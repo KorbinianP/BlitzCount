@@ -16,7 +16,7 @@ Featuring **Counti**, the cute kawaii Capybara mascot! ✨
 
 You can play **BlitzCount / ZählFix** directly in your browser or install it as an offline app:
 
-> **Live Demo**: `https://<your-username>.github.io/<your-repo>/`
+> **Live Demo**: [https://korbinianp.github.io/BlitzCount/](https://korbinianp.github.io/BlitzCount/)
 
 ### 📱 Installing on an Android Tablet or Phone (PWA)
 1. Open the URL in Google Chrome (or any modern mobile browser).

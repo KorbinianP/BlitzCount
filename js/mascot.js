@@ -1,157 +1,201 @@
 // Counti the Kawaii Capybara mascot SVG generator
-// Authentic Capybara anatomy:
-// - Characteristic flat-topped blocky rectangular head & barrel/loaf body
-// - Small rounded ears set far back and to the sides
-// - High-set wide eyes with chill zen kawaii cuteness
-// - Broad, blunt rectangular snout with classic capybara nostrils (\ /)
-// - Iconic Japanese onsen yuzu/orange on its flat head
+// Warm chibi cartoon aesthetic:
+// - Friendly dark-chocolate cartoon outline (stroke: #452615)
+// - Warm milk-caramel body (#D29873) with a distinct darker brown rounded snout (#935A39)
+// - Rosy blush cheeks (#FF8FA3) and wide-set expressive kawaii eyes
+// - Characteristic capybara nostrils and vertical philtrum
+// - Chubby seated potato/loaf body with little stubby front paws and toe lines
+// - 100% original vector geometry
 
 export function renderCounti(mood = 'idle', size = 120) {
   let eyesSvg = '';
   let mouthSvg = '';
+  let pawsSvg = '';
   let extrasSvg = '';
   let animationClass = 'counti-idle';
+
+  const strokeColor = '#452615';
+  const bodyColor = '#D29873';
+  const snoutColor = '#935A39';
+  const innerEarColor = '#80492B';
+  const cheekColor = '#FF8FA3';
 
   switch (mood) {
     case 'cheer':
       animationClass = 'counti-bounce';
+      // Happy rainbow-arc eyes ^ ^
       eyesSvg = `
-        <path d="M 32 46 Q 38 38 44 46" stroke="#2C1810" stroke-width="3" stroke-linecap="round" fill="none" />
-        <path d="M 76 46 Q 82 38 88 46" stroke="#2C1810" stroke-width="3" stroke-linecap="round" fill="none" />
+        <path d="M 32 44 Q 37 38 42 44" stroke="${strokeColor}" stroke-width="3.2" stroke-linecap="round" fill="none" />
+        <path d="M 78 44 Q 83 38 88 44" stroke="${strokeColor}" stroke-width="3.2" stroke-linecap="round" fill="none" />
       `;
+      // Open happy mouth with pink tongue
       mouthSvg = `
-        <path d="M 54 74 Q 60 80 66 74" stroke="#2C1810" stroke-width="2.6" stroke-linecap="round" fill="none" />
+        <path d="M 53 62 Q 60 71 67 62 Z" fill="#D32F2F" stroke="${strokeColor}" stroke-width="2.4" stroke-linejoin="round" />
+        <path d="M 56 65 Q 60 70 64 65 Z" fill="#FF8FA3" />
+      `;
+      // Cheering raised paws
+      pawsSvg = `
+        <ellipse cx="26" cy="74" rx="7.5" ry="11" transform="rotate(-35 26 74)" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="2.8" />
+        <ellipse cx="94" cy="74" rx="7.5" ry="11" transform="rotate(35 94 74)" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="2.8" />
       `;
       extrasSvg = `
-        <text x="12" y="30" font-size="16" class="sparkle-float">✨</text>
-        <text x="92" y="26" font-size="16" class="sparkle-float-delay">✨</text>
-        <!-- Cheering Paws Up -->
-        <ellipse cx="26" cy="76" rx="8" ry="12" transform="rotate(-30 26 76)" fill="#8A5122" />
-        <ellipse cx="94" cy="76" rx="8" ry="12" transform="rotate(30 94 76)" fill="#8A5122" />
+        <text x="12" y="28" font-size="16" class="sparkle-float">✨</text>
+        <text x="92" y="24" font-size="16" class="sparkle-float-delay">✨</text>
       `;
       break;
 
     case 'victory':
       animationClass = 'counti-triumph';
+      // Proud sparkling eyes
       eyesSvg = `
-        <ellipse cx="38" cy="46" rx="4.5" ry="5.5" fill="#2C1810" />
-        <circle cx="36" cy="44" r="1.8" fill="#FFF" />
-        <ellipse cx="82" cy="46" rx="4.5" ry="5.5" fill="#2C1810" />
-        <circle cx="80" cy="44" r="1.8" fill="#FFF" />
+        <ellipse cx="37" cy="44" rx="4.5" ry="5.5" fill="${strokeColor}" />
+        <circle cx="35.5" cy="42" r="1.8" fill="#FFF" />
+        <circle cx="38.5" cy="46" r="0.9" fill="#FFF" />
+        <ellipse cx="83" cy="44" rx="4.5" ry="5.5" fill="${strokeColor}" />
+        <circle cx="81.5" cy="42" r="1.8" fill="#FFF" />
+        <circle cx="84.5" cy="46" r="0.9" fill="#FFF" />
       `;
+      // Big triumphant smile
       mouthSvg = `
-        <path d="M 53 73 Q 60 80 67 73" stroke="#2C1810" stroke-width="2.6" stroke-linecap="round" fill="none" />
+        <path d="M 52 62 Q 60 69 68 62" stroke="${strokeColor}" stroke-width="2.8" stroke-linecap="round" fill="none" />
+      `;
+      // Sitting paws
+      pawsSvg = `
+        <g class="front-paws">
+          <ellipse cx="49" cy="104" rx="7" ry="5.5" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="2.6" />
+          <line x1="49" y1="102" x2="49" y2="108" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" />
+          <ellipse cx="71" cy="104" rx="7" ry="5.5" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="2.6" />
+          <line x1="71" y1="102" x2="71" y2="108" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" />
+        </g>
       `;
       extrasSvg = `
-        <!-- Party Hat on Capybara's Flat Head -->
-        <polygon points="60,6 48,32 72,32" fill="#FF4081" />
-        <polygon points="60,6 54,32 66,32" fill="#FFEB3B" />
-        <circle cx="60" cy="5" r="4" fill="#FFD700" />
+        <!-- Festive Striped Party Hat -->
+        <polygon points="60,2 48,26 72,26" fill="#FF5252" stroke="${strokeColor}" stroke-width="2.6" stroke-linejoin="round" />
+        <path d="M 52 19 L 68 19 M 55 12 L 65 12" stroke="#FFD54F" stroke-width="2.8" stroke-linecap="round" />
+        <circle cx="60" cy="2" r="3.5" fill="#FFD54F" stroke="${strokeColor}" stroke-width="1.8" />
         
-        <!-- Golden Medal with Blue Ribbon -->
-        <path d="M 46 84 L 60 94 L 74 84" stroke="#2196F3" stroke-width="4" fill="none" stroke-linecap="round" />
-        <circle cx="60" cy="98" r="9" fill="#FFD700" stroke="#FFA000" stroke-width="1.5" />
-        <text x="60" y="102" font-size="9" text-anchor="middle" font-weight="bold" fill="#795548">1</text>
+        <!-- Golden Medal with Royal Blue Ribbon -->
+        <path d="M 47 82 L 60 92 L 73 82" stroke="#1E88E5" stroke-width="4.5" fill="none" stroke-linecap="round" />
+        <circle cx="60" cy="96" r="9" fill="#FFD54F" stroke="#FFA000" stroke-width="1.8" />
+        <text x="60" y="100" font-size="9" text-anchor="middle" font-weight="900" fill="#795548">1</text>
       `;
       break;
 
     case 'encourage':
       animationClass = 'counti-nod';
+      // Warm, sweet caring eyes
       eyesSvg = `
-        <ellipse cx="38" cy="46" rx="4" ry="5" fill="#2C1810" />
-        <circle cx="36" cy="44" r="1.5" fill="#FFF" />
-        <ellipse cx="82" cy="46" rx="4" ry="5" fill="#2C1810" />
-        <circle cx="80" cy="44" r="1.5" fill="#FFF" />
+        <ellipse cx="37" cy="44" rx="4.2" ry="5" fill="${strokeColor}" />
+        <circle cx="35.5" cy="42" r="1.6" fill="#FFF" />
+        <ellipse cx="83" cy="44" rx="4.2" ry="5" fill="${strokeColor}" />
+        <circle cx="81.5" cy="42" r="1.6" fill="#FFF" />
       `;
+      // Gentle warm smile
       mouthSvg = `
-        <path d="M 55 74 Q 60 78 65 74" stroke="#2C1810" stroke-width="2.2" stroke-linecap="round" fill="none" />
+        <path d="M 54 62 Q 60 66 66 62" stroke="${strokeColor}" stroke-width="2.4" stroke-linecap="round" fill="none" />
+      `;
+      pawsSvg = `
+        <g class="front-paws">
+          <ellipse cx="49" cy="104" rx="7" ry="5.5" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="2.6" />
+          <line x1="49" y1="102" x2="49" y2="108" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" />
+          <ellipse cx="71" cy="104" rx="7" ry="5.5" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="2.6" />
+          <line x1="71" y1="102" x2="71" y2="108" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" />
+        </g>
       `;
       extrasSvg = `
-        <text x="82" y="86" font-size="16">🌸</text>
+        <!-- Cheerful encouraging flower -->
+        <text x="76" y="86" font-size="18">🌸</text>
       `;
       break;
 
     case 'idle':
     default:
       animationClass = 'counti-idle';
+      // Relaxed, calm, curious open eyes
       eyesSvg = `
-        <ellipse cx="38" cy="46" rx="4.5" ry="5.5" fill="#2C1810" />
-        <circle cx="36.5" cy="44.5" r="1.8" fill="#FFF" />
-        <ellipse cx="82" cy="46" rx="4.5" ry="5.5" fill="#2C1810" />
-        <circle cx="80.5" cy="44.5" r="1.8" fill="#FFF" />
+        <ellipse cx="37" cy="44" rx="4.5" ry="5.5" fill="${strokeColor}" />
+        <circle cx="35.5" cy="42" r="1.8" fill="#FFF" />
+        <circle cx="38.5" cy="45.5" r="0.9" fill="#FFF" />
+        <ellipse cx="83" cy="44" rx="4.5" ry="5.5" fill="${strokeColor}" />
+        <circle cx="81.5" cy="42" r="1.8" fill="#FFF" />
+        <circle cx="84.5" cy="45.5" r="0.9" fill="#FFF" />
       `;
+      // Sweet peaceful smile
       mouthSvg = `
-        <path d="M 54 74 Q 60 77 66 74" stroke="#2C1810" stroke-width="2.2" stroke-linecap="round" fill="none" />
+        <path d="M 53 62 Q 60 67 67 62" stroke="${strokeColor}" stroke-width="2.6" stroke-linecap="round" fill="none" />
+      `;
+      pawsSvg = `
+        <g class="front-paws">
+          <ellipse cx="49" cy="104" rx="7" ry="5.5" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="2.6" />
+          <line x1="49" y1="102" x2="49" y2="108" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" />
+          <ellipse cx="71" cy="104" rx="7" ry="5.5" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="2.6" />
+          <line x1="71" y1="102" x2="71" y2="108" stroke="${strokeColor}" stroke-width="2" stroke-linecap="round" />
+        </g>
       `;
       extrasSvg = `
-        <!-- Iconic Yuzu/Orange resting gently on flat capybara head -->
-        <circle cx="60" cy="22" r="8" fill="#FFA726" />
-        <circle cx="60" cy="22" r="8" fill="url(#orangeGrad)" />
-        <path d="M 60 14 Q 63 10 66 12" stroke="#4CAF50" stroke-width="2.2" fill="none" stroke-linecap="round" />
-        <circle cx="65" cy="11" r="2.2" fill="#66BB6A" />
+        <!-- Iconic Japanese onsen Yuzu / Orange on Counti's head -->
+        <circle cx="60" cy="19" r="8" fill="#FFA726" stroke="${strokeColor}" stroke-width="2.2" />
+        <!-- Little green stem & leaf -->
+        <path d="M 60 11 Q 64 7 67 9 Q 64 14 60 11 Z" fill="#66BB6A" stroke="${strokeColor}" stroke-width="1.6" />
       `;
       break;
   }
 
   return `
     <svg class="counti-mascot ${animationClass}" viewBox="0 0 120 120" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <!-- Warm Capybara brown fur gradient -->
-        <linearGradient id="capyFur" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#BA7C46" />
-          <stop offset="100%" stop-color="#8F5323" />
-        </linearGradient>
-        <!-- Distinctive broad snout gradient -->
-        <linearGradient id="capySnout" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#8B5121" />
-          <stop offset="100%" stop-color="#683610" />
-        </linearGradient>
-        <radialGradient id="orangeGrad" cx="40%" cy="40%" r="60%">
-          <stop offset="0%" stop-color="#FFB74D" />
-          <stop offset="100%" stop-color="#F57C00" />
-        </radialGradient>
-      </defs>
+      <!-- Soft Ambient Shadow -->
+      <ellipse cx="60" cy="113" rx="38" ry="5.5" fill="rgba(69, 38, 21, 0.14)" />
 
-      <!-- Soft Ground Shadow -->
-      <ellipse cx="60" cy="112" rx="38" ry="6" fill="rgba(0,0,0,0.12)" />
+      <!-- Cute Small Rounded Capybara Ears -->
+      <ellipse cx="27" cy="30" rx="7.5" ry="8.5" transform="rotate(-20 27 30)" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="3" />
+      <ellipse cx="28" cy="31" rx="4" ry="5" transform="rotate(-20 27 30)" fill="${innerEarColor}" />
 
-      <!-- Small Rounded Capybara Ears set to the sides of the head -->
-      <ellipse cx="22" cy="38" rx="7" ry="8" fill="#8F5323" transform="rotate(-15 22 38)" />
-      <ellipse cx="23" cy="38" rx="4" ry="5" fill="#5D320F" transform="rotate(-15 23 38)" />
+      <ellipse cx="93" cy="30" rx="7.5" ry="8.5" transform="rotate(20 93 30)" fill="${bodyColor}" stroke="${strokeColor}" stroke-width="3" />
+      <ellipse cx="92" cy="31" rx="4" ry="5" transform="rotate(20 93 30)" fill="${innerEarColor}" />
+
+      <!-- Chubby Loaf Body (Seated posture) -->
+      <path d="M 36 68 
+               C 22 76, 18 92, 21 102 
+               C 24 109, 34 110, 60 110 
+               C 86 110, 96 109, 99 102 
+               C 102 92, 98 76, 84 68 Z" 
+            fill="${bodyColor}" 
+            stroke="${strokeColor}" 
+            stroke-width="3.2" 
+            stroke-linejoin="round" />
+
+      <!-- Characteristic Capybara Head Shape (Flat-topped crown, soft sloping cheeks) -->
+      <path d="M 37 26 
+               Q 60 23 83 26 
+               C 97 29, 99 48, 97 63 
+               C 95 76, 83 80, 60 80 
+               C 37 80, 25 76, 23 63 
+               C 21 48, 23 29, 37 26 Z" 
+            fill="${bodyColor}" 
+            stroke="${strokeColor}" 
+            stroke-width="3.2" 
+            stroke-linejoin="round" />
+
+      <!-- Distinctive Darker Snout / Muzzle Patch (Vertical rounded bean/oval) -->
+      <path d="M 44 45 
+               C 44 38, 76 38, 76 45 
+               C 77 56, 78 72, 60 72 
+               C 42 72, 43 56, 44 45 Z" 
+            fill="${snoutColor}" 
+            stroke="${strokeColor}" 
+            stroke-width="2.8" 
+            stroke-linejoin="round" />
+
+      <!-- Capybara Nostril Slits -->
+      <path d="M 52 51 C 51 54, 53 56, 56 54" stroke="${strokeColor}" stroke-width="2.6" stroke-linecap="round" fill="none" />
+      <path d="M 68 51 C 69 54, 67 56, 64 54" stroke="${strokeColor}" stroke-width="2.6" stroke-linecap="round" fill="none" />
       
-      <ellipse cx="98" cy="38" rx="7" ry="8" fill="#8F5323" transform="rotate(15 98 38)" />
-      <ellipse cx="97" cy="38" rx="4" ry="5" fill="#5D320F" transform="rotate(15 97 38)" />
+      <!-- Philtrum Line -->
+      <line x1="60" y1="53" x2="60" y2="61" stroke="${strokeColor}" stroke-width="2.6" stroke-linecap="round" />
 
-      <!-- Body / Lower torso (barrel/loaf shape) -->
-      <path d="M 28 80 C 24 96, 32 108, 60 108 C 88 108, 96 96, 92 80 Z" fill="#8F5323" />
-      
-      <!-- Resting Paws -->
-      <ellipse cx="44" cy="98" rx="7" ry="5" fill="#683610" />
-      <ellipse cx="76" cy="98" rx="7" ry="5" fill="#683610" />
-
-      <!-- Characteristic Flat-Topped Blocky Capybara Head -->
-      <!-- Flat top, slopes down to blunt cheeks -->
-      <path d="M 34 32 
-               L 86 32 
-               C 96 32, 100 46, 98 64 
-               C 96 82, 88 90, 60 90 
-               C 32 90, 24 82, 22 64 
-               C 20 46, 24 32, 34 32 Z" 
-            fill="url(#capyFur)" />
-
-      <!-- Prominent Blunt / Boxy Capybara Snout (Broad rounded rectangle) -->
-      <rect x="36" y="52" width="48" height="34" rx="14" fill="url(#capySnout)" />
-
-      <!-- Iconic Capybara Nostrils: wide-spaced angled slits -->
-      <path d="M 48 60 C 47 64, 49 66, 52 64" stroke="#2C1810" stroke-width="3" stroke-linecap="round" fill="none" />
-      <path d="M 72 60 C 73 64, 71 66, 68 64" stroke="#2C1810" stroke-width="3" stroke-linecap="round" fill="none" />
-      
-      <!-- Vertical philtrum from snout to mouth -->
-      <line x1="60" y1="64" x2="60" y2="73" stroke="#2C1810" stroke-width="2.2" stroke-linecap="round" />
-
-      <!-- Subtle Kawaii Rosy Cheeks -->
-      <ellipse cx="30" cy="62" rx="5" ry="3.5" fill="#FF8A80" opacity="0.6" />
-      <ellipse cx="90" cy="62" rx="5" ry="3.5" fill="#FF8A80" opacity="0.6" />
+      <!-- Rosy Blush Cheeks -->
+      <ellipse cx="31" cy="56" rx="5.5" ry="4" fill="${cheekColor}" opacity="0.9" />
+      <ellipse cx="89" cy="56" rx="5.5" ry="4" fill="${cheekColor}" opacity="0.9" />
 
       <!-- Eyes -->
       ${eyesSvg}
@@ -159,7 +203,10 @@ export function renderCounti(mood = 'idle', size = 120) {
       <!-- Mouth -->
       ${mouthSvg}
 
-      <!-- Extras (Orange, Hat, Sparkles, Paws) -->
+      <!-- Front Paws -->
+      ${pawsSvg}
+
+      <!-- Mood-Specific Extras (Orange, Party Hat, Medal, Flower, Sparkles) -->
       ${extrasSvg}
     </svg>
   `;

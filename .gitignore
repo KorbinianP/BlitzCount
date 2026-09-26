@@ -1,0 +1,6 @@
+# Reference assets / scratch
+*.png
+*.jpg
+*.jpeg
+.DS_Store
+scratch/

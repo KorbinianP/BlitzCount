@@ -502,12 +502,6 @@ body {
   transition: background 0.2s ease;
 }
 
-.game-mascot-corner {
-  position: absolute;
-  bottom: 6px;
-  right: 10px;
-  pointer-events: none;
-}
 
 .blank-curtain {
   display: flex;
@@ -555,8 +549,18 @@ body {
   color: #2E7D32;
 }
 
+/* Top bar mascot reaction pill */
+.game-mascot-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
 /* ==================== STIMULI RENDERING ==================== */
-/* Fruits in 3x3 Dice Pattern (Floating, no bounding box) */
+/* Fruits in 3x3 Dice Pattern (Floating, perfectly proportioned, no box) */
 .stimulus-fruits {
   display: flex;
   align-items: center;
@@ -565,26 +569,52 @@ body {
   position: relative;
 }
 
-.fruit-dice-grid {
+/* Single die pattern (1-6 fruits): Large, cozy, and prominent */
+.stimulus-fruits.single-die-pattern .fruit-dice-grid {
   display: grid;
-  grid-template-columns: repeat(3, 48px);
-  grid-template-rows: repeat(3, 48px);
+  grid-template-columns: repeat(3, 58px);
+  grid-template-rows: repeat(3, 58px);
   gap: 6px;
   align-items: center;
   justify-content: center;
 }
 
-.fruit-pip {
+.stimulus-fruits.single-die-pattern .fruit-pip {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 58px;
+  height: 58px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.fruit-pip .fruit-emoji {
-  font-size: 2.6rem;
+.stimulus-fruits.single-die-pattern .fruit-emoji {
+  font-size: 3.3rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  line-height: 1;
+}
+
+/* Double die pattern (7-10 fruits): Compact pair side-by-side */
+.stimulus-fruits.double-die-pattern .fruit-dice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(3, 44px);
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.stimulus-fruits.double-die-pattern .fruit-pip {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stimulus-fruits.double-die-pattern .fruit-emoji {
+  font-size: 2.5rem;
   filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.1));
   line-height: 1;
 }

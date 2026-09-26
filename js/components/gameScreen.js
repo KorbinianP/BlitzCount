@@ -25,7 +25,6 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
   let isAnswered = false;
 
   function renderFrame(phase = 'ready') {
-    // Generate progress bubbles
     let progressBubblesHtml = '';
     for (let i = 0; i < totalRounds; i++) {
       let bubbleClass = 'bubble-pending';
@@ -50,12 +49,16 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
 
     container.innerHTML = `
       <div class="game-screen-view">
-        <!-- Top Game Header -->
+        <!-- Top Game Header with Exit, Mascot reaction pill, progress bubbles, and round count -->
         <div class="game-top-bar">
           <button class="game-exit-btn" id="btn-game-exit" title="${t('home')}">
             <span class="exit-icon">🏠</span>
           </button>
           
+          <div class="game-mascot-pill" id="game-mascot" title="Counti">
+            ${renderCounti('idle', 44)}
+          </div>
+
           <div class="progress-bubble-track">
             ${progressBubblesHtml}
           </div>
@@ -70,15 +73,10 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
           <div class="timer-bar-fill" id="timer-bar-fill"></div>
         </div>
 
-        <!-- Central Play / Flash Card Area -->
+        <!-- Central Play / Flash Card Area (Completely unobstructed, 100% reserved for stimulus) -->
         <div class="flash-stage-wrapper">
           <div class="flash-card-stage" id="flash-stage">
             <!-- Content injected dynamically -->
-          </div>
-
-          <!-- Mascot Helper Corner -->
-          <div class="game-mascot-corner" id="game-mascot">
-            ${renderCounti('idle', 75)}
           </div>
         </div>
 
@@ -118,16 +116,13 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
     const keypadMount = container.querySelector('#keypad-mount');
     const timerBar = container.querySelector('#timer-bar-fill');
 
-    // Generate random stimulus for this round
     currentStimulus = createStimulus(category);
 
-    // Initial mount: keypad is ready
     renderKeypad(keypadMount, {
       isEnabled: false,
       onSelectNumber: () => {}
     });
 
-    // Brief ready cue (300ms)
     playDing();
     stage.innerHTML = `
       <div class="ready-countdown-pulse">
@@ -142,11 +137,10 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       stage.innerHTML = currentStimulus.html;
       stage.classList.add('is-flashing');
 
-      // Animate the flash timer bar depleting
       timerBar.style.transition = `width ${flashDuration}s linear`;
       timerBar.style.width = '0%';
 
-      // CHANGE 3: Enable Keypad IMMEDIATELY when stimulus appears!
+      // Enable keypad immediately during flash
       renderKeypad(keypadMount, {
         isEnabled: true,
         onSelectNumber: handleUserAnswer
@@ -166,19 +160,17 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
         timerBar.style.transition = 'none';
         timerBar.style.width = '100%';
 
-        // Ensure keypad is enabled
         renderKeypad(keypadMount, {
           isEnabled: true,
           onSelectNumber: handleUserAnswer
         });
 
-        // If Rocket mode, start answer timer
         if (isRocket) {
           timerBar.style.transition = `width ${rocketAnswerLimit}s linear`;
           timerBar.style.width = '0%';
           answerTimer = setTimeout(() => {
             if (!isAnswered) {
-              handleUserAnswer(-1); // Timed out
+              handleUserAnswer(-1);
             }
           }, rocketAnswerLimit * 1000);
         }
@@ -196,7 +188,6 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
     const keypadMount = container.querySelector('#keypad-mount');
     const timerBar = container.querySelector('#timer-bar-fill');
 
-    // Immediately disable keypad to prevent double-tap
     renderKeypad(keypadMount, {
       isEnabled: false,
       onSelectNumber: () => {}
@@ -212,9 +203,8 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
     if (isCorrect) score++;
 
     if (isCorrect) {
-      // Correct! Cheerful chime, sparkling Counti, green glow
       playCorrect();
-      mascot.innerHTML = renderCounti('cheer', 85);
+      if (mascot) mascot.innerHTML = renderCounti('cheer', 48);
       stage.classList.remove('is-flashing');
       stage.classList.add('feedback-correct');
       stage.innerHTML = `
@@ -229,12 +219,10 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
         startRound();
       }, 1000);
     } else {
-      // Missed / timeout! Gentle boing, encouraging Counti, friendly reveal with numbers
       playWrong();
-      mascot.innerHTML = renderCounti('encourage', 85);
+      if (mascot) mascot.innerHTML = renderCounti('encourage', 48);
       stage.classList.remove('is-flashing');
       stage.classList.add('feedback-wrong');
-      // Reveal the counted stimulus with badges so the child learns
       stage.innerHTML = `
         <div class="feedback-reveal-wrap">
           ${currentStimulus.reviewHtml}
@@ -267,7 +255,6 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
     });
   }
 
-  // Start the first round
   startRound();
 
   return {

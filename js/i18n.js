@@ -2,7 +2,7 @@
 export const translations = {
   en: {
     appTitle: 'BlitzCount',
-    tagline: 'Quick Number Flash with Counti 🦫',
+    tagline: 'Quick Number Flash with Counti',
     play: 'Play',
     replay: 'Play Again',
     home: 'Home',
@@ -55,7 +55,7 @@ export const translations = {
   },
   de: {
     appTitle: 'ZählFix',
-    tagline: 'Blitzschnell Zählen mit Counti 🦫',
+    tagline: 'Blitzschnell Zählen mit Counti',
     play: 'Spielen',
     replay: 'Nochmal',
     home: 'Start',
@@ -93,7 +93,7 @@ export const translations = {
       close: 'Zurück',
       resetScores: 'Punkte zurücksetzen',
       confirmReset: 'Alle Rekorde für dieses Profil zurücksetzen?',
-      trophies: 'Trophäen-Zimmer'
+      trophies: 'Trophy Room'
     },
     profileModal: {
       title: 'Wähle deinen Spieler',

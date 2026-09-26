@@ -1,161 +1,166 @@
 // Counti the Kawaii Capybara mascot SVG generator
-// Beautiful, crisp, infinitely scalable vector mascot for BlitzCount / ZählFix
+// Authentic Capybara anatomy:
+// - Characteristic flat-topped blocky rectangular head & barrel/loaf body
+// - Small rounded ears set far back and to the sides
+// - High-set wide eyes with chill zen kawaii cuteness
+// - Broad, blunt rectangular snout with classic capybara nostrils (\ /)
+// - Iconic Japanese onsen yuzu/orange on its flat head
 
 export function renderCounti(mood = 'idle', size = 120) {
-  let eyes = '';
-  let mouth = '';
-  let paws = '';
-  let extras = '';
-  let animationClass = '';
+  let eyesSvg = '';
+  let mouthSvg = '';
+  let extrasSvg = '';
+  let animationClass = 'counti-idle';
 
   switch (mood) {
     case 'cheer':
       animationClass = 'counti-bounce';
-      eyes = `
-        <path d="M 38 48 Q 45 40 52 48" stroke="#3D271D" stroke-width="3.5" stroke-linecap="round" fill="none" />
-        <path d="M 68 48 Q 75 40 82 48" stroke="#3D271D" stroke-width="3.5" stroke-linecap="round" fill="none" />
+      eyesSvg = `
+        <path d="M 32 46 Q 38 38 44 46" stroke="#2C1810" stroke-width="3" stroke-linecap="round" fill="none" />
+        <path d="M 76 46 Q 82 38 88 46" stroke="#2C1810" stroke-width="3" stroke-linecap="round" fill="none" />
       `;
-      mouth = `
-        <path d="M 54 62 Q 60 70 66 62" stroke="#3D271D" stroke-width="3" stroke-linecap="round" fill="#E86A82" />
+      mouthSvg = `
+        <path d="M 54 74 Q 60 80 66 74" stroke="#2C1810" stroke-width="2.6" stroke-linecap="round" fill="none" />
       `;
-      paws = `
-        <ellipse cx="28" cy="62" rx="7" ry="10" transform="rotate(-30 28 62)" fill="#8B5A2B" />
-        <ellipse cx="92" cy="62" rx="7" ry="10" transform="rotate(30 92 62)" fill="#8B5A2B" />
-      `;
-      extras = `
-        <text x="14" y="32" font-size="16" class="sparkle-float">✨</text>
-        <text x="92" y="28" font-size="16" class="sparkle-float-delay">✨</text>
+      extrasSvg = `
+        <text x="12" y="30" font-size="16" class="sparkle-float">✨</text>
+        <text x="92" y="26" font-size="16" class="sparkle-float-delay">✨</text>
+        <!-- Cheering Paws Up -->
+        <ellipse cx="26" cy="76" rx="8" ry="12" transform="rotate(-30 26 76)" fill="#8A5122" />
+        <ellipse cx="94" cy="76" rx="8" ry="12" transform="rotate(30 94 76)" fill="#8A5122" />
       `;
       break;
 
     case 'victory':
       animationClass = 'counti-triumph';
-      eyes = `
-        <ellipse cx="44" cy="46" rx="5" ry="6" fill="#3D271D" />
-        <circle cx="42" cy="44" r="2" fill="#FFF" />
-        <ellipse cx="76" cy="46" rx="5" ry="6" fill="#3D271D" />
-        <circle cx="74" cy="44" r="2" fill="#FFF" />
+      eyesSvg = `
+        <ellipse cx="38" cy="46" rx="4.5" ry="5.5" fill="#2C1810" />
+        <circle cx="36" cy="44" r="1.8" fill="#FFF" />
+        <ellipse cx="82" cy="46" rx="4.5" ry="5.5" fill="#2C1810" />
+        <circle cx="80" cy="44" r="1.8" fill="#FFF" />
       `;
-      mouth = `
-        <path d="M 52 59 Q 60 68 68 59" stroke="#3D271D" stroke-width="3" stroke-linecap="round" fill="#E86A82" />
+      mouthSvg = `
+        <path d="M 53 73 Q 60 80 67 73" stroke="#2C1810" stroke-width="2.6" stroke-linecap="round" fill="none" />
       `;
-      paws = `
-        <ellipse cx="44" cy="88" rx="8" ry="6" fill="#8B5A2B" />
-        <ellipse cx="76" cy="88" rx="8" ry="6" fill="#8B5A2B" />
-      `;
-      extras = `
-        <!-- Party Hat -->
-        <polygon points="60,6 48,30 72,30" fill="#FF4081" />
-        <polygon points="60,6 54,30 66,30" fill="#FFEB3B" />
-        <circle cx="60" cy="5" r="4" fill="#FFEB3B" />
+      extrasSvg = `
+        <!-- Party Hat on Capybara's Flat Head -->
+        <polygon points="60,6 48,32 72,32" fill="#FF4081" />
+        <polygon points="60,6 54,32 66,32" fill="#FFEB3B" />
+        <circle cx="60" cy="5" r="4" fill="#FFD700" />
         
-        <!-- Gold Medal with ribbon -->
-        <path d="M 46 76 L 60 88 L 74 76" stroke="#2196F3" stroke-width="4" fill="none" stroke-linecap="round" />
-        <circle cx="60" cy="94" r="9" fill="#FFD700" stroke="#FFA000" stroke-width="1.5" />
-        <text x="60" y="98" font-size="9" text-anchor="middle" font-weight="bold" fill="#795548">1</text>
+        <!-- Golden Medal with Blue Ribbon -->
+        <path d="M 46 84 L 60 94 L 74 84" stroke="#2196F3" stroke-width="4" fill="none" stroke-linecap="round" />
+        <circle cx="60" cy="98" r="9" fill="#FFD700" stroke="#FFA000" stroke-width="1.5" />
+        <text x="60" y="102" font-size="9" text-anchor="middle" font-weight="bold" fill="#795548">1</text>
       `;
       break;
 
     case 'encourage':
       animationClass = 'counti-nod';
-      eyes = `
-        <ellipse cx="45" cy="47" rx="4.5" ry="5.5" fill="#3D271D" />
-        <circle cx="43" cy="45" r="1.8" fill="#FFF" />
-        <ellipse cx="75" cy="47" rx="4.5" ry="5.5" fill="#3D271D" />
-        <circle cx="73" cy="45" r="1.8" fill="#FFF" />
+      eyesSvg = `
+        <ellipse cx="38" cy="46" rx="4" ry="5" fill="#2C1810" />
+        <circle cx="36" cy="44" r="1.5" fill="#FFF" />
+        <ellipse cx="82" cy="46" rx="4" ry="5" fill="#2C1810" />
+        <circle cx="80" cy="44" r="1.5" fill="#FFF" />
       `;
-      mouth = `
-        <path d="M 55 60 Q 60 65 65 60" stroke="#3D271D" stroke-width="2.8" stroke-linecap="round" fill="none" />
+      mouthSvg = `
+        <path d="M 55 74 Q 60 78 65 74" stroke="#2C1810" stroke-width="2.2" stroke-linecap="round" fill="none" />
       `;
-      paws = `
-        <ellipse cx="44" cy="88" rx="7" ry="5" fill="#8B5A2B" />
-        <ellipse cx="76" cy="86" rx="7" ry="5" fill="#8B5A2B" />
-      `;
-      extras = `
-        <text x="80" y="86" font-size="16">🌸</text>
+      extrasSvg = `
+        <text x="82" y="86" font-size="16">🌸</text>
       `;
       break;
 
     case 'idle':
     default:
       animationClass = 'counti-idle';
-      eyes = `
-        <ellipse cx="44" cy="47" rx="5" ry="6" fill="#3D271D" />
-        <circle cx="42" cy="45" r="2" fill="#FFF" />
-        <ellipse cx="76" cy="47" rx="5" ry="6" fill="#3D271D" />
-        <circle cx="74" cy="45" r="2" fill="#FFF" />
+      eyesSvg = `
+        <ellipse cx="38" cy="46" rx="4.5" ry="5.5" fill="#2C1810" />
+        <circle cx="36.5" cy="44.5" r="1.8" fill="#FFF" />
+        <ellipse cx="82" cy="46" rx="4.5" ry="5.5" fill="#2C1810" />
+        <circle cx="80.5" cy="44.5" r="1.8" fill="#FFF" />
       `;
-      mouth = `
-        <path d="M 54 60 Q 60 64 66 60" stroke="#3D271D" stroke-width="2.8" stroke-linecap="round" fill="none" />
+      mouthSvg = `
+        <path d="M 54 74 Q 60 77 66 74" stroke="#2C1810" stroke-width="2.2" stroke-linecap="round" fill="none" />
       `;
-      paws = `
-        <ellipse cx="44" cy="88" rx="8" ry="6" fill="#8B5A2B" />
-        <ellipse cx="76" cy="88" rx="8" ry="6" fill="#8B5A2B" />
-      `;
-      extras = `
-        <!-- Capybara signature little orange / yuzu on head -->
-        <circle cx="60" cy="22" r="7" fill="#FFA726" />
-        <path d="M 60 15 Q 63 12 65 14" stroke="#4CAF50" stroke-width="2" fill="none" stroke-linecap="round" />
-        <circle cx="64" cy="13" r="2" fill="#66BB6A" />
+      extrasSvg = `
+        <!-- Iconic Yuzu/Orange resting gently on flat capybara head -->
+        <circle cx="60" cy="22" r="8" fill="#FFA726" />
+        <circle cx="60" cy="22" r="8" fill="url(#orangeGrad)" />
+        <path d="M 60 14 Q 63 10 66 12" stroke="#4CAF50" stroke-width="2.2" fill="none" stroke-linecap="round" />
+        <circle cx="65" cy="11" r="2.2" fill="#66BB6A" />
       `;
       break;
   }
 
   return `
-    <svg class="counti-mascot ${animationClass}" width="${size}" height="${size}" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <svg class="counti-mascot ${animationClass}" viewBox="0 0 120 120" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="bodyGrad" cx="50%" cy="40%" r="60%">
-          <stop offset="0%" stop-color="#C68B59" />
-          <stop offset="100%" stop-color="#9E6335" />
-        </radialGradient>
-        <linearGradient id="snoutGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#DEB088" />
-          <stop offset="100%" stop-color="#C28E61" />
+        <!-- Warm Capybara brown fur gradient -->
+        <linearGradient id="capyFur" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#BA7C46" />
+          <stop offset="100%" stop-color="#8F5323" />
         </linearGradient>
+        <!-- Distinctive broad snout gradient -->
+        <linearGradient id="capySnout" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#8B5121" />
+          <stop offset="100%" stop-color="#683610" />
+        </linearGradient>
+        <radialGradient id="orangeGrad" cx="40%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#FFB74D" />
+          <stop offset="100%" stop-color="#F57C00" />
+        </radialGradient>
       </defs>
 
-      <!-- Background Glow / Shadow -->
-      <ellipse cx="60" cy="112" rx="36" ry="6" fill="rgba(0,0,0,0.12)" />
+      <!-- Soft Ground Shadow -->
+      <ellipse cx="60" cy="112" rx="38" ry="6" fill="rgba(0,0,0,0.12)" />
 
-      <!-- Ears -->
-      <ellipse cx="32" cy="30" rx="8" ry="9" fill="#9E6335" transform="rotate(-15 32 30)" />
-      <ellipse cx="33" cy="31" rx="4.5" ry="5.5" fill="#6E401F" transform="rotate(-15 33 31)" />
+      <!-- Small Rounded Capybara Ears set to the sides of the head -->
+      <ellipse cx="22" cy="38" rx="7" ry="8" fill="#8F5323" transform="rotate(-15 22 38)" />
+      <ellipse cx="23" cy="38" rx="4" ry="5" fill="#5D320F" transform="rotate(-15 23 38)" />
       
-      <ellipse cx="88" cy="30" rx="8" ry="9" fill="#9E6335" transform="rotate(15 88 30)" />
-      <ellipse cx="87" cy="31" rx="4.5" ry="5.5" fill="#6E401F" transform="rotate(15 87 31)" />
+      <ellipse cx="98" cy="38" rx="7" ry="8" fill="#8F5323" transform="rotate(15 98 38)" />
+      <ellipse cx="97" cy="38" rx="4" ry="5" fill="#5D320F" transform="rotate(15 97 38)" />
 
-      <!-- Body / Main chubby shape -->
-      <path d="M 32 44 
-               C 22 55, 20 85, 28 100 
-               C 34 110, 86 110, 92 100 
-               C 100 85, 98 55, 88 44 
-               C 80 34, 40 34, 32 44 Z" 
-            fill="url(#bodyGrad)" />
+      <!-- Body / Lower torso (barrel/loaf shape) -->
+      <path d="M 28 80 C 24 96, 32 108, 60 108 C 88 108, 96 96, 92 80 Z" fill="#8F5323" />
+      
+      <!-- Resting Paws -->
+      <ellipse cx="44" cy="98" rx="7" ry="5" fill="#683610" />
+      <ellipse cx="76" cy="98" rx="7" ry="5" fill="#683610" />
 
-      <!-- Chubby Snout -->
-      <path d="M 40 54 
-               C 40 44, 80 44, 80 54 
-               C 80 72, 40 72, 40 54 Z" 
-            fill="url(#snoutGrad)" />
+      <!-- Characteristic Flat-Topped Blocky Capybara Head -->
+      <!-- Flat top, slopes down to blunt cheeks -->
+      <path d="M 34 32 
+               L 86 32 
+               C 96 32, 100 46, 98 64 
+               C 96 82, 88 90, 60 90 
+               C 32 90, 24 82, 22 64 
+               C 20 46, 24 32, 34 32 Z" 
+            fill="url(#capyFur)" />
 
-      <!-- Cute Dark Snout Nose -->
-      <ellipse cx="60" cy="54" rx="8" ry="5" fill="#3D271D" />
-      <circle cx="57" cy="53" r="1.5" fill="#6E401F" />
-      <circle cx="63" cy="53" r="1.5" fill="#6E401F" />
+      <!-- Prominent Blunt / Boxy Capybara Snout (Broad rounded rectangle) -->
+      <rect x="36" y="52" width="48" height="34" rx="14" fill="url(#capySnout)" />
 
-      <!-- Cheeks (Rosy Pink Kawaii Blush) -->
-      <ellipse cx="34" cy="55" rx="6" ry="4" fill="#FF8A80" opacity="0.65" />
-      <ellipse cx="86" cy="55" rx="6" ry="4" fill="#FF8A80" opacity="0.65" />
+      <!-- Iconic Capybara Nostrils: wide-spaced angled slits -->
+      <path d="M 48 60 C 47 64, 49 66, 52 64" stroke="#2C1810" stroke-width="3" stroke-linecap="round" fill="none" />
+      <path d="M 72 60 C 73 64, 71 66, 68 64" stroke="#2C1810" stroke-width="3" stroke-linecap="round" fill="none" />
+      
+      <!-- Vertical philtrum from snout to mouth -->
+      <line x1="60" y1="64" x2="60" y2="73" stroke="#2C1810" stroke-width="2.2" stroke-linecap="round" />
 
-      <!-- Eyes & Mouth depending on mood -->
-      ${eyes}
-      ${mouth}
+      <!-- Subtle Kawaii Rosy Cheeks -->
+      <ellipse cx="30" cy="62" rx="5" ry="3.5" fill="#FF8A80" opacity="0.6" />
+      <ellipse cx="90" cy="62" rx="5" ry="3.5" fill="#FF8A80" opacity="0.6" />
 
-      <!-- Paws -->
-      ${paws}
+      <!-- Eyes -->
+      ${eyesSvg}
 
-      <!-- Extras (Hat, Medal, Orange, etc.) -->
-      ${extras}
+      <!-- Mouth -->
+      ${mouthSvg}
+
+      <!-- Extras (Orange, Hat, Sparkles, Paws) -->
+      ${extrasSvg}
     </svg>
   `;
 }

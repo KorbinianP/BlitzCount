@@ -1,5 +1,5 @@
 // Number Keypad component arranged like a standard Numpad
-// Top: 10 (3-wide), then 7-8-9, then 4-5-6, then 1-2-3, Bottom: 0 (3-wide)
+// Top: 10, 11, 12, then 7-8-9, then 4-5-6, then 1-2-3, Bottom: 0 (3-wide)
 
 import { playTap } from '../audio.js';
 
@@ -7,9 +7,15 @@ export function renderKeypad(container, { onSelectNumber, isEnabled = true }) {
   container.innerHTML = `
     <div class="keypad-container ${!isEnabled ? 'is-disabled' : ''}">
       <div class="keypad-numpad-grid">
-        <!-- Top Row: 10 (3-wide) -->
-        <button class="keypad-num-btn num-10 span-3" data-num="10" ${!isEnabled ? 'disabled' : ''}>
+        <!-- Top Row: 10, 11, 12 -->
+        <button class="keypad-num-btn num-10" data-num="10" ${!isEnabled ? 'disabled' : ''}>
           <span class="num-text">10</span>
+        </button>
+        <button class="keypad-num-btn num-11" data-num="11" ${!isEnabled ? 'disabled' : ''}>
+          <span class="num-text">11</span>
+        </button>
+        <button class="keypad-num-btn num-12" data-num="12" ${!isEnabled ? 'disabled' : ''}>
+          <span class="num-text">12</span>
         </button>
 
         <!-- Row 2: 7, 8, 9 -->

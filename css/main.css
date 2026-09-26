@@ -834,6 +834,18 @@ body {
   color: #C2185B;
 }
 
+.num-11 {
+  border-color: #BA68C8;
+  background: #F3E5F5;
+  color: #7B1FA2;
+}
+
+.num-12 {
+  border-color: #9575CD;
+  background: #EDE7F6;
+  color: #512DA8;
+}
+
 .num-7, .num-8, .num-9 {
   border-color: #64B5F6;
   background: #E3F2FD;

@@ -19,7 +19,7 @@ export const translations = {
       mixed: 'Mixed'
     },
     results: {
-      gold: 'Spectacular! Perfect 10!',
+      gold: 'Spectacular! Perfect Score!',
       silver: 'Super Job!',
       bronze: 'Great Work!',
       tryAgain: 'Good Practice! Try again!',

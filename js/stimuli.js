@@ -46,9 +46,29 @@ function renderFruitDiceGrid(value, fruit, offsetIndex = 0, showCountBadges = fa
   `;
 }
 
-// Generate Fruit Stimulus ordered like points on a dice (1 to 10, no box)
-export function renderFruitsStimulus(count, fruit = '🍓', showCountBadges = false) {
-  const validCount = Math.max(1, Math.min(count, 10));
+// Partition a total (7 to 12) into two valid 6-sided dice faces [d1, d2]
+export function getDicePartition(total) {
+  if (total <= 6) return [total, 0];
+
+  const pairs = [];
+  const minD1 = Math.max(1, total - 6);
+  const maxD1 = Math.min(6, total - 1);
+
+  for (let d1 = minD1; d1 <= maxD1; d1++) {
+    const d2 = total - d1;
+    pairs.push([d1, d2]);
+  }
+
+  if (pairs.length === 0) {
+    return [6, Math.min(6, total - 6)];
+  }
+
+  return pairs[Math.floor(Math.random() * pairs.length)];
+}
+
+// Generate Fruit Stimulus ordered like points on a dice (1 to 12, no box)
+export function renderFruitsStimulus(count, fruit = '🍓', showCountBadges = false, partition = null) {
+  const validCount = Math.max(1, Math.min(count, 12));
 
   if (validCount <= 6) {
     return `
@@ -58,16 +78,15 @@ export function renderFruitsStimulus(count, fruit = '🍓', showCountBadges = fa
     `;
   }
 
-  // 7 to 10: Two 3x3 dice patterns (5 on left + remainder on right)
-  const leftCount = 5;
-  const rightCount = validCount - 5;
+  // 7 to 12: Two 3x3 dice patterns
+  const [leftCount, rightCount] = partition || getDicePartition(validCount);
 
   return `
     <div class="stimulus-fruits double-die-pattern ${showCountBadges ? 'show-badges' : ''}">
       ${renderFruitDiceGrid(leftCount, fruit, 0, showCountBadges)}
       <span class="fruits-plus">+</span>
-      ${renderFruitDiceGrid(rightCount, fruit, 5, showCountBadges)}
-      ${showCountBadges ? `<div class="fruits-sum-formula">5 + ${rightCount} = ${validCount}</div>` : ''}
+      ${renderFruitDiceGrid(rightCount, fruit, leftCount, showCountBadges)}
+      ${showCountBadges ? `<div class="fruits-sum-formula">${leftCount} + ${rightCount} = ${validCount}</div>` : ''}
     </div>
   `;
 }
@@ -95,9 +114,9 @@ function renderDieFace(value, pipColor = '#2B3A67', offsetIndex = 0, showCountBa
   `;
 }
 
-// Generate High-Contrast Dice Stimulus (1 to 10)
-export function renderDiceStimulus(count, showCountBadges = false) {
-  const validCount = Math.max(1, Math.min(count, 10));
+// Generate High-Contrast Dice Stimulus (1 to 12)
+export function renderDiceStimulus(count, showCountBadges = false, partition = null) {
+  const validCount = Math.max(1, Math.min(count, 12));
 
   if (validCount <= 6) {
     return `
@@ -107,16 +126,15 @@ export function renderDiceStimulus(count, showCountBadges = false) {
     `;
   }
 
-  // Double dice (5 + remainder)
-  const die1 = 5;
-  const die2 = validCount - 5;
+  // Double dice (7 to 12)
+  const [die1, die2] = partition || getDicePartition(validCount);
 
   return `
     <div class="stimulus-dice double-dice ${showCountBadges ? 'show-badges' : ''}">
       ${renderDieFace(die1, '#2E7D32', 0, showCountBadges)}
       <span class="dice-plus">+</span>
-      ${renderDieFace(die2, '#1565C0', 5, showCountBadges)}
-      ${showCountBadges ? `<div class="dice-sum-formula">5 + ${die2} = ${validCount}</div>` : ''}
+      ${renderDieFace(die2, '#1565C0', die1, showCountBadges)}
+      ${showCountBadges ? `<div class="dice-sum-formula">${die1} + ${die2} = ${validCount}</div>` : ''}
     </div>
   `;
 }
@@ -224,16 +242,18 @@ export function createStimulus(category, targetNumber = null) {
   }
 
   const minCount = (resolvedCategory === 'fingers') ? 0 : 1;
-  const count = targetNumber !== null ? targetNumber : getRandomNumber(minCount, 10);
+  const maxCount = (resolvedCategory === 'fingers') ? 10 : 12;
+  const count = targetNumber !== null ? targetNumber : getRandomNumber(minCount, maxCount);
   const fruit = getRandomFruit();
+  const partition = (resolvedCategory !== 'fingers' && count > 6) ? getDicePartition(count) : null;
 
   let html = '';
   let reviewHtml = '';
 
   switch (resolvedCategory) {
     case 'dice':
-      html = renderDiceStimulus(count, false);
-      reviewHtml = renderDiceStimulus(count, true);
+      html = renderDiceStimulus(count, false, partition);
+      reviewHtml = renderDiceStimulus(count, true, partition);
       break;
 
     case 'fingers':
@@ -244,8 +264,8 @@ export function createStimulus(category, targetNumber = null) {
     case 'fruits':
     default:
       resolvedCategory = 'fruits';
-      html = renderFruitsStimulus(count, fruit, false);
-      reviewHtml = renderFruitsStimulus(count, fruit, true);
+      html = renderFruitsStimulus(count, fruit, false, partition);
+      reviewHtml = renderFruitsStimulus(count, fruit, true, partition);
       break;
   }
 
@@ -253,6 +273,7 @@ export function createStimulus(category, targetNumber = null) {
     category: resolvedCategory,
     count,
     fruit,
+    partition,
     html,
     reviewHtml
   };

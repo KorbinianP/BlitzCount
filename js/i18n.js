@@ -18,6 +18,15 @@ export const translations = {
       fingers: 'Fingers',
       mixed: 'Mixed'
     },
+    numberRanges: {
+      title: 'Number Range',
+      easy: 'Up to 6',
+      easyBadge: '🌱 Up to 6',
+      easyDesc: '0–5 fingers, 1–6 fruits & dice',
+      advanced: 'Up to 12',
+      advancedBadge: '🌟 Up to 12',
+      advancedDesc: '0–10 fingers, 1–12 fruits & dice'
+    },
     gameModes: {
       classic: 'Rounds',
       classicDesc: '5, 10 or 20 rounds',
@@ -41,7 +50,7 @@ export const translations = {
     },
     about: {
       title: 'About BlitzCount',
-      version: 'Version 1.5.0',
+      version: 'Version 1.6.0',
       direction: 'Direction & Concept: Korbinian Probst',
       code: 'Code & Architecture: Antigravity',
       license: 'License: MIT (Free & Open Source)',
@@ -55,6 +64,7 @@ export const translations = {
       childLockHint: 'Hold ⚙️ for 3 seconds to unlock',
       unlocked: 'Settings Unlocked',
       roundsCount: 'Rounds per game',
+      numberRange: 'Number Range',
       flashDuration: 'Flash time (seconds)',
       sound: 'Sound Effects',
       language: 'Language',
@@ -95,6 +105,15 @@ export const translations = {
       fingers: 'Finger',
       mixed: 'Gemischt'
     },
+    numberRanges: {
+      title: 'Zahlenraum',
+      easy: 'Bis 6',
+      easyBadge: '🌱 Bis 6 (Leicht)',
+      easyDesc: '0–5 Finger, 1–6 Früchte & Würfel',
+      advanced: 'Bis 12',
+      advancedBadge: '🌟 Bis 12 (Profi)',
+      advancedDesc: '0–10 Finger, 1–12 Früchte & Würfel'
+    },
     gameModes: {
       classic: 'Runden',
       classicDesc: '5, 10 oder 20 Runden',
@@ -118,7 +137,7 @@ export const translations = {
     },
     about: {
       title: 'Über ZählFix',
-      version: 'Version 1.5.0',
+      version: 'Version 1.6.0',
       direction: 'Regie & Konzept: Korbinian Probst',
       code: 'Code & Architektur: Antigravity',
       license: 'Lizenz: MIT (Frei & Open Source)',
@@ -132,6 +151,7 @@ export const translations = {
       childLockHint: '⚙️ 3 Sekunden gedrückt halten zum Entsperren',
       unlocked: 'Einstellungen geöffnet',
       roundsCount: 'Runden pro Spiel',
+      numberRange: 'Zahlenraum',
       flashDuration: 'Anzeigedauer (Sekunden)',
       sound: 'Soundeffekte',
       language: 'Sprache',

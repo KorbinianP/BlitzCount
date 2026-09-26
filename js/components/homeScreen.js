@@ -7,9 +7,9 @@ import { renderCounti } from '../mascot.js';
 export function renderHomeScreen(container, { onStartGame }) {
   const state = getState();
   const profile = getActiveProfile();
-  const { gameMode = 'classic', category, speed, rounds } = state.settings;
+  const { gameMode = 'classic', category, speed, rounds, numberRange = 'advanced' } = state.settings;
 
-  const bestScore = getProfileBestScore(profile, { gameMode, category, speed, rounds });
+  const bestScore = getProfileBestScore(profile, { gameMode, category, speed, rounds, numberRange });
 
   let highscoreLabel = '';
   if (gameMode === 'blitz') {
@@ -48,6 +48,21 @@ export function renderHomeScreen(container, { onStartGame }) {
           <button class="mode-tab-btn ${gameMode === 'streak' ? 'is-active' : ''}" data-mode="streak" title="${t('gameModes.streakDesc')}">
             <span class="mode-emoji">🔥</span>
             <span class="mode-label">${t('gameModes.streak')}</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Number Range Selector (🌱 Bis 6, 🌟 Bis 12) -->
+      <section class="section-container">
+        <div class="range-tabs" role="tablist">
+          <button class="range-tab-btn ${numberRange === 'easy' ? 'is-active' : ''}" data-range="easy" title="${t('numberRanges.easyDesc')}">
+            <span class="range-emoji">🌱</span>
+            <span class="range-label">${t('numberRanges.easy')}</span>
+          </button>
+
+          <button class="range-tab-btn ${numberRange === 'advanced' ? 'is-active' : ''}" data-range="advanced" title="${t('numberRanges.advancedDesc')}">
+            <span class="range-emoji">🌟</span>
+            <span class="range-label">${t('numberRanges.advanced')}</span>
           </button>
         </div>
       </section>
@@ -122,6 +137,17 @@ export function renderHomeScreen(container, { onStartGame }) {
       playTap();
       const newMode = btn.getAttribute('data-mode');
       updateSettings({ gameMode: newMode });
+      renderHomeScreen(container, { onStartGame });
+    });
+  });
+
+  // Range button events
+  const rangeButtons = container.querySelectorAll('.range-tab-btn');
+  rangeButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      playTap();
+      const newRange = btn.getAttribute('data-range');
+      updateSettings({ numberRange: newRange });
       renderHomeScreen(container, { onStartGame });
     });
   });

@@ -112,6 +112,19 @@ export function openSettingsModal(modalContainer, { onSettingsChanged }) {
               </div>
             </div>
 
+            <!-- Number Range / Difficulty -->
+            <div class="setting-group">
+              <label class="setting-label">${t('settings.numberRange')}</label>
+              <div class="setting-button-row">
+                <button class="toggle-pill-btn ${s.settings.numberRange === 'easy' ? 'is-active' : ''}" data-setting-range="easy">
+                  ${t('numberRanges.easyBadge')}
+                </button>
+                <button class="toggle-pill-btn ${s.settings.numberRange === 'advanced' ? 'is-active' : ''}" data-setting-range="advanced">
+                  ${t('numberRanges.advancedBadge')}
+                </button>
+              </div>
+            </div>
+
             <!-- Fine-Tune Flash Durations -->
             <div class="setting-group">
               <label class="setting-label">${t('settings.flashDuration')}</label>
@@ -201,6 +214,16 @@ export function openSettingsModal(modalContainer, { onSettingsChanged }) {
         playTap();
         const r = parseInt(btn.getAttribute('data-rounds'), 10);
         updateSettings({ rounds: r });
+        render();
+      });
+    });
+
+    const rangeBtns = modalContainer.querySelectorAll('[data-setting-range]');
+    rangeBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        playTap();
+        const nr = btn.getAttribute('data-setting-range');
+        updateSettings({ numberRange: nr });
         render();
       });
     });

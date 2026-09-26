@@ -17,6 +17,7 @@ const INITIAL_STATE = {
   soundEnabled: true,
   settings: {
     gameMode: 'classic', // 'classic' | 'blitz' | 'streak'
+    numberRange: 'advanced', // 'easy' (0-5 / 1-6) | 'advanced' (0-10 / 1-12)
     speed: 'turtle',
     category: 'fruits',
     rounds: 10,
@@ -167,19 +168,21 @@ export function deleteProfile(id) {
   saveState();
 }
 
-export function getProfileBestScore(profile, { gameMode = 'classic', category, speed, rounds = 10 }) {
+export function getProfileBestScore(profile, { gameMode = 'classic', category, speed, rounds = 10, numberRange = 'advanced' }) {
   if (!profile || !profile.highscores) return 0;
   if (gameMode === 'blitz') {
-    return profile.highscores[`blitz_${category}_${speed}`] || 0;
+    return profile.highscores[`blitz_${category}_${speed}_${numberRange}`] ||
+           (numberRange === 'advanced' ? profile.highscores[`blitz_${category}_${speed}`] : 0) || 0;
   } else if (gameMode === 'streak') {
-    return profile.highscores[`streak_${category}_${speed}`] || 0;
+    return profile.highscores[`streak_${category}_${speed}_${numberRange}`] ||
+           (numberRange === 'advanced' ? profile.highscores[`streak_${category}_${speed}`] : 0) || 0;
   } else {
-    return profile.highscores[`classic_${category}_${speed}_${rounds}`] ||
-           profile.highscores[`${category}_${speed}_${rounds}`] || 0;
+    return profile.highscores[`classic_${category}_${speed}_${rounds}_${numberRange}`] ||
+           (numberRange === 'advanced' ? (profile.highscores[`classic_${category}_${speed}_${rounds}`] || profile.highscores[`${category}_${speed}_${rounds}`]) : 0) || 0;
   }
 }
 
-export function recordGameResult({ score, total, speed, category, gameMode = 'classic', streak = 0 }) {
+export function recordGameResult({ score, total, speed, category, gameMode = 'classic', streak = 0, numberRange = 'advanced' }) {
   const profile = getActiveProfile();
   if (!profile) return { earnedMedal: null, isNewHighscore: false, previousBest: 0 };
 
@@ -225,19 +228,24 @@ export function recordGameResult({ score, total, speed, category, gameMode = 'cl
   }
 
   let key = '';
+  let fallbackKey = '';
   let scoreToCompare = score;
   if (gameMode === 'blitz') {
-    key = `blitz_${category}_${speed}`;
+    key = `blitz_${category}_${speed}_${numberRange}`;
+    fallbackKey = `blitz_${category}_${speed}`;
     scoreToCompare = score;
   } else if (gameMode === 'streak') {
-    key = `streak_${category}_${speed}`;
+    key = `streak_${category}_${speed}_${numberRange}`;
+    fallbackKey = `streak_${category}_${speed}`;
     scoreToCompare = streak || score;
   } else {
-    key = `classic_${category}_${speed}_${total}`;
+    key = `classic_${category}_${speed}_${total}_${numberRange}`;
+    fallbackKey = `classic_${category}_${speed}_${total}`;
     scoreToCompare = score;
   }
 
-  const previousBest = profile.highscores[key] || profile.highscores[`${category}_${speed}_${total}`] || 0;
+  const previousBest = profile.highscores[key] ||
+    (numberRange === 'advanced' ? (profile.highscores[fallbackKey] || (gameMode === 'classic' ? profile.highscores[`${category}_${speed}_${total}`] : 0)) : 0) || 0;
   const isNewHighscore = scoreToCompare > previousBest;
 
   if (isNewHighscore) {

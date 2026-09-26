@@ -11,7 +11,7 @@ import { t } from '../i18n.js';
 
 export function renderGameScreen(container, { onGameFinished, onExitGame }) {
   const state = getState();
-  const { gameMode = 'classic', category, speed, rounds, blitzTime = 60 } = state.settings;
+  const { gameMode = 'classic', category, speed, rounds, blitzTime = 60, numberRange = 'advanced' } = state.settings;
   const totalRounds = rounds || 10;
   const flashDuration = getDurationForSpeed(speed);
   const isRocket = speed === 'rocket';
@@ -174,10 +174,11 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
     const keypadMount = container.querySelector('#keypad-mount');
     const timerBar = container.querySelector('#timer-bar-fill');
 
-    currentStimulus = createStimulus(category);
+    currentStimulus = createStimulus(category, null, numberRange);
 
     renderKeypad(keypadMount, {
       isEnabled: false,
+      numberRange,
       onSelectNumber: () => {}
     });
 
@@ -201,6 +202,7 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       // Enable keypad immediately during flash
       renderKeypad(keypadMount, {
         isEnabled: true,
+        numberRange,
         onSelectNumber: handleUserAnswer
       });
 
@@ -337,7 +339,8 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       speed,
       category,
       gameMode,
-      streak
+      streak,
+      numberRange
     });
 
     onGameFinished({
@@ -347,6 +350,7 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       category,
       gameMode,
       streak,
+      numberRange,
       earnedMedal: resultMeta.earnedMedal,
       isNewHighscore: resultMeta.isNewHighscore,
       wasSuddenDeath

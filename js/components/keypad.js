@@ -3,59 +3,95 @@
 
 import { playTap } from '../audio.js';
 
-export function renderKeypad(container, { onSelectNumber, isEnabled = true }) {
+export function renderKeypad(container, { onSelectNumber, isEnabled = true, numberRange = 'advanced' }) {
+  const isEasy = numberRange === 'easy';
+
+  const gridHtml = isEasy ? `
+    <!-- Easy Mode (0 to 6): 3 chunky rows -->
+    <!-- Row 1: 4, 5, 6 -->
+    <button class="keypad-num-btn num-4" data-num="4" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">4</span>
+    </button>
+    <button class="keypad-num-btn num-5" data-num="5" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">5</span>
+    </button>
+    <button class="keypad-num-btn num-6" data-num="6" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">6</span>
+    </button>
+
+    <!-- Row 2: 1, 2, 3 -->
+    <button class="keypad-num-btn num-1" data-num="1" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">1</span>
+    </button>
+    <button class="keypad-num-btn num-2" data-num="2" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">2</span>
+    </button>
+    <button class="keypad-num-btn num-3" data-num="3" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">3</span>
+    </button>
+
+    <!-- Bottom Row: 0 (3-wide, single fist) -->
+    <button class="keypad-num-btn num-0 span-3" data-num="0" ${!isEnabled ? 'disabled' : ''}>
+      <span class="zero-fists-icon">✊</span>
+      <span class="num-text">0</span>
+    </button>
+  ` : `
+    <!-- Advanced Mode (0 to 12): 5 full rows -->
+    <!-- Top Row: 10, 11, 12 -->
+    <button class="keypad-num-btn num-10" data-num="10" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">10</span>
+    </button>
+    <button class="keypad-num-btn num-11" data-num="11" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">11</span>
+    </button>
+    <button class="keypad-num-btn num-12" data-num="12" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">12</span>
+    </button>
+
+    <!-- Row 2: 7, 8, 9 -->
+    <button class="keypad-num-btn num-7" data-num="7" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">7</span>
+    </button>
+    <button class="keypad-num-btn num-8" data-num="8" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">8</span>
+    </button>
+    <button class="keypad-num-btn num-9" data-num="9" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">9</span>
+    </button>
+
+    <!-- Row 3: 4, 5, 6 -->
+    <button class="keypad-num-btn num-4" data-num="4" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">4</span>
+    </button>
+    <button class="keypad-num-btn num-5" data-num="5" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">5</span>
+    </button>
+    <button class="keypad-num-btn num-6" data-num="6" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">6</span>
+    </button>
+
+    <!-- Row 4: 1, 2, 3 -->
+    <button class="keypad-num-btn num-1" data-num="1" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">1</span>
+    </button>
+    <button class="keypad-num-btn num-2" data-num="2" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">2</span>
+    </button>
+    <button class="keypad-num-btn num-3" data-num="3" ${!isEnabled ? 'disabled' : ''}>
+      <span class="num-text">3</span>
+    </button>
+
+    <!-- Bottom Row: 0 (3-wide, double fists) -->
+    <button class="keypad-num-btn num-0 span-3" data-num="0" ${!isEnabled ? 'disabled' : ''}>
+      <span class="zero-fists-icon">✊✊</span>
+      <span class="num-text">0</span>
+    </button>
+  `;
+
   container.innerHTML = `
-    <div class="keypad-container ${!isEnabled ? 'is-disabled' : ''}">
-      <div class="keypad-numpad-grid">
-        <!-- Top Row: 10, 11, 12 -->
-        <button class="keypad-num-btn num-10" data-num="10" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">10</span>
-        </button>
-        <button class="keypad-num-btn num-11" data-num="11" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">11</span>
-        </button>
-        <button class="keypad-num-btn num-12" data-num="12" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">12</span>
-        </button>
-
-        <!-- Row 2: 7, 8, 9 -->
-        <button class="keypad-num-btn num-7" data-num="7" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">7</span>
-        </button>
-        <button class="keypad-num-btn num-8" data-num="8" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">8</span>
-        </button>
-        <button class="keypad-num-btn num-9" data-num="9" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">9</span>
-        </button>
-
-        <!-- Row 3: 4, 5, 6 -->
-        <button class="keypad-num-btn num-4" data-num="4" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">4</span>
-        </button>
-        <button class="keypad-num-btn num-5" data-num="5" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">5</span>
-        </button>
-        <button class="keypad-num-btn num-6" data-num="6" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">6</span>
-        </button>
-
-        <!-- Row 4: 1, 2, 3 -->
-        <button class="keypad-num-btn num-1" data-num="1" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">1</span>
-        </button>
-        <button class="keypad-num-btn num-2" data-num="2" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">2</span>
-        </button>
-        <button class="keypad-num-btn num-3" data-num="3" ${!isEnabled ? 'disabled' : ''}>
-          <span class="num-text">3</span>
-        </button>
-
-        <!-- Bottom Row: 0 (3-wide) -->
-        <button class="keypad-num-btn num-0 span-3" data-num="0" ${!isEnabled ? 'disabled' : ''}>
-          <span class="zero-fists-icon">✊✊</span>
-          <span class="num-text">0</span>
-        </button>
+    <div class="keypad-container ${isEasy ? 'keypad-easy' : 'keypad-advanced'} ${!isEnabled ? 'is-disabled' : ''}">
+      <div class="keypad-numpad-grid ${isEasy ? 'keypad-grid-easy' : ''}">
+        ${gridHtml}
       </div>
     </div>
   `;

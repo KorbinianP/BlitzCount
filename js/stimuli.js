@@ -197,10 +197,18 @@ function renderCartoonHand(fingerCount, isMirrored = false, badgeText = null) {
 }
 
 // Generate Hand / Finger Counting Stimulus (0 to 10)
-export function renderFingersStimulus(count, showCountBadges = false) {
+export function renderFingersStimulus(count, showCountBadges = false, singleHandZero = false) {
   const validCount = Math.max(0, Math.min(count, 10));
 
   if (validCount === 0) {
+    if (singleHandZero) {
+      return `
+        <div class="stimulus-fingers single-hand zero-fingers ${showCountBadges ? 'show-badges' : ''}">
+          ${renderCartoonHand(0, false, showCountBadges ? '0' : null)}
+          ${showCountBadges ? `<div class="finger-sum-formula">0</div>` : ''}
+        </div>
+      `;
+    }
     // Both hands showing 0 fingers (two closed fists)
     return `
       <div class="stimulus-fingers zero-fingers ${showCountBadges ? 'show-badges' : ''}">
@@ -233,7 +241,7 @@ export function renderFingersStimulus(count, showCountBadges = false) {
 }
 
 // Unified generator for a game round
-export function createStimulus(category, targetNumber = null) {
+export function createStimulus(category, targetNumber = null, numberRange = 'advanced') {
   let resolvedCategory = category;
 
   if (category === 'mixed') {
@@ -241,8 +249,12 @@ export function createStimulus(category, targetNumber = null) {
     resolvedCategory = cats[Math.floor(Math.random() * cats.length)];
   }
 
+  const isEasy = numberRange === 'easy';
   const minCount = (resolvedCategory === 'fingers') ? 0 : 1;
-  const maxCount = (resolvedCategory === 'fingers') ? 10 : 12;
+  const maxCount = isEasy 
+    ? ((resolvedCategory === 'fingers') ? 5 : 6)
+    : ((resolvedCategory === 'fingers') ? 10 : 12);
+
   const count = targetNumber !== null ? targetNumber : getRandomNumber(minCount, maxCount);
   const fruit = getRandomFruit();
   const partition = (resolvedCategory !== 'fingers' && count > 6) ? getDicePartition(count) : null;
@@ -257,8 +269,8 @@ export function createStimulus(category, targetNumber = null) {
       break;
 
     case 'fingers':
-      html = renderFingersStimulus(count, false);
-      reviewHtml = renderFingersStimulus(count, true);
+      html = renderFingersStimulus(count, false, isEasy);
+      reviewHtml = renderFingersStimulus(count, true, isEasy);
       break;
 
     case 'fruits':
@@ -275,6 +287,7 @@ export function createStimulus(category, targetNumber = null) {
     fruit,
     partition,
     html,
-    reviewHtml
+    reviewHtml,
+    numberRange
   };
 }

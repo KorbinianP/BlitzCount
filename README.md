@@ -4,9 +4,9 @@
   <b>Meet Counti the Capybara! 🍊</b>
 </p>
 
-# BlitzCount / ZählFix
+# BlitzCount
 
-**BlitzCount** (English) / **ZählFix** (Deutsch) is an offline, kid-friendly web app designed for children aged 4–8 to build rapid visual number recognition (**subitizing**) from **0 to 12**.
+**BlitzCount** is an offline, kid-friendly web app designed for children aged 4–8 to build rapid visual number recognition (**subitizing**) from **0 to 12**.
 
 Featuring **Counti**, the cute kawaii Capybara mascot! ✨
 
@@ -14,7 +14,7 @@ Featuring **Counti**, the cute kawaii Capybara mascot! ✨
 
 ## 🎮 Play Live on GitHub Pages
 
-You can play **BlitzCount / ZählFix** directly in your browser or install it as an offline app:
+You can play **BlitzCount** directly in your browser or install it as an offline app:
 
 > **Live Demo**: [https://korbinianp.github.io/BlitzCount/](https://korbinianp.github.io/BlitzCount/)
 
@@ -82,7 +82,7 @@ You can play **BlitzCount / ZählFix** directly in your browser or install it as
   * Shared Hall of Fame so siblings and parents can play and compare.
 * **Parent Settings (with Child-Lock)**:
   * 3-second long press on ⚙️ prevents toddlers from accidentally changing settings.
-  * Toggle between German (ZählFix) and English (BlitzCount).
+  * Toggle between German and English.
   * Fine-tune flash duration sliders and round counts (5, 10, 20).
 * **Privacy & Offline First**:
   * 100% offline via Service Worker.
@@ -100,7 +100,7 @@ python3 server.py
 This launches the local server:
 ```
 ============================================================
- 🍊  BlitzCount / ZählFix (Counti the Capybara) is ready!
+ 🍊  BlitzCount (Counti the Capybara) is ready!
 ============================================================
  ▶  On this computer:              http://localhost:8000
  📱 On your Tablet/Phone (Wi-Fi):  http://192.168.x.x:8000

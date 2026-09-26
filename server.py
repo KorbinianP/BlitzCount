@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Simple local development and LAN server for BlitzCount / ZählFix.
+Simple local development and LAN server for BlitzCount.
 Automatically discovers your local IP address so you can immediately
 test and install the PWA on an Android tablet or phone over your home Wi-Fi!
 """
@@ -53,7 +53,7 @@ def main():
     httpd, port = find_open_server(DEFAULT_PORT)
 
     print("=" * 60, flush=True)
-    print(" 🦫  BlitzCount / ZählFix (Counti the Capybara) is running!", flush=True)
+    print(" 🦫  BlitzCount (Counti the Capybara) is running!", flush=True)
     print("=" * 60, flush=True)
     print(f" ▶  On this computer:              http://localhost:{port}", flush=True)
     print(f" 📱 On your Tablet/Phone (Wi-Fi):  http://{local_ip}:{port}", flush=True)

@@ -1,4 +1,4 @@
-// Parent Settings Modal for BlitzCount / ZählFix
+// Parent Settings Modal for BlitzCount
 
 import { getState, updateSettings, updateDurations, setLanguage, resetProfileScores, getActiveProfile } from '../state.js';
 import { playTap } from '../audio.js';
@@ -94,10 +94,10 @@ export function openSettingsModal(modalContainer, { onSettingsChanged }) {
               <label class="setting-label">${t('settings.language')}</label>
               <div class="setting-button-row">
                 <button class="toggle-pill-btn ${s.language === 'de' ? 'is-active' : ''}" data-lang="de">
-                  🇩🇪 Deutsch (ZählFix)
+                  🇩🇪 Deutsch
                 </button>
                 <button class="toggle-pill-btn ${s.language === 'en' ? 'is-active' : ''}" data-lang="en">
-                  🇬🇧 English (BlitzCount)
+                  🇬🇧 English
                 </button>
               </div>
             </div>

@@ -18,12 +18,6 @@ export function renderHeader(container, { onOpenProfiles, onOpenSettings, onOpen
         <span class="profile-name">${profile.name}</span>
       </button>
 
-      <!-- App Logo & Home Link -->
-      <div class="header-logo" id="btn-home" role="button" tabindex="0">
-        <div class="mini-mascot">${renderCounti('idle', 36)}</div>
-        <span class="logo-text">${t('appTitle')}</span>
-      </div>
-
       <!-- Quick Action Controls -->
       <div class="header-actions">
         <!-- Sound Toggle -->
@@ -58,12 +52,6 @@ export function renderHeader(container, { onOpenProfiles, onOpenSettings, onOpen
   btnProfile.addEventListener('click', () => {
     playTap();
     onOpenProfiles();
-  });
-
-  const btnHome = container.querySelector('#btn-home');
-  btnHome.addEventListener('click', () => {
-    playTap();
-    onGoHome();
   });
 
   const btnSound = container.querySelector('#btn-sound');

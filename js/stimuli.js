@@ -1,4 +1,4 @@
-// Visual stimuli generator for BlitzCount / ZählFix
+// Visual stimuli generator for BlitzCount
 // Formats:
 // 1. Fruits: Arranged in classic 3x3 dice formations without any bounding box (1-6 single dice pattern, 7-10 double dice 5+X) (1 to 10)
 // 2. Dice: High-contrast 3x3 pip cards (1-6 single die, 7-10 double dice 5+X) (1 to 10)

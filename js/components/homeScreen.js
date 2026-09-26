@@ -1,4 +1,4 @@
-// Home Screen Component for BlitzCount / ZählFix
+// Home Screen Component for BlitzCount
 import { getState, updateSettings, getActiveProfile, getProfileBestScore } from '../state.js';
 import { playTap } from '../audio.js';
 import { t } from '../i18n.js';

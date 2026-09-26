@@ -1,4 +1,4 @@
-// Player Profile Selection Modal for BlitzCount / ZählFix
+// Player Profile Selection Modal for BlitzCount
 
 import { getState, setActiveProfile, addProfile, DEFAULT_AVATARS } from '../state.js';
 import { playTap } from '../audio.js';

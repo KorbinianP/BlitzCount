@@ -1,4 +1,4 @@
-// Procedural Web Audio API sound synthesizer for BlitzCount / ZählFix
+// Procedural Web Audio API sound synthesizer for BlitzCount
 // Generates joyful, zero-latency sounds directly in code with NO external audio files.
 
 let audioCtx = null;
@@ -100,7 +100,7 @@ export function playCorrect() {
   }
 }
 
-// Encouraging, soft boing/wood tone for missed answers (gentle, never scary for a 4-year-old)
+// Gentle descending cartoon "uh-oh" cue for missed answers (warm, clear, never scary)
 export function playWrong() {
   if (isMuted) return;
   try {
@@ -108,22 +108,30 @@ export function playWrong() {
     if (!ctx) return;
     const now = ctx.currentTime;
 
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    // Two descending soft tones: Eb4 (311Hz) -> B3 (247Hz)
+    const tones = [
+      { freq: 311.13, start: now, dur: 0.16 },
+      { freq: 233.08, start: now + 0.14, dur: 0.28 }
+    ];
 
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(220, now);
-    osc.frequency.exponentialRampToValueAtTime(140, now + 0.18);
-    osc.frequency.exponentialRampToValueAtTime(160, now + 0.32);
+    tones.forEach((tone) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
 
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.33);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(tone.freq, tone.start);
+      osc.frequency.exponentialRampToValueAtTime(tone.freq * 0.94, tone.start + tone.dur);
 
-    osc.connect(gain);
-    gain.connect(ctx.destination);
+      gain.gain.setValueAtTime(0.001, tone.start);
+      gain.gain.linearRampToValueAtTime(0.24, tone.start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, tone.start + tone.dur);
 
-    osc.start(now);
-    osc.stop(now + 0.35);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(tone.start);
+      osc.stop(tone.start + tone.dur + 0.02);
+    });
   } catch (e) {
     console.warn('Audio playback error', e);
   }

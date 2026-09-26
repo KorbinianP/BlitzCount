@@ -1,4 +1,4 @@
-/* BlitzCount / ZählFix - Cheerful, Modern Kid-Friendly Theme */
+/* BlitzCount - Cheerful, Modern Kid-Friendly Theme */
 
 :root {
   --bg-gradient: linear-gradient(135deg, #FFFDF8 0%, #FFF3E0 100%);
@@ -507,12 +507,58 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
-.question-mark-icon {
-  font-size: 4.5rem;
-  color: #B0BEC5;
-  animation: pulseQ 1.2s infinite ease-in-out;
+.shutter-curtain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.shutter-slats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 180px;
+  opacity: 0.35;
+}
+
+.shutter-slats .slat {
+  display: block;
+  height: 4px;
+  background: #90A4AE;
+  border-radius: var(--radius-full);
+}
+
+.input-prompt-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.input-prompt-arrow {
+  font-size: 2.8rem;
+  animation: promptArrowBounce 0.65s infinite alternate ease-in-out;
+}
+
+@keyframes promptArrowBounce {
+  0% { transform: translateY(-4px); }
+  100% { transform: translateY(6px); }
+}
+
+.input-prompt-text {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #455A64;
+  background: #ECEFF1;
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .ready-countdown-pulse {
@@ -527,8 +573,53 @@ body {
 }
 
 .feedback-wrong {
-  background: #FFF3E0 !important;
-  border-color: #FFB74D !important;
+  background: #FFF5F5 !important;
+  border-color: #EF5350 !important;
+  animation: cardShake 0.4s ease;
+}
+
+@keyframes cardShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.feedback-wrong-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.feedback-wrong-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #FFFFFF;
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 12px rgba(239, 83, 80, 0.2);
+  border: 2px solid #FFCDD2;
+}
+
+.wrong-choice-badge {
+  color: #C62828;
+  font-weight: 900;
+  font-size: 1.15rem;
+}
+
+.wrong-arrow {
+  color: #90A4AE;
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.correct-choice-badge {
+  color: #2E7D32;
+  font-weight: 900;
+  font-size: 1.15rem;
 }
 
 .feedback-badge-correct {
@@ -784,8 +875,52 @@ body {
 }
 
 .keypad-container.is-disabled {
-  opacity: 0.5;
+  opacity: 0.9;
   pointer-events: none;
+}
+
+/* Prompt Pulse when Flash Ends */
+.keypad-container.keypad-prompt-pulse {
+  animation: keypadPulse 1.1s infinite alternate ease-in-out;
+}
+
+@keyframes keypadPulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(77, 150, 255, 0)); }
+  100% { transform: scale(1.02); filter: drop-shadow(0 0 10px rgba(77, 150, 255, 0.45)); }
+}
+
+/* Keypad button feedback: correct / wrong / hint */
+.keypad-num-btn.key-correct {
+  background: #E8F5E9 !important;
+  border-color: #43A047 !important;
+  color: #1B5E20 !important;
+  transform: scale(1.04);
+}
+
+.keypad-num-btn.key-wrong {
+  background: #FFEBEE !important;
+  border-color: #E53E3E !important;
+  color: #C53030 !important;
+  box-shadow: 0 0 10px rgba(229, 62, 62, 0.4) !important;
+  animation: keyShake 0.4s ease;
+}
+
+@keyframes keyShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.keypad-num-btn.key-hint-correct {
+  background: #E8F5E9 !important;
+  border-color: #43A047 !important;
+  box-shadow: 0 0 14px rgba(76, 175, 80, 0.6) !important;
+  animation: hintPulse 0.7s infinite alternate ease-in-out;
+}
+
+@keyframes hintPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
 }
 
 .keypad-numpad-grid {

@@ -1,4 +1,4 @@
-// Reactive State Management & LocalStorage Persistence for BlitzCount / ZählFix
+// Reactive State Management & LocalStorage Persistence for BlitzCount
 
 const STORAGE_KEY = 'blitzcount_v1_state';
 

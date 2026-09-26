@@ -1,4 +1,4 @@
-// Game Screen Component for BlitzCount / ZählFix
+// Game Screen Component for BlitzCount
 // Supports 3 Game Modes: 🎯 Classic Rounds, ⏱️ 60s Blitz, 🔥 Sudden Death Streak
 // Features immediate keypad response during stimulus flash, plus blank card fallback
 
@@ -68,7 +68,7 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
             bubbleContent = '⭐';
           } else {
             bubbleClass = 'bubble-wrong';
-            bubbleContent = '⭕';
+            bubbleContent = '❌';
           }
         } else if (i === currentRound) {
           bubbleClass = 'bubble-current';
@@ -209,21 +209,29 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       flashTimer = setTimeout(() => {
         if (isAnswered) return;
 
-        // 2. INPUT PHASE: Blank card if not answered yet
+        // 2. INPUT PHASE: Non-countable shutter curtain with downward prompt
         stage.classList.remove('is-flashing');
         stage.innerHTML = `
-          <div class="blank-curtain">
-            <span class="question-mark-icon">❓</span>
+          <div class="blank-curtain shutter-curtain">
+            <div class="shutter-slats">
+              <span class="slat"></span>
+              <span class="slat"></span>
+              <span class="slat"></span>
+            </div>
+            <div class="input-prompt-box">
+              <span class="input-prompt-arrow">👇</span>
+              <span class="input-prompt-text">${t('results.inputPrompt')}</span>
+            </div>
           </div>
         `;
 
         timerBar.style.transition = 'none';
         timerBar.style.width = '100%';
 
-        renderKeypad(keypadMount, {
-          isEnabled: true,
-          onSelectNumber: handleUserAnswer
-        });
+        const kp = keypadMount.querySelector('.keypad-container');
+        if (kp) {
+          kp.classList.add('keypad-prompt-pulse');
+        }
 
         if (isRocket) {
           timerBar.style.transition = `width ${rocketAnswerLimit}s linear`;
@@ -249,10 +257,12 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
     const keypadMount = container.querySelector('#keypad-mount');
     const timerBar = container.querySelector('#timer-bar-fill');
 
-    renderKeypad(keypadMount, {
-      isEnabled: false,
-      onSelectNumber: () => {}
-    });
+    // Keep keypad visible so the tapped and correct keys can be highlighted
+    const keypadContainer = keypadMount.querySelector('.keypad-container');
+    if (keypadContainer) {
+      keypadContainer.classList.add('is-disabled');
+      keypadContainer.classList.remove('keypad-prompt-pulse');
+    }
 
     if (timerBar) {
       timerBar.style.transition = 'none';
@@ -260,8 +270,11 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
     }
 
     const isCorrect = chosenNumber === currentStimulus.count;
+    const tappedBtn = keypadMount.querySelector(`[data-num="${chosenNumber}"]`);
+    const correctBtn = keypadMount.querySelector(`[data-num="${currentStimulus.count}"]`);
 
     if (isCorrect) {
+      if (tappedBtn) tappedBtn.classList.add('key-correct');
       score++;
       if (gameMode === 'classic') {
         roundResults.push(true);
@@ -300,12 +313,22 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       }
 
       playWrong();
+      if (tappedBtn) tappedBtn.classList.add('key-wrong');
+      if (correctBtn) correctBtn.classList.add('key-hint-correct');
+
       if (mascot) mascot.innerHTML = renderCounti('encourage', 48);
       stage.classList.remove('is-flashing');
       stage.classList.add('feedback-wrong');
       stage.innerHTML = `
-        <div class="feedback-reveal-wrap">
-          ${currentStimulus.reviewHtml}
+        <div class="feedback-wrong-wrapper">
+          <div class="feedback-wrong-banner">
+            <span class="wrong-choice-badge">❌ ${chosenNumber >= 0 ? chosenNumber : '⏱️'}</span>
+            <span class="wrong-arrow">➔</span>
+            <span class="correct-choice-badge">⭐ ${currentStimulus.count}</span>
+          </div>
+          <div class="feedback-reveal-wrap">
+            ${currentStimulus.reviewHtml}
+          </div>
         </div>
       `;
 
@@ -315,11 +338,11 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
           finishGame(true);
         }, 1800);
       } else if (gameMode === 'blitz') {
-        // In 60s Blitz, quick brief 600ms pause so time isn't lost
+        // In 60s Blitz, brief pause so player sees mistake
         setTimeout(() => {
           currentRound++;
           startRound();
-        }, 650);
+        }, 850);
       } else {
         // Classic: standard review duration
         setTimeout(() => {

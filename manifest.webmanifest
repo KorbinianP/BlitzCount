@@ -1,5 +1,5 @@
 {
-  "name": "BlitzCount / ZählFix",
+  "name": "BlitzCount",
   "short_name": "BlitzCount",
   "description": "Quick subitizing and visual number flash training for kids featuring Counti the Capybara",
   "start_url": "./index.html",

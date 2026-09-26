@@ -1,4 +1,4 @@
-// Game Result & Medal Celebration Screen for BlitzCount / ZählFix
+// Game Result & Medal Celebration Screen for BlitzCount
 
 import { playFanfare, playTap, playDing } from '../audio.js';
 import { renderCounti } from '../mascot.js';

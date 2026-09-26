@@ -1,4 +1,4 @@
-// Internationalization module for BlitzCount (EN) / ZählFix (DE)
+// Internationalization module for BlitzCount (EN / DE)
 export const translations = {
   en: {
     appTitle: 'BlitzCount',
@@ -46,11 +46,13 @@ export const translations = {
       points: 'Points',
       inARow: 'in a row!',
       timeUp: 'Time is up!',
-      firstMistake: 'First mistake! Great streak!'
+      firstMistake: 'First mistake! Great streak!',
+      inputPrompt: 'Tap your number! 👇',
+      almost: 'Almost! Correct was'
     },
     about: {
       title: 'About BlitzCount',
-      version: 'Version 1.6.0',
+      version: 'Version 1.7.0',
       direction: 'Direction & Concept: Korbinian Probst',
       code: 'Code & Architecture: Antigravity',
       license: 'License: MIT (Free & Open Source)',
@@ -88,7 +90,7 @@ export const translations = {
     }
   },
   de: {
-    appTitle: 'ZählFix',
+    appTitle: 'BlitzCount',
     tagline: 'Blitzschnell Zählen mit Counti',
     play: 'Spielen',
     replay: 'Nochmal',
@@ -133,11 +135,13 @@ export const translations = {
       points: 'Punkte',
       inARow: 'hintereinander!',
       timeUp: 'Die Zeit ist um!',
-      firstMistake: 'Erster Fehler! Tolle Serie!'
+      firstMistake: 'Erster Fehler! Tolle Serie!',
+      inputPrompt: 'Tippe deine Zahl! 👇',
+      almost: 'Fast! Richtig war'
     },
     about: {
-      title: 'Über ZählFix',
-      version: 'Version 1.6.0',
+      title: 'Über BlitzCount',
+      version: 'Version 1.7.0',
       direction: 'Regie & Konzept: Korbinian Probst',
       code: 'Code & Architektur: Antigravity',
       license: 'Lizenz: MIT (Frei & Open Source)',

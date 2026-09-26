@@ -1,4 +1,4 @@
-// Lightweight, zero-dependency celebration confetti particle burst for BlitzCount / ZählFix
+// Lightweight, zero-dependency celebration confetti particle burst for BlitzCount
 
 export function launchConfetti(canvasElement, durationMs = 3500) {
   if (!canvasElement) return;

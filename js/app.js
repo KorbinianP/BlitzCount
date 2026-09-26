@@ -1,4 +1,4 @@
-// Main Application Controller for BlitzCount (ZählFix)
+// Main Application Controller for BlitzCount
 
 import { getState, subscribe } from './state.js';
 import { setLanguage as setI18nLanguage } from './i18n.js';

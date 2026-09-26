@@ -1,4 +1,4 @@
-// Trophy Room / Hall of Fame modal for BlitzCount / ZählFix
+// Trophy Room / Hall of Fame modal for BlitzCount
 
 import { getState, getActiveProfile } from '../state.js';
 import { playTap } from '../audio.js';

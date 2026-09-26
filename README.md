@@ -1,8 +1,28 @@
-# 🦫 BlitzCount / ZählFix
+<p align="center">
+  <img src="assets/counti.svg" width="160" height="160" alt="Counti the Kawaii Capybara">
+  <br>
+  <b>Meet Counti the Capybara! 🍊</b>
+</p>
 
-**BlitzCount** (English) / **ZählFix** (Deutsch) is an offline, kid-friendly app designed for children aged 4–8 to build rapid visual number recognition (**subitizing**) from 0 to 10.
+# BlitzCount / ZählFix
 
-Featuring **Counti the Kawaii Capybara** mascot! 🦫✨
+**BlitzCount** (English) / **ZählFix** (Deutsch) is an offline, kid-friendly web app designed for children aged 4–8 to build rapid visual number recognition (**subitizing**) from **0 to 12**.
+
+Featuring **Counti**, the cute kawaii Capybara mascot! ✨
+
+---
+
+## 🎮 Play Live on GitHub Pages
+
+You can play **BlitzCount / ZählFix** directly in your browser or install it as an offline app:
+
+> **Live Demo**: `https://<your-username>.github.io/<your-repo>/`
+
+### 📱 Installing on an Android Tablet or Phone (PWA)
+1. Open the URL in Google Chrome (or any modern mobile browser).
+2. Tap the browser menu (⋮) and select **"Install App"** or **"Add to Home screen"**.
+3. BlitzCount installs with its orange icon (`🍊`) and launches full-screen like a native app.
+4. **100% Offline**: Once loaded, it works entirely offline with zero network connection needed!
 
 ---
 
@@ -15,36 +35,42 @@ Featuring **Counti the Kawaii Capybara** mascot! 🦫✨
     * 🐇 **Bunny**: 1.2s flash (Medium / Normal)
     * 🐆 **Cheetah**: 0.6s flash (Fast / Schnell)
     * 🚀 **Rocket**: 0.3s flash + 3s keypad countdown (Master / Rakete)
-  * Big glowing ▶️ Play button, clear 0–10 keypad, and star progress bubbles.
-* **Smart Pedagogical Grouping**:
-  * 🍓 **Fruits (3x3 Dice Pattern Layout & 5+X)**:
-    * Arranged like the dots on a dice!
-    * Counts 1 to 6 in a classic 3x3 dice formation.
-    * Counts 7 to 10 in two dice formations side-by-side (5 on the left + remainder on the right).
-    * Strictly numbers 1 to 10 (no zero).
+  * Big glowing ▶️ Play button, clear keypad, and star progress bubbles.
+* **Pedagogical Grouping (Numbers 0 to 12)**:
+  * 🍓 **Fruits (3x3 Dice Pattern Layout)**:
+    * Arranged cleanly like points on a dice without distracting boxes.
+    * 1 to 6 in a single die formation.
+    * 7 to 12 in realistic two-dice formations (e.g. 6 + 4 = 10, 6 + 5 = 11, 6 + 6 = 12).
+    * Strictly numbers 1 to 12.
   * 🎲 **High-Contrast 3x3 Dice Cards**:
     * 1 to 6 on a single die card with large colorful pips.
-    * 7 to 10 across two dice (e.g. 5 + 3 = 8) for intuitive visual addition.
-    * Strictly numbers 1 to 10 (no zero).
+    * 7 to 12 across two dice for authentic mental addition.
+    * Strictly numbers 1 to 12.
   * 🖐️ **Fingers Mode (0 to 10)**:
-    * 0 represented by both hands showing closed fists (✊ ✊).
+    * Anchored on the pedagogical ten-frame (two hands).
+    * 0 represented by both hands showing closed fists (`✊ ✊`).
     * 1 to 5 on one hand, 6 to 10 across two hands.
+    * Unambiguous 4-finger hand with all 4 fingers straight up and thumb tucked across palm.
   * 🔀 **Mixed Mode**:
     * Random variety mix of fruits, dice, and hands.
-* **Instant Tapping During Flash**:
+* **Instant Input During Flash**:
   * Kids can tap their answer immediately while the picture is visible—no need to wait for the timer to run out!
-* **Numpad Layout**:
-  * Organized like a standard phone/calculator numpad:
-    * `[ 10 ]` (3-wide on top)
-    * `[ 7 ] [ 8 ] [ 9 ]`
-    * `[ 4 ] [ 5 ] [ 6 ]`
-    * `[ 1 ] [ 2 ] [ 3 ]`
-    * `[ 0 ]` (3-wide at the bottom)
-* **Counti the Kawaii Capybara**:
-  * Dynamic vector mascot that cheers with joyful sparkles upon correct answers, offers encouraging learning reveals when an answer is missed, and celebrates with a party hat and gold medal upon winning!
+* **Symmetrical Keypad Layout**:
+  * Standard phone/calculator numpad arrangement:
+    * `[ 10 ] [ 11 ] [ 12 ]` (Top row)
+    * `[  7 ] [  8 ] [  9 ]`
+    * `[  4 ] [  5 ] [  6 ]`
+    * `[  1 ] [  2 ] [  3 ]`
+    * `[      0 ✊ ✊      ]` (Bottom row, full width)
+* **Counti the Kawaii Capybara Mascot**:
+  * Pure original vector mascot with cheerful expressions:
+    * **Idle**: Calm, zen gaze with an onsen yuzu orange on head.
+    * **Cheer**: Jumping with joy, sparkles, and raised paws upon correct answers.
+    * **Encourage**: Gentle learning review when an answer is missed.
+    * **Victory**: Striped festive party hat and gold medal celebration!
 * **100% Procedural Audio (Web Audio API)**:
   * Zero audio files to download or stream.
-  * Instant, zero-latency bubble pops, joyful glockenspiel chimes (C-E-G-C), gentle boings, and brass victory fanfares generated in code.
+  * Instant, zero-latency bubble pops, joyful glockenspiel chimes (C-E-G-C), gentle boings, and brass victory fanfares synthesized mathematically in code.
   * Immediate 🔊/🔇 toggle.
 * **Profiles & Trophy Room**:
   * Multiple player profiles with animal avatars (🦁, 🦄, 🐶, 🐱, 🐻, 🦊, 🦕, 🐼, 🐸, 🚀).
@@ -60,30 +86,22 @@ Featuring **Counti the Kawaii Capybara** mascot! 🦫✨
 
 ---
 
-## 🚀 Running on Your Computer & Android Tablet/Phone
+## 🚀 Local Development
 
-### Quick Start with Python
 In the project directory, run:
 ```bash
 python3 server.py
 ```
 
-This will launch the local server and display:
+This launches the local server:
 ```
 ============================================================
- 🦫  BlitzCount / ZählFix (Counti the Capybara) is ready!
+ 🍊  BlitzCount / ZählFix (Counti the Capybara) is ready!
 ============================================================
  ▶  On this computer:              http://localhost:8000
  📱 On your Tablet/Phone (Wi-Fi):  http://192.168.x.x:8000
 ============================================================
 ```
-
-### 📱 Installing on an Android Tablet or Phone (PWA)
-1. Ensure your tablet or phone is on the same local Wi-Fi.
-2. Open Chrome (or any Chromium/Firefox browser) and enter the `http://<your-ip>:8000` address.
-3. Tap the browser menu (⋮) and select **"Add to Home screen"** or **"Install App"**.
-4. The app will install with its own icon 🦫 and launch full-screen like a native app (without address bar or browser controls).
-5. Once loaded once, it works **100% offline** even if the server is stopped!
 
 ---
 
@@ -91,11 +109,16 @@ This will launch the local server and display:
 
 ```
 sumarize/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml      # Automatic GitHub Pages deployment workflow
+├── assets/
+│   └── counti.svg          # Standalone Counti the Capybara vector mascot
 ├── index.html              # HTML5 entrypoint & PWA metadata
 ├── manifest.webmanifest    # Standalone PWA declaration
 ├── sw.js                   # Service Worker for offline caching
 ├── server.py               # Local LAN dev & Wi-Fi server
-├── LICENSE                 # MIT License (Coded by Antigravity, directed by Korbinian Probst)
+├── LICENSE                 # MIT License
 ├── README.md
 ├── css/
 │   └── main.css            # Kid-friendly theme, large buttons, animations
@@ -106,12 +129,12 @@ sumarize/
     ├── i18n.js             # English & German translations
     ├── mascot.js           # Counti the Kawaii Capybara SVG generator
     ├── state.js            # Reactive state & localStorage persistence
-    ├── stimuli.js          # Hungarian 5+X fruits, 3x3 dice cards, hands
+    ├── stimuli.js          # Fruits (1-12), dice (1-12), hands (0-10)
     └── components/
         ├── header.js       # Top bar, profile avatar, 3s child-locked settings
         ├── homeScreen.js   # Main view, speeds (🐢🐇🐆🚀), category tabs
-        ├── gameScreen.js   # Flash timer, stage, feedback & 0-10 keypad
-        ├── keypad.js       # Chunky 0-10 buttons with 3D press feel
+        ├── gameScreen.js   # Flash timer, stage, feedback & keypad
+        ├── keypad.js       # Chunky 0-12 buttons with 3D press feel
         ├── resultScreen.js # Medals (🥇🥈🥉), confetti & fanfare
         ├── profileModal.js # Animal avatar picker for multi-user profiles
         ├── trophyModal.js  # Trophy Room & shared Hall of Fame
@@ -122,9 +145,8 @@ sumarize/
 
 ## 📄 License
 
-This project is open-source under the [MIT License](file:///home/korbinian/coding/sumarize/LICENSE).
+This project is open-source under the [MIT License](LICENSE).
 
-**Direction & Concept**: Korbinian Probst  
-**Code & Architecture**: Antigravity  
-Mascot (`Counti`) is original inline SVG vector code licensed under the same MIT license.
-
+- **Direction & Concept**: Korbinian Probst
+- **Code & Architecture**: Antigravity
+- Mascot (**Counti**) is 100% original inline SVG vector code licensed under the same MIT license.

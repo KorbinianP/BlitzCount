@@ -16,9 +16,11 @@ const INITIAL_STATE = {
   language: 'de',
   soundEnabled: true,
   settings: {
+    gameMode: 'classic', // 'classic' | 'blitz' | 'streak'
     speed: 'turtle',
     category: 'fruits',
     rounds: 10,
+    blitzTime: 60,
     durations: { ...DEFAULT_DURATIONS }
   },
   activeProfileId: 'profile-1',
@@ -165,28 +167,81 @@ export function deleteProfile(id) {
   saveState();
 }
 
-export function recordGameResult({ score, total, speed, category }) {
+export function getProfileBestScore(profile, { gameMode = 'classic', category, speed, rounds = 10 }) {
+  if (!profile || !profile.highscores) return 0;
+  if (gameMode === 'blitz') {
+    return profile.highscores[`blitz_${category}_${speed}`] || 0;
+  } else if (gameMode === 'streak') {
+    return profile.highscores[`streak_${category}_${speed}`] || 0;
+  } else {
+    return profile.highscores[`classic_${category}_${speed}_${rounds}`] ||
+           profile.highscores[`${category}_${speed}_${rounds}`] || 0;
+  }
+}
+
+export function recordGameResult({ score, total, speed, category, gameMode = 'classic', streak = 0 }) {
   const profile = getActiveProfile();
-  if (!profile) return { earnedMedal: null, isNewHighscore: false };
+  if (!profile) return { earnedMedal: null, isNewHighscore: false, previousBest: 0 };
 
   let earnedMedal = null;
-  if (score === total && total >= 5) {
-    earnedMedal = 'gold';
-    profile.medals.gold = (profile.medals.gold || 0) + 1;
-  } else if (score >= Math.ceil(total * 0.8)) {
-    earnedMedal = 'silver';
-    profile.medals.silver = (profile.medals.silver || 0) + 1;
-  } else if (score >= Math.ceil(total * 0.6)) {
-    earnedMedal = 'bronze';
-    profile.medals.bronze = (profile.medals.bronze || 0) + 1;
+
+  if (gameMode === 'blitz') {
+    // 60s Blitz medals
+    if (score >= 28) {
+      earnedMedal = 'gold';
+      profile.medals.gold = (profile.medals.gold || 0) + 1;
+    } else if (score >= 20) {
+      earnedMedal = 'silver';
+      profile.medals.silver = (profile.medals.silver || 0) + 1;
+    } else if (score >= 12) {
+      earnedMedal = 'bronze';
+      profile.medals.bronze = (profile.medals.bronze || 0) + 1;
+    }
+  } else if (gameMode === 'streak') {
+    // Sudden Death Streak medals
+    const finalStreak = streak || score;
+    if (finalStreak >= 25) {
+      earnedMedal = 'gold';
+      profile.medals.gold = (profile.medals.gold || 0) + 1;
+    } else if (finalStreak >= 15) {
+      earnedMedal = 'silver';
+      profile.medals.silver = (profile.medals.silver || 0) + 1;
+    } else if (finalStreak >= 8) {
+      earnedMedal = 'bronze';
+      profile.medals.bronze = (profile.medals.bronze || 0) + 1;
+    }
+  } else {
+    // Classic Rounds medals
+    if (score === total && total >= 5) {
+      earnedMedal = 'gold';
+      profile.medals.gold = (profile.medals.gold || 0) + 1;
+    } else if (score >= Math.ceil(total * 0.8)) {
+      earnedMedal = 'silver';
+      profile.medals.silver = (profile.medals.silver || 0) + 1;
+    } else if (score >= Math.ceil(total * 0.6)) {
+      earnedMedal = 'bronze';
+      profile.medals.bronze = (profile.medals.bronze || 0) + 1;
+    }
   }
 
-  const key = `${category}_${speed}_${total}`;
-  const previousBest = profile.highscores[key] || 0;
-  const isNewHighscore = score > previousBest;
+  let key = '';
+  let scoreToCompare = score;
+  if (gameMode === 'blitz') {
+    key = `blitz_${category}_${speed}`;
+    scoreToCompare = score;
+  } else if (gameMode === 'streak') {
+    key = `streak_${category}_${speed}`;
+    scoreToCompare = streak || score;
+  } else {
+    key = `classic_${category}_${speed}_${total}`;
+    scoreToCompare = score;
+  }
+
+  const previousBest = profile.highscores[key] || profile.highscores[`${category}_${speed}_${total}`] || 0;
+  const isNewHighscore = scoreToCompare > previousBest;
 
   if (isNewHighscore) {
-    profile.highscores[key] = score;
+    profile.highscores[key] = scoreToCompare;
   }
 
   saveState();

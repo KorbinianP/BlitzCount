@@ -5,7 +5,17 @@ import { renderCounti } from '../mascot.js';
 import { launchConfetti } from '../confetti.js';
 import { t } from '../i18n.js';
 
-export function renderResultScreen(container, { score, total, earnedMedal, isNewHighscore, onReplay, onHome }) {
+export function renderResultScreen(container, {
+  score,
+  total,
+  earnedMedal,
+  isNewHighscore,
+  gameMode = 'classic',
+  streak = 0,
+  wasSuddenDeath = false,
+  onReplay,
+  onHome
+}) {
   let headline = t('results.tryAgain');
   let medalEmoji = '🌟';
   let medalClass = 'medal-star';
@@ -22,10 +32,45 @@ export function renderResultScreen(container, { score, total, earnedMedal, isNew
     headline = t('results.bronze');
     medalEmoji = '🥉';
     medalClass = 'medal-bronze';
+  } else {
+    if (gameMode === 'blitz') {
+      headline = t('results.timeUp');
+    } else if (gameMode === 'streak') {
+      headline = t('results.firstMistake');
+    }
+  }
+
+  let scoreSummaryHtml = '';
+  if (gameMode === 'blitz') {
+    scoreSummaryHtml = `
+      <div class="score-stars-summary score-blitz-summary">
+        <span class="score-number">${score}</span>
+        <span class="score-mode-caption">${t('results.points')} (60s)</span>
+        <span class="score-star-glyph">⚡</span>
+      </div>
+    `;
+  } else if (gameMode === 'streak') {
+    const finalStreak = streak || score;
+    scoreSummaryHtml = `
+      <div class="score-stars-summary score-streak-summary">
+        <span class="score-number">${finalStreak}</span>
+        <span class="score-mode-caption">${t('results.inARow')}</span>
+        <span class="score-star-glyph">🔥</span>
+      </div>
+    `;
+  } else {
+    scoreSummaryHtml = `
+      <div class="score-stars-summary">
+        <span class="score-number">${score}</span>
+        <span class="score-divider">/</span>
+        <span class="score-total">${total}</span>
+        <span class="score-star-glyph">⭐</span>
+      </div>
+    `;
   }
 
   container.innerHTML = `
-    <div class="result-screen-view">
+    <div class="result-screen-view mode-${gameMode}">
       <canvas class="confetti-canvas" id="result-confetti-canvas"></canvas>
 
       <div class="result-mascot-wrap">
@@ -39,12 +84,7 @@ export function renderResultScreen(container, { score, total, earnedMedal, isNew
 
         <h2 class="result-headline">${headline}</h2>
 
-        <div class="score-stars-summary">
-          <span class="score-number">${score}</span>
-          <span class="score-divider">/</span>
-          <span class="score-total">${total}</span>
-          <span class="score-star-glyph">⭐</span>
-        </div>
+        ${scoreSummaryHtml}
 
         ${isNewHighscore ? `
           <div class="new-highscore-badge">

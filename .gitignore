@@ -4,3 +4,4 @@
 *.jpeg
 .DS_Store
 scratch/
+conversation_history.md

@@ -18,12 +18,36 @@ export const translations = {
       fingers: 'Fingers',
       mixed: 'Mixed'
     },
+    gameModes: {
+      classic: 'Rounds',
+      classicDesc: '5, 10 or 20 rounds',
+      blitz: '60s Blitz',
+      blitzDesc: '60s time attack',
+      streak: 'Streak',
+      streakDesc: 'Until first mistake'
+    },
     results: {
       gold: 'Spectacular! Perfect Score!',
       silver: 'Super Job!',
       bronze: 'Great Work!',
       tryAgain: 'Good Practice! Try again!',
-      newMedal: 'New Medal!'
+      newMedal: 'New Medal!',
+      blitzScore: 'Score in 60s',
+      streakScore: 'Streak',
+      points: 'Points',
+      inARow: 'in a row!',
+      timeUp: 'Time is up!',
+      firstMistake: 'First mistake! Great streak!'
+    },
+    about: {
+      title: 'About BlitzCount',
+      version: 'Version 1.5.0',
+      direction: 'Direction & Concept: Korbinian Probst',
+      code: 'Code & Architecture: Antigravity',
+      license: 'License: MIT (Free & Open Source)',
+      sourceCode: 'Source Code on GitHub',
+      privacy: '100% Offline • Zero Tracking • Zero Ads',
+      close: 'Back'
     },
     roundLabel: 'Round',
     settings: {
@@ -71,12 +95,36 @@ export const translations = {
       fingers: 'Finger',
       mixed: 'Gemischt'
     },
+    gameModes: {
+      classic: 'Runden',
+      classicDesc: '5, 10 oder 20 Runden',
+      blitz: '60s Blitz',
+      blitzDesc: '60 Sekunden Jagd',
+      streak: 'Serie',
+      streakDesc: 'Bis zum ersten Fehler'
+    },
     results: {
       gold: 'Fantastisch! Volle Punktzahl!',
       silver: 'Klasse gemacht!',
       bronze: 'Super geübt!',
       tryAgain: 'Toll mitgemacht! Gleich nochmal!',
-      newMedal: 'Neue Medaille!'
+      newMedal: 'Neue Medaille!',
+      blitzScore: 'Punkte in 60s',
+      streakScore: 'Serie',
+      points: 'Punkte',
+      inARow: 'hintereinander!',
+      timeUp: 'Die Zeit ist um!',
+      firstMistake: 'Erster Fehler! Tolle Serie!'
+    },
+    about: {
+      title: 'Über ZählFix',
+      version: 'Version 1.5.0',
+      direction: 'Regie & Konzept: Korbinian Probst',
+      code: 'Code & Architektur: Antigravity',
+      license: 'Lizenz: MIT (Frei & Open Source)',
+      sourceCode: 'Quellcode auf GitHub',
+      privacy: '100% Offline • Kein Tracking • Keine Werbung',
+      close: 'Zurück'
     },
     roundLabel: 'Runde',
     settings: {

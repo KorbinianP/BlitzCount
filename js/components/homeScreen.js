@@ -1,5 +1,5 @@
 // Home Screen Component for BlitzCount / ZählFix
-import { getState, updateSettings, getActiveProfile } from '../state.js';
+import { getState, updateSettings, getActiveProfile, getProfileBestScore } from '../state.js';
 import { playTap } from '../audio.js';
 import { t } from '../i18n.js';
 import { renderCounti } from '../mascot.js';
@@ -7,10 +7,18 @@ import { renderCounti } from '../mascot.js';
 export function renderHomeScreen(container, { onStartGame }) {
   const state = getState();
   const profile = getActiveProfile();
-  const { category, speed, rounds } = state.settings;
+  const { gameMode = 'classic', category, speed, rounds } = state.settings;
 
-  const scoreKey = `${category}_${speed}_${rounds}`;
-  const bestScore = profile.highscores[scoreKey] || 0;
+  const bestScore = getProfileBestScore(profile, { gameMode, category, speed, rounds });
+
+  let highscoreLabel = '';
+  if (gameMode === 'blitz') {
+    highscoreLabel = `⏱️ ${t('results.blitzScore')}: <strong>${bestScore} ${t('results.points')}</strong>`;
+  } else if (gameMode === 'streak') {
+    highscoreLabel = `🔥 ${t('results.streakScore')}: <strong>${bestScore} ${t('results.inARow')}</strong>`;
+  } else {
+    highscoreLabel = `⭐ ${t('trophyRoom.highscores')}: <strong>${bestScore} / ${rounds}</strong>`;
+  }
 
   container.innerHTML = `
     <div class="home-screen-view">
@@ -24,6 +32,27 @@ export function renderHomeScreen(container, { onStartGame }) {
         </div>
       </div>
 
+      <!-- Game Mode Selector (🎯 Classic, ⏱️ 60s Blitz, 🔥 Streak) -->
+      <section class="section-container">
+        <div class="mode-tabs" role="tablist">
+          <button class="mode-tab-btn ${gameMode === 'classic' ? 'is-active' : ''}" data-mode="classic" title="${t('gameModes.classicDesc')}">
+            <span class="mode-emoji">🎯</span>
+            <span class="mode-label">${t('gameModes.classic')}</span>
+          </button>
+
+          <button class="mode-tab-btn ${gameMode === 'blitz' ? 'is-active' : ''}" data-mode="blitz" title="${t('gameModes.blitzDesc')}">
+            <span class="mode-emoji">⏱️</span>
+            <span class="mode-label">${t('gameModes.blitz')}</span>
+          </button>
+
+          <button class="mode-tab-btn ${gameMode === 'streak' ? 'is-active' : ''}" data-mode="streak" title="${t('gameModes.streakDesc')}">
+            <span class="mode-emoji">🔥</span>
+            <span class="mode-label">${t('gameModes.streak')}</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Category Selector -->
       <section class="section-container">
         <div class="category-tabs" role="tablist">
           <button class="cat-tab-btn ${category === 'fruits' ? 'is-active' : ''}" data-cat="fruits">
@@ -48,6 +77,7 @@ export function renderHomeScreen(container, { onStartGame }) {
         </div>
       </section>
 
+      <!-- Animal Speed Selector -->
       <section class="section-container">
         <div class="speed-grid">
           <button class="speed-card-btn ${speed === 'turtle' ? 'is-active' : ''}" data-speed="turtle">
@@ -73,8 +103,7 @@ export function renderHomeScreen(container, { onStartGame }) {
       </section>
 
       <div class="highscore-badge-row">
-        <span class="star-icon">⭐</span>
-        <span class="best-score-text">${t('trophyRoom.highscores')}: <strong>${bestScore} / ${rounds}</strong></span>
+        <span class="best-score-text">${highscoreLabel}</span>
       </div>
 
       <div class="play-action-wrapper">
@@ -86,6 +115,18 @@ export function renderHomeScreen(container, { onStartGame }) {
     </div>
   `;
 
+  // Mode button events
+  const modeButtons = container.querySelectorAll('.mode-tab-btn');
+  modeButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      playTap();
+      const newMode = btn.getAttribute('data-mode');
+      updateSettings({ gameMode: newMode });
+      renderHomeScreen(container, { onStartGame });
+    });
+  });
+
+  // Category button events
   const catButtons = container.querySelectorAll('.cat-tab-btn');
   catButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -96,6 +137,7 @@ export function renderHomeScreen(container, { onStartGame }) {
     });
   });
 
+  // Speed button events
   const speedButtons = container.querySelectorAll('.speed-card-btn');
   speedButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -106,6 +148,7 @@ export function renderHomeScreen(container, { onStartGame }) {
     });
   });
 
+  // Play button
   const btnPlay = container.querySelector('#btn-play-game');
   btnPlay.addEventListener('click', () => {
     playTap();

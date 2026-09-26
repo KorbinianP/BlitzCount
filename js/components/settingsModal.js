@@ -3,18 +3,89 @@
 import { getState, updateSettings, updateDurations, setLanguage, resetProfileScores, getActiveProfile } from '../state.js';
 import { playTap } from '../audio.js';
 import { t, setLanguage as setI18nLang } from '../i18n.js';
+import { renderCounti } from '../mascot.js';
 
 export function openSettingsModal(modalContainer, { onSettingsChanged }) {
   const profile = getActiveProfile();
+  let currentView = 'settings'; // 'settings' | 'about'
 
   function render() {
     const s = getState();
+
+    if (currentView === 'about') {
+      modalContainer.innerHTML = `
+        <div class="modal-backdrop">
+          <div class="modal-card about-modal-card">
+            <div class="modal-header">
+              <h2 class="modal-title">${t('about.title')}</h2>
+              <button class="modal-close-btn" id="btn-close-about">✖</button>
+            </div>
+
+            <div class="modal-body about-body">
+              <div class="about-hero">
+                <div class="about-mascot-wrap">
+                  ${renderCounti('idle', 90)}
+                </div>
+                <h3 class="about-app-name">${t('appTitle')}</h3>
+                <span class="about-version-tag">${t('about.version')}</span>
+              </div>
+
+              <div class="about-details-list">
+                <div class="about-row">
+                  <span class="about-icon">🎬</span>
+                  <span class="about-text"><strong>${t('about.direction')}</strong></span>
+                </div>
+                <div class="about-row">
+                  <span class="about-icon">💻</span>
+                  <span class="about-text">${t('about.code')}</span>
+                </div>
+                <div class="about-row">
+                  <span class="about-icon">📜</span>
+                  <span class="about-text">${t('about.license')}</span>
+                </div>
+                <div class="about-row">
+                  <span class="about-icon">🐙</span>
+                  <a href="https://github.com/KorbinianP/BlitzCount" target="_blank" rel="noopener noreferrer" class="about-source-link">
+                    ${t('about.sourceCode')} ↗
+                  </a>
+                </div>
+                <div class="about-row about-privacy-row">
+                  <span class="about-icon">🛡️</span>
+                  <span class="about-privacy-note">${t('about.privacy')}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="modal-done-btn" id="btn-back-from-about">
+                ${t('about.close')}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const backToSettings = () => {
+        playTap();
+        currentView = 'settings';
+        render();
+      };
+
+      modalContainer.querySelector('#btn-close-about').addEventListener('click', backToSettings);
+      modalContainer.querySelector('#btn-back-from-about').addEventListener('click', backToSettings);
+      return;
+    }
+
+    // Default: Settings view
     modalContainer.innerHTML = `
       <div class="modal-backdrop">
         <div class="modal-card settings-modal-card">
           <div class="modal-header">
             <h2 class="modal-title">⚙️ ${t('settings.title')}</h2>
-            <button class="modal-close-btn" id="btn-close-settings">✖</button>
+            <div class="modal-header-actions">
+              <button class="modal-info-btn" id="btn-info-about" title="${t('about.title')}">ℹ️</button>
+              <button class="modal-close-btn" id="btn-close-settings">✖</button>
+            </div>
           </div>
 
           <div class="modal-body settings-body">
@@ -71,6 +142,14 @@ export function openSettingsModal(modalContainer, { onSettingsChanged }) {
               </div>
             </div>
 
+            <!-- About / Source Code Button -->
+            <div class="setting-group">
+              <button class="about-card-link-btn" id="btn-open-about-link">
+                <span class="about-link-icon">ℹ️</span>
+                <span class="about-link-text">${t('about.title')} (Lizenz & Info)</span>
+              </button>
+            </div>
+
             <!-- Reset Scores -->
             <div class="setting-group danger-zone">
               <button class="reset-scores-btn" id="btn-reset-scores">
@@ -94,8 +173,16 @@ export function openSettingsModal(modalContainer, { onSettingsChanged }) {
       onSettingsChanged();
     };
 
+    const openAbout = () => {
+      playTap();
+      currentView = 'about';
+      render();
+    };
+
     modalContainer.querySelector('#btn-close-settings').addEventListener('click', closeModal);
     modalContainer.querySelector('#btn-done-settings').addEventListener('click', closeModal);
+    modalContainer.querySelector('#btn-info-about').addEventListener('click', openAbout);
+    modalContainer.querySelector('#btn-open-about-link').addEventListener('click', openAbout);
 
     const langBtns = modalContainer.querySelectorAll('[data-lang]');
     langBtns.forEach((btn) => {

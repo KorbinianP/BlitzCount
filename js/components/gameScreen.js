@@ -291,6 +291,7 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       if (mascot) mascot.innerHTML = renderCounti('cheer', 48);
       stage.classList.remove('is-flashing');
       stage.classList.add('feedback-correct');
+      if (stage.parentElement) stage.parentElement.classList.add('stage-correct');
       stage.innerHTML = `
         <div class="feedback-badge-correct">
           <span class="feedback-star">⭐</span>
@@ -319,6 +320,7 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       if (mascot) mascot.innerHTML = renderCounti('encourage', 48);
       stage.classList.remove('is-flashing');
       stage.classList.add('feedback-wrong');
+      if (stage.parentElement) stage.parentElement.classList.add('stage-wrong');
       stage.innerHTML = `
         <div class="feedback-wrong-wrapper">
           <div class="feedback-wrong-banner">

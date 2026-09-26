@@ -476,10 +476,13 @@ body {
   border-radius: 4px;
 }
 
-/* Flash Stage */
+/* Flash Stage: Fixed, constant height across all states (ready, flashing, choose, right, wrong) */
 .flash-stage-wrapper {
   position: relative;
-  min-height: 190px;
+  height: 224px;
+  min-height: 224px;
+  max-height: 224px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -489,16 +492,20 @@ body {
   border: 4px solid #FFF8E1;
   overflow: hidden;
   margin-bottom: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
 }
 
 .flash-card-stage {
   width: 100%;
   height: 100%;
-  min-height: 190px;
+  min-height: 100%;
+  max-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 8px 12px;
+  box-sizing: border-box;
   transition: background 0.2s ease;
 }
 
@@ -516,14 +523,15 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
+  height: 100%;
 }
 
 .shutter-slats {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  width: 180px;
+  gap: 5px;
+  width: 160px;
   opacity: 0.35;
 }
 
@@ -538,42 +546,55 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .input-prompt-arrow {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
+  line-height: 1;
   animation: promptArrowBounce 0.65s infinite alternate ease-in-out;
 }
 
 @keyframes promptArrowBounce {
-  0% { transform: translateY(-4px); }
-  100% { transform: translateY(6px); }
+  0% { transform: translateY(-3px); }
+  100% { transform: translateY(5px); }
 }
 
 .input-prompt-text {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #455A64;
   background: #ECEFF1;
-  padding: 6px 18px;
+  padding: 5px 16px;
   border-radius: var(--radius-full);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .ready-countdown-pulse {
   font-size: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   animation: popReady 0.35s ease-out;
 }
 
 /* Feedback halos */
 .feedback-correct {
   background: #E8F5E9 !important;
+}
+
+.flash-stage-wrapper.stage-correct,
+.flash-stage-wrapper:has(.feedback-correct) {
   border-color: #81C784 !important;
 }
 
 .feedback-wrong {
   background: #FFF5F5 !important;
+}
+
+.flash-stage-wrapper.stage-wrong,
+.flash-stage-wrapper:has(.feedback-wrong) {
   border-color: #EF5350 !important;
   animation: cardShake 0.4s ease;
 }
@@ -588,54 +609,87 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   width: 100%;
+  height: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
 }
 
 .feedback-wrong-banner {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   background: #FFFFFF;
-  padding: 6px 18px;
+  padding: 4px 14px;
   border-radius: var(--radius-full);
-  box-shadow: 0 4px 12px rgba(239, 83, 80, 0.2);
+  box-shadow: 0 2px 8px rgba(239, 83, 80, 0.15);
   border: 2px solid #FFCDD2;
+  flex-shrink: 0;
 }
 
 .wrong-choice-badge {
   color: #C62828;
   font-weight: 900;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
 }
 
 .wrong-arrow {
   color: #90A4AE;
   font-weight: 900;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .correct-choice-badge {
   color: #2E7D32;
   font-weight: 900;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
+}
+
+.feedback-reveal-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-height: calc(100% - 40px);
+  box-sizing: border-box;
+}
+
+.feedback-reveal-wrap .stimulus-fruits.single-die-pattern .fruit-dice-grid {
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(3, 44px);
+  gap: 4px;
+}
+
+.feedback-reveal-wrap .stimulus-fruits.single-die-pattern .fruit-pip {
+  width: 44px;
+  height: 44px;
+}
+
+.feedback-reveal-wrap .stimulus-fruits.single-die-pattern .fruit-emoji {
+  font-size: 2.5rem;
 }
 
 .feedback-badge-correct {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2px;
+  height: 100%;
   animation: bounceCorrect 0.5s ease;
 }
 
 .feedback-badge-correct .feedback-star {
-  font-size: 3.5rem;
+  font-size: 3.4rem;
+  line-height: 1;
 }
 
 .feedback-badge-correct .feedback-number {
   font-size: 2.2rem;
+  line-height: 1;
   font-weight: 900;
   color: #2E7D32;
 }
@@ -663,8 +717,8 @@ body {
 /* Single die pattern (1-6 fruits): Large, cozy, and prominent */
 .stimulus-fruits.single-die-pattern .fruit-dice-grid {
   display: grid;
-  grid-template-columns: repeat(3, 58px);
-  grid-template-rows: repeat(3, 58px);
+  grid-template-columns: repeat(3, 56px);
+  grid-template-rows: repeat(3, 56px);
   gap: 6px;
   align-items: center;
   justify-content: center;
@@ -672,15 +726,15 @@ body {
 
 .stimulus-fruits.single-die-pattern .fruit-pip {
   position: relative;
-  width: 58px;
-  height: 58px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .stimulus-fruits.single-die-pattern .fruit-emoji {
-  font-size: 3.3rem;
+  font-size: 3.1rem;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
   line-height: 1;
 }
@@ -746,15 +800,25 @@ body {
   color: #78909C;
 }
 
+.stimulus-fruits.show-badges,
+.stimulus-dice.show-badges,
+.stimulus-hands.show-badges {
+  padding-bottom: 24px;
+}
+
 .fruits-sum-formula, .dice-sum-formula, .finger-sum-formula {
   position: absolute;
-  bottom: -4px;
-  font-size: 1.15rem;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.05rem;
   font-weight: 900;
   color: #1565C0;
   background: #E3F2FD;
-  padding: 3px 12px;
+  padding: 2px 14px;
   border-radius: var(--radius-full);
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 /* High-Contrast Dice Cards */
@@ -1955,5 +2019,15 @@ body {
   .hand-svg {
     width: 85px;
     height: 98px;
+  }
+
+  .flash-stage-wrapper {
+    height: 196px;
+    min-height: 196px;
+    max-height: 196px;
+  }
+
+  .flash-card-stage {
+    padding: 6px 8px;
   }
 }

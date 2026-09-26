@@ -52,7 +52,7 @@ export const translations = {
     },
     about: {
       title: 'About BlitzCount',
-      version: 'Version 1.7.1',
+      version: 'Version 1.7.2',
       direction: 'Direction & Concept: Korbinian Probst',
       code: 'Code & Architecture: Antigravity',
       license: 'License: MIT (Free & Open Source)',
@@ -141,7 +141,7 @@ export const translations = {
     },
     about: {
       title: 'Über BlitzCount',
-      version: 'Version 1.7.1',
+      version: 'Version 1.7.2',
       direction: 'Regie & Konzept: Korbinian Probst',
       code: 'Code & Architektur: Antigravity',
       license: 'Lizenz: MIT (Frei & Open Source)',

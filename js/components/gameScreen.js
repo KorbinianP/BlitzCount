@@ -24,21 +24,72 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
   let currentStimulus = null;
   let flashTimer = null;
   let answerTimer = null;
+  let reviewTimeout = null;
   let isAnswered = false;
 
-  // Blitz Mode specific state
-  let blitzTimeLeft = blitzTime;
-  let blitzInterval = null;
+  // Blitz Mode specific precision state
+  let blitzMsLeft = (blitzTime || 60) * 1000;
+  let blitzRunning = false;
+  let blitzLastTick = 0;
+  let blitzTimer = null;
+
+  function updateBlitzDisplay() {
+    const seconds = Math.ceil(blitzMsLeft / 1000);
+    const timeText = container.querySelector('#blitz-time-text');
+    const clockPill = container.querySelector('#blitz-clock-pill');
+    if (timeText) timeText.textContent = `${seconds}s`;
+    if (clockPill) {
+      if (seconds <= 10) clockPill.classList.add('is-urgent');
+      else clockPill.classList.remove('is-urgent');
+      if (!blitzRunning) clockPill.classList.add('is-paused');
+      else clockPill.classList.remove('is-paused');
+    }
+  }
+
+  function startBlitzTimer() {
+    if (gameMode !== 'blitz' || blitzRunning) return;
+    if (blitzMsLeft <= 0) {
+      finishGame();
+      return;
+    }
+    blitzRunning = true;
+    blitzLastTick = Date.now();
+    updateBlitzDisplay();
+
+    blitzTimer = setInterval(() => {
+      if (!blitzRunning) return;
+      const now = Date.now();
+      const delta = now - blitzLastTick;
+      blitzLastTick = now;
+      blitzMsLeft = Math.max(0, blitzMsLeft - delta);
+      updateBlitzDisplay();
+
+      if (blitzMsLeft <= 0) {
+        pauseBlitzTimer();
+        finishGame();
+      }
+    }, 100);
+  }
+
+  function pauseBlitzTimer() {
+    blitzRunning = false;
+    if (blitzTimer) {
+      clearInterval(blitzTimer);
+      blitzTimer = null;
+    }
+    updateBlitzDisplay();
+  }
 
   function renderFrame(phase = 'ready') {
     let topBarCenterHtml = '';
 
     if (gameMode === 'blitz') {
+      const displaySec = Math.ceil(blitzMsLeft / 1000);
       topBarCenterHtml = `
         <div class="blitz-hud-track">
-          <div class="blitz-clock-pill ${blitzTimeLeft <= 10 ? 'is-urgent' : ''}" id="blitz-clock-pill">
+          <div class="blitz-clock-pill ${displaySec <= 10 ? 'is-urgent' : ''} ${!blitzRunning ? 'is-paused' : ''}" id="blitz-clock-pill">
             <span class="blitz-icon">⏱️</span>
-            <span class="blitz-time-text" id="blitz-time-text">${blitzTimeLeft}s</span>
+            <span class="blitz-time-text" id="blitz-time-text">${displaySec}s</span>
           </div>
           <div class="blitz-score-pill">
             <span class="blitz-star">⭐</span>
@@ -136,29 +187,14 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
   function cleanupAllTimers() {
     if (flashTimer) clearTimeout(flashTimer);
     if (answerTimer) clearTimeout(answerTimer);
-    if (blitzInterval) clearInterval(blitzInterval);
-  }
-
-  function startBlitzTimerIfNeeded() {
-    if (gameMode === 'blitz' && !blitzInterval) {
-      blitzInterval = setInterval(() => {
-        blitzTimeLeft--;
-        const timeText = container.querySelector('#blitz-time-text');
-        const clockPill = container.querySelector('#blitz-clock-pill');
-        if (timeText) timeText.textContent = `${blitzTimeLeft}s`;
-        if (clockPill && blitzTimeLeft <= 10) clockPill.classList.add('is-urgent');
-
-        if (blitzTimeLeft <= 0) {
-          clearInterval(blitzInterval);
-          finishGame();
-        }
-      }, 1000);
-    }
+    if (reviewTimeout) clearTimeout(reviewTimeout);
+    pauseBlitzTimer();
   }
 
   function startRound() {
     if (flashTimer) clearTimeout(flashTimer);
     if (answerTimer) clearTimeout(answerTimer);
+    if (reviewTimeout) clearTimeout(reviewTimeout);
     isAnswered = false;
 
     // Check Classic rounds finish condition
@@ -167,8 +203,14 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       return;
     }
 
+    // Check Blitz time expired condition before starting round
+    if (gameMode === 'blitz' && blitzMsLeft <= 0) {
+      finishGame();
+      return;
+    }
+
     renderFrame('ready');
-    startBlitzTimerIfNeeded();
+    updateBlitzDisplay();
 
     const stage = container.querySelector('#flash-stage');
     const keypadMount = container.querySelector('#keypad-mount');
@@ -195,6 +237,9 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       // 1. FLASH PHASE: Display the stimulus
       stage.innerHTML = currentStimulus.html;
       stage.classList.add('is-flashing');
+
+      // Start/resume the 60s countdown ONLY when the stimulus appears!
+      startBlitzTimer();
 
       timerBar.style.transition = `width ${flashDuration}s linear`;
       timerBar.style.width = '0%';
@@ -252,6 +297,9 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
     if (flashTimer) clearTimeout(flashTimer);
     if (answerTimer) clearTimeout(answerTimer);
 
+    // Freeze 60s timer immediately so right & wrong feedback does NOT count to the 60s!
+    pauseBlitzTimer();
+
     const stage = container.querySelector('#flash-stage');
     const mascot = container.querySelector('#game-mascot');
     const keypadMount = container.querySelector('#keypad-mount');
@@ -299,13 +347,22 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
         </div>
       `;
 
-      // Fast pacing for Blitz & Streak, normal for Classic
-      const nextDelay = (gameMode === 'blitz') ? 350 : (gameMode === 'streak' ? 450 : 900);
+      // Celebration delay: plenty of time for star celebration, chime, and cheer
+      // (Does NOT count towards the 60s timer in Blitz mode!)
+      const nextDelay = (gameMode === 'blitz') ? 950 : (gameMode === 'streak' ? 1050 : 1200);
 
-      setTimeout(() => {
+      const advanceRight = () => {
+        if (reviewTimeout) {
+          clearTimeout(reviewTimeout);
+          reviewTimeout = null;
+        }
+        stage.removeEventListener('click', advanceRight);
         currentRound++;
         startRound();
-      }, nextDelay);
+      };
+
+      reviewTimeout = setTimeout(advanceRight, nextDelay);
+      stage.addEventListener('click', advanceRight);
 
     } else {
       // Incorrect answer
@@ -335,22 +392,32 @@ export function renderGameScreen(container, { onGameFinished, onExitGame }) {
       `;
 
       if (gameMode === 'streak') {
-        // Sudden Death! Game finishes on first mistake
-        setTimeout(() => {
+        // Sudden Death! Game finishes on first mistake: 3.0s to clearly see what broke the streak
+        const finishStreak = () => {
+          if (reviewTimeout) {
+            clearTimeout(reviewTimeout);
+            reviewTimeout = null;
+          }
+          stage.removeEventListener('click', finishStreak);
           finishGame(true);
-        }, 1800);
-      } else if (gameMode === 'blitz') {
-        // In 60s Blitz, brief pause so player sees mistake
-        setTimeout(() => {
-          currentRound++;
-          startRound();
-        }, 850);
+        };
+        reviewTimeout = setTimeout(finishStreak, 3000);
+        stage.addEventListener('click', finishStreak);
       } else {
-        // Classic: standard review duration
-        setTimeout(() => {
+        // Generous review time: 3.5s in Classic, 2.5s in Blitz (where timer is paused!)
+        // Tapping card advances immediately if player doesn't want to wait
+        const wrongDelay = (gameMode === 'blitz') ? 2500 : 3500;
+        const advanceWrong = () => {
+          if (reviewTimeout) {
+            clearTimeout(reviewTimeout);
+            reviewTimeout = null;
+          }
+          stage.removeEventListener('click', advanceWrong);
           currentRound++;
           startRound();
-        }, 2200);
+        };
+        reviewTimeout = setTimeout(advanceWrong, wrongDelay);
+        stage.addEventListener('click', advanceWrong);
       }
     }
   }

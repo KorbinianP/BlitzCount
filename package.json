@@ -1,0 +1,7 @@
+{
+  "name": "blitzcount",
+  "version": "1.2.0",
+  "description": "BlitzCount / ZählFix - Quick Number Flash with Counti the Capybara",
+  "type": "module",
+  "private": true
+}

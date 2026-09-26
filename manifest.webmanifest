@@ -1,0 +1,19 @@
+{
+  "name": "BlitzCount / ZählFix",
+  "short_name": "BlitzCount",
+  "description": "Quick subitizing and visual number flash training for kids featuring Counti the Capybara",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FFFDF8",
+  "theme_color": "#FFD54F",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -14,9 +14,13 @@ endif
 export ANDROID_HOME ?= $(shell if [ -d "$$HOME/Android/Sdk" ]; then echo "$$HOME/Android/Sdk"; elif [ -d "$$HOME/Library/Android/sdk" ]; then echo "$$HOME/Library/Android/sdk"; elif [ -d "/usr/lib/android-sdk" ]; then echo "/usr/lib/android-sdk"; fi)
 export ANDROID_SDK_ROOT ?= $(ANDROID_HOME)
 
-# Keystore defaults for local release signing if blitzcount-release.keystore exists
+# Keystore defaults for local release signing
 ifneq ("$(wildcard $(ROOT_DIR)/blitzcount-release.keystore)","")
-  export KEYSTORE_FILE ?= $(ROOT_DIR)/blitzcount-release.keystore
+  ifeq ($(origin KEYSTORE_FILE), undefined)
+    ifneq ($(KEYSTORE_PASSWORD),)
+      export KEYSTORE_FILE := $(ROOT_DIR)/blitzcount-release.keystore
+    endif
+  endif
 endif
 
 help:

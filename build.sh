@@ -96,12 +96,39 @@ case "$MODE" in
 
     release|apk-release)
         check_env
-        echo -e "\n${CYAN}==> Building Release APK...${NC}"
-        if [ -z "$KEYSTORE_FILE" ] && [ -f "$SCRIPT_DIR/blitzcount-release.keystore" ]; then
-            export KEYSTORE_FILE="$SCRIPT_DIR/blitzcount-release.keystore"
-            echo -e "${GREEN}✓ Using local keystore:${NC} $KEYSTORE_FILE"
+        echo -e "\n${CYAN}==> Checking Release Signing Configuration...${NC}"
+        if [ -f "$SCRIPT_DIR/android/keystore.properties" ]; then
+            echo -e "${GREEN}✓ Found signing configuration in android/keystore.properties${NC}"
+        elif [ -f "$SCRIPT_DIR/keystore.properties" ]; then
+            echo -e "${GREEN}✓ Found signing configuration in keystore.properties${NC}"
+        elif [ -n "$KEYSTORE_PASSWORD" ]; then
+            echo -e "${GREEN}✓ Using KEYSTORE_PASSWORD from environment${NC}"
+            export KEYSTORE_FILE="${KEYSTORE_FILE:-$SCRIPT_DIR/blitzcount-release.keystore}"
+            export KEY_ALIAS="${KEY_ALIAS:-blitzcount}"
+            export KEY_PASSWORD="${KEY_PASSWORD:-$KEYSTORE_PASSWORD}"
+        else
+            echo -e "${YELLOW}Keystore detected ($SCRIPT_DIR/blitzcount-release.keystore), but passwords are not set.${NC}"
+            if [ -t 0 ]; then
+                read -s -p "Enter Keystore Password (or press Enter to build unsigned): " USER_KEY_PASS
+                echo ""
+                if [ -n "$USER_KEY_PASS" ]; then
+                    export KEYSTORE_FILE="$SCRIPT_DIR/blitzcount-release.keystore"
+                    export KEYSTORE_PASSWORD="$USER_KEY_PASS"
+                    read -p "Enter Key Alias [default: blitzcount]: " USER_KEY_ALIAS
+                    export KEY_ALIAS="${USER_KEY_ALIAS:-blitzcount}"
+                    read -s -p "Enter Key Password [default: same as keystore]: " USER_KEY_PASS2
+                    echo ""
+                    export KEY_PASSWORD="${USER_KEY_PASS2:-$USER_KEY_PASS}"
+                else
+                    echo -e "${YELLOW}Proceeding with unsigned release build.${NC}"
+                fi
+            else
+                echo -e "${YELLOW}Non-interactive shell: building unsigned release APK.${NC}"
+                echo -e "Tip: To sign automatically, create 'android/keystore.properties' (see android/keystore.properties.example)"
+            fi
         fi
 
+        echo -e "\n${CYAN}==> Building Release APK...${NC}"
         cd "$SCRIPT_DIR/android"
         ./gradlew assembleRelease
         cd "$SCRIPT_DIR"

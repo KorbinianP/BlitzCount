@@ -12,11 +12,15 @@ blitzcount-release.keystore
 *.keystore
 *.jks
 keystore_base64.txt
+keystore.properties
+*/keystore.properties
 
 # Android build outputs and caches
 android/.gradle/
 android/build/
 android/app/build/
 android/app/src/main/assets/
+android/local.properties
+dist/
 
 

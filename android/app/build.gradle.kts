@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -20,14 +23,29 @@ android {
         }
     }
 
+    val keystorePropsFile = rootProject.file("keystore.properties").takeIf { it.exists() }
+        ?: file("keystore.properties").takeIf { it.exists() }
+    val keystoreProperties = Properties().apply {
+        keystorePropsFile?.let { load(FileInputStream(it)) }
+    }
+
     signingConfigs {
         create("release") {
-            val keystoreFile = System.getenv("KEYSTORE_FILE")
-            if (!keystoreFile.isNullOrEmpty() && file(keystoreFile).exists()) {
-                storeFile = file(keystoreFile)
-                storePassword = System.getenv("KEYSTORE_PASSWORD")
-                keyAlias = System.getenv("KEY_ALIAS")
-                keyPassword = System.getenv("KEY_PASSWORD")
+            val storeFilePath = keystoreProperties.getProperty("storeFile")
+                ?: System.getenv("KEYSTORE_FILE")
+            val storePass = keystoreProperties.getProperty("storePassword")
+                ?: System.getenv("KEYSTORE_PASSWORD")
+            val alias = keystoreProperties.getProperty("keyAlias")
+                ?: System.getenv("KEY_ALIAS")
+            val keyPass = keystoreProperties.getProperty("keyPassword")
+                ?: System.getenv("KEY_PASSWORD")
+
+            if (!storeFilePath.isNullOrEmpty() && file(storeFilePath).exists() &&
+                !storePass.isNullOrEmpty() && !alias.isNullOrEmpty() && !keyPass.isNullOrEmpty()) {
+                storeFile = file(storeFilePath)
+                storePassword = storePass
+                keyAlias = alias
+                keyPassword = keyPass
             }
         }
     }
@@ -40,7 +58,7 @@ android {
                 "proguard-rules.pro"
             )
             val releaseSigning = signingConfigs.getByName("release")
-            if (releaseSigning.storeFile != null) {
+            if (releaseSigning.storeFile != null && !releaseSigning.storePassword.isNullOrEmpty()) {
                 signingConfig = releaseSigning
             }
         }

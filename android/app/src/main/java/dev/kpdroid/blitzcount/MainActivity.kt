@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.FrameLayout
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
@@ -35,23 +37,44 @@ class MainActivity : AppCompatActivity() {
         // Enable edge-to-edge / sticky immersive mode for kid-friendly full screen
         setupImmersiveMode()
 
-        webView = WebView(this).apply {
+        // Root container: FrameLayout respects view padding, whereas WebView overrides setPadding
+        // and does not inset its HTML canvas.
+        val container = FrameLayout(this).apply {
             id = View.generateViewId()
             setBackgroundColor(0xFFFFFDF8.toInt()) // Matches BlitzCount --bg-gradient warm tint
         }
-        setContentView(webView)
+
+        webView = WebView(this).apply {
+            id = View.generateViewId()
+            setBackgroundColor(0xFFFFFDF8.toInt())
+            layoutParams = FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }
+        container.addView(webView)
+        setContentView(container)
 
         // Protect against camera punch-holes (center, left, right) and screen corner curves
-        ViewCompat.setOnApplyWindowInsetsListener(webView) { view, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(container) { v, windowInsets ->
             val cutoutInsets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
             )
-            // Apply padding to webView so all cutouts and curved screen corners are 100% physically respected
-            view.setPadding(
-                cutoutInsets.left,
-                cutoutInsets.top,
-                cutoutInsets.right,
-                cutoutInsets.bottom
+            val density = resources.displayMetrics.density
+            val minTopPx = (46 * density).toInt()
+            val extraTopPx = (8 * density).toInt()
+            val safeTop = maxOf(cutoutInsets.top + (if (cutoutInsets.top > 0) extraTopPx else 0), minTopPx)
+            val minSidePx = (10 * density).toInt()
+            val safeLeft = maxOf(cutoutInsets.left, minSidePx)
+            val safeRight = maxOf(cutoutInsets.right, minSidePx)
+            val minBottomPx = (14 * density).toInt()
+            val safeBottom = maxOf(cutoutInsets.bottom, minBottomPx)
+
+            v.setPadding(
+                safeLeft,
+                safeTop,
+                safeRight,
+                safeBottom
             )
             windowInsets
         }

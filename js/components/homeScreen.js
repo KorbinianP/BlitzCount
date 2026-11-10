@@ -24,13 +24,14 @@ export function renderHomeScreen(container, callbacks) {
 
   container.innerHTML = `
     <div class="home-screen-view">
-      <!-- Integrated Game Hub Card (Header + Mascot) -->
-      <div class="mascot-hero-card">
-        ${getHeaderActionsHtml()}
+      <!-- Floating Canvas Header Actions (Profile & Quick Controls) -->
+      ${getHeaderActionsHtml()}
 
+      <!-- Mascot Hero Card: Counti & BlitzCount Headline in flat screen zone -->
+      <div class="mascot-hero-card">
         <div class="hero-content">
           <div class="mascot-large-wrap">
-            ${renderCounti('idle', 115)}
+            ${renderCounti('idle', 110)}
           </div>
           <div class="mascot-bubble">
             <h1 class="game-headline">${t('appTitle')}</h1>

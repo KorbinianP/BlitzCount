@@ -11,8 +11,8 @@ android {
         applicationId = "dev.kpdroid.blitzcount"
         minSdk = 26
         targetSdk = 36
-        versionCode = 3
-        versionName = "1.8.1-beta.1"
+        versionCode = 4
+        versionName = "1.8.1-beta.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 512 512" width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Warm Golden Yellow Circular Background -->
+  <circle cx="256" cy="256" r="256" fill="#FFD54F" />
+
+  <!-- Counti the Capybara Head Centered -->
+  <g transform="translate(256, 260) scale(3.8) translate(-60, -47)">
+    <!-- Cute Small Rounded Capybara Ears -->
+    <ellipse cx="27" cy="30" rx="7.5" ry="8.5" transform="rotate(-20 27 30)" fill="#D29873" stroke="#452615" stroke-width="3" />
+    <ellipse cx="28" cy="31" rx="4" ry="5" transform="rotate(-20 27 30)" fill="#80492B" />
+
+    <ellipse cx="93" cy="30" rx="7.5" ry="8.5" transform="rotate(20 93 30)" fill="#D29873" stroke="#452615" stroke-width="3" />
+    <ellipse cx="92" cy="31" rx="4" ry="5" transform="rotate(20 93 30)" fill="#80492B" />
+
+    <!-- Characteristic Capybara Head Shape -->
+    <path d="M 37 26 
+             Q 60 23 83 26 
+             C 97 29, 99 48, 97 63 
+             C 95 76, 83 80, 60 80 
+             C 37 80, 25 76, 23 63 
+             C 21 48, 23 29, 37 26 Z" 
+          fill="#D29873" 
+          stroke="#452615" 
+          stroke-width="3.2" 
+          stroke-linejoin="round" />
+
+    <!-- Darker Snout Patch -->
+    <path d="M 44 45 
+             C 44 38, 76 38, 76 45 
+             C 77 56, 78 72, 60 72 
+             C 42 72, 43 56, 44 45 Z" 
+          fill="#935A39" 
+          stroke="#452615" 
+          stroke-width="2.8" 
+          stroke-linejoin="round" />
+
+    <!-- Capybara Nostril Slits -->
+    <path d="M 52 51 C 51 54, 53 56, 56 54" stroke="#452615" stroke-width="2.6" stroke-linecap="round" fill="none" />
+    <path d="M 68 51 C 69 54, 67 56, 64 54" stroke="#452615" stroke-width="2.6" stroke-linecap="round" fill="none" />
+    
+    <!-- Philtrum Line -->
+    <line x1="60" y1="53" x2="60" y2="61" stroke="#452615" stroke-width="2.6" stroke-linecap="round" />
+
+    <!-- Rosy Blush Cheeks -->
+    <ellipse cx="31" cy="56" rx="5.5" ry="4" fill="#FF8FA3" opacity="0.9" />
+    <ellipse cx="89" cy="56" rx="5.5" ry="4" fill="#FF8FA3" opacity="0.9" />
+
+    <!-- Eyes -->
+    <ellipse cx="37" cy="44" rx="4.5" ry="5.5" fill="#452615" />
+    <circle cx="35.5" cy="42" r="1.8" fill="#FFF" />
+    <circle cx="38.5" cy="45.5" r="0.9" fill="#FFF" />
+    <ellipse cx="83" cy="44" rx="4.5" ry="5.5" fill="#452615" />
+    <circle cx="81.5" cy="42" r="1.8" fill="#FFF" />
+    <circle cx="84.5" cy="45.5" r="0.9" fill="#FFF" />
+
+    <!-- Cheerful Smile -->
+    <path d="M 53 62 Q 60 67 67 62" stroke="#452615" stroke-width="2.6" stroke-linecap="round" fill="none" />
+
+    <!-- Iconic Onsen Yuzu Orange -->
+    <circle cx="60" cy="19" r="8" fill="#FFA726" stroke="#452615" stroke-width="2.2" />
+    <path d="M 60 11 Q 64 7 67 9 Q 64 14 60 11 Z" fill="#66BB6A" stroke="#452615" stroke-width="1.6" />
+  </g>
+</svg>

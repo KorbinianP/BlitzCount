@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Privacy Policy - BlitzCount</title>
+  <meta name="theme-color" content="#FFD54F">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍊</text></svg>">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #FFFDF8 0%, #FFF3E0 100%);
+      --text-dark: #2C3E50;
+      --text-muted: #5A6D82;
+      --card-bg: #FFFFFF;
+      --card-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04);
+      --accent-orange: #FFA726;
+      --accent-yellow: #FFD54F;
+      --accent-green: #6BCB77;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-gradient);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 760px;
+      width: 100%;
+    }
+
+    .header-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
+      border: 3px solid #FFE0B2;
+    }
+
+    .mascot {
+      width: 90px;
+      height: 90px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+      color: #D2691E;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      background: #FFF3E0;
+      padding: 4px;
+      border-radius: 9999px;
+      margin-top: 14px;
+      gap: 4px;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-dark);
+      font-size: 0.88rem;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--accent-orange);
+      color: #FFF;
+      box-shadow: 0 2px 6px rgba(255, 167, 38, 0.4);
+    }
+
+    .policy-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      color: #8D4925;
+      margin: 22px 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h2:first-of-type {
+      margin-top: 0;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: var(--text-dark);
+    }
+
+    ul {
+      margin: 0 0 16px 20px;
+      color: var(--text-dark);
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .highlight-badge {
+      display: inline-block;
+      background: #E8F5E9;
+      color: #2E7D32;
+      border: 1px solid #A5D6A7;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .contact-box {
+      background: #FFF8E1;
+      border-left: 4px solid var(--accent-yellow);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 0.95rem;
+    }
+
+    .back-nav {
+      text-align: center;
+      margin-top: 8px;
+      margin-bottom: 32px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card-bg);
+      color: var(--text-dark);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      border: 2px solid #FFE0B2;
+      transition: transform 0.15s ease;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header-card">
+      <img src="assets/counti.svg" alt="Counti the Capybara Mascot" class="mascot">
+      <h1>BlitzCount</h1>
+      <p class="subtitle">Privacy Policy • Datenschutzerklärung</p>
+      
+      <div class="lang-switcher">
+        <button id="btn-en" class="lang-btn active" onclick="setLang('en')">English</button>
+        <button id="btn-de" class="lang-btn" onclick="setLang('de')">Deutsch</button>
+      </div>
+    </header>
+
+    <!-- English Section -->
+    <main id="section-en" class="policy-card">
+      <h2>🛡️ Summary: 100% Private & Kid-Safe</h2>
+      <p>
+        <strong>BlitzCount</strong> is built specifically for young children (ages 4–8) to practice rapid visual number recognition. We believe children's educational games should be safe, fun, and completely private.
+      </p>
+      <p>
+        <span class="highlight-badge">Zero Personal Data Collected</span>
+        <span class="highlight-badge">Zero Ads</span>
+        <span class="highlight-badge">Zero Trackers</span>
+        <span class="highlight-badge">100% Offline Capable</span>
+      </p>
+
+      <h2>1. Information We Do NOT Collect</h2>
+      <p>BlitzCount does not collect, transmit, share, or sell any personal information or telemetry data. Specifically:</p>
+      <ul>
+        <li><strong>No Personal Identifiers:</strong> We do not ask for or collect names, email addresses, phone numbers, or account details.</li>
+        <li><strong>No Device Information:</strong> We do not read or collect device identifiers (IMEI, MAC address, advertising IDs, or IP addresses).</li>
+        <li><strong>No Location Data:</strong> We never request or access GPS or coarse location.</li>
+        <li><strong>No Analytics or Tracking:</strong> There are no third-party analytics libraries (such as Google Analytics or Firebase) embedded in the app.</li>
+        <li><strong>No Advertising:</strong> BlitzCount contains zero advertisements.</li>
+      </ul>
+
+      <h2>2. On-Device Local Storage</h2>
+      <p>
+        All gameplay progress—including selected player profile names (e.g., "Player 1"), animal avatars, earned medals (🥉, 🥈, 🥇), high scores, and sound preferences—is stored <strong>exclusively on your device</strong> using standard local storage (`localStorage`).
+      </p>
+      <p>
+        This data never leaves your device and is not sent to any cloud server. You can reset or delete this data at any time by clearing your browser cache or app storage in Android settings.
+      </p>
+
+      <h2>3. Internet & Network Permissions</h2>
+      <p>
+        The native Android application declares <strong>zero internet permissions</strong>. It functions entirely standalone without requiring any active network connection.
+      </p>
+
+      <h2>4. Children’s Privacy (COPPA & GDPR-Kids)</h2>
+      <p>
+        BlitzCount strictly complies with the United States <em>Children’s Online Privacy Protection Act</em> (COPPA), the European Union <em>General Data Protection Regulation</em> (GDPR-K), and the Google Play <em>Designed for Families</em> policy. Because we collect no personal information from anyone, children can play safely without any risk of data exposure.
+      </p>
+
+      <h2>5. Procedural Sound & Media</h2>
+      <p>
+        All sound effects (glockenspiel tones, pop sounds, fanfares) are synthesized mathematically in real-time via the Web Audio API. No external audio files or media streams are downloaded.
+      </p>
+
+      <h2>6. Contact Us</h2>
+      <p>
+        If you have any questions or feedback regarding this Privacy Policy, please contact the developer:
+      </p>
+      <div class="contact-box">
+        <strong>Developer:</strong> Korbinian Probst<br>
+        <strong>Email:</strong> <a href="mailto:kp.droid.dev@gmail.com" style="color: #D2691E; font-weight: bold;">kp.droid.dev@gmail.com</a><br>
+        <strong>Repository:</strong> <a href="https://github.com/KorbinianP/BlitzCount" target="_blank" rel="noopener" style="color: #D2691E;">github.com/KorbinianP/BlitzCount</a>
+      </div>
+      <p style="margin-top: 14px; font-size: 0.85rem; color: var(--text-muted);">
+        Effective Date: November 2026
+      </p>
+    </main>
+
+    <!-- German Section -->
+    <main id="section-de" class="policy-card" style="display: none;">
+      <h2>🛡️ Zusammenfassung: 100% Privat & Kindersicher</h2>
+      <p>
+        <strong>BlitzCount</strong> wurde speziell für Kinder (im Alter von 4–8 Jahren) entwickelt, um das blitzschnelle visuelle Erkennen von Mengen (Subitizing) spielerisch zu üben. Wir sind überzeugt, dass Lernspiele für Kinder absolut sicher, werbefrei und privat sein müssen.
+      </p>
+      <p>
+        <span class="highlight-badge">Keine Datenerfassung</span>
+        <span class="highlight-badge">Keine Werbung</span>
+        <span class="highlight-badge">Keine Tracker</span>
+        <span class="highlight-badge">100% Offline-fähig</span>
+      </p>
+
+      <h2>1. Daten, die wir NICHT erheben</h2>
+      <p>BlitzCount erfasst, überträgt, teilt oder verkauft zu keinem Zeitpunkt personenbezogene Daten oder Telemetrie. Konkret bedeutet das:</p>
+      <ul>
+        <li><strong>Keine Identifikationsdaten:</strong> Wir fragen nicht nach Namen, E-Mail-Adressen, Telefonnummern oder Kontoinformationen.</li>
+        <li><strong>Keine Geräteinformationen:</strong> Wir lesen keine Gerätekennungen (IMEI, MAC-Adresse, Werbe-IDs) oder IP-Adressen aus.</li>
+        <li><strong>Keine Standortdaten:</strong> Wir erfassen niemals GPS- oder Standortdaten.</li>
+        <li><strong>Keine Analyse oder Tracking:</strong> Es sind keinerlei Analyse-Dienste (wie Google Analytics oder Firebase) integriert.</li>
+        <li><strong>Keine Werbung:</strong> BlitzCount ist vollkommen werbefrei.</li>
+      </ul>
+
+      <h2>2. Lokale Speicherung auf dem Gerät</h2>
+      <p>
+        Alle Spielstände – wie Spielernamen, Tier-Avatare, gesammelte Medaillen (🥉, 🥈, 🥇), Bestzeiten und Sound-Einstellungen – werden <strong>ausschließlich lokal auf dem Gerät</strong> im Browserspeicher (`localStorage`) abgelegt.
+      </p>
+      <p>
+        Diese Daten verlassen niemals das Endgerät und werden an keinen Server gesendet. Sie können diese Daten jederzeit über die Browser-Einstellungen oder die Android-App-Verwaltung löschen.
+      </p>
+
+      <h2>3. Internet- und Netzwerkberechtigungen</h2>
+      <p>
+        Die native Android-App benötigt und fordert <strong>keine Internet-Berechtigung</strong> an. Das Spiel läuft vollkommen autark ohne jegliche Netzverbindung.
+      </p>
+
+      <h2>4. Schutz der Privatsphäre von Kindern (DSGVO & COPPA)</h2>
+      <p>
+        BlitzCount entspricht den Bestimmungen der europäischen Datenschutz-Grundverordnung (DSGVO), dem US-amerikanischen COPPA-Standard sowie den Google Play <em>Für Familien</em>-Richtlinien. Da keinerlei Daten gesammelt werden, besteht kein Risiko für die Privatsphäre von Kindern.
+      </p>
+
+      <h2>5. Lokale Klangerzeugung</h2>
+      <p>
+        Alle Toneffekte (Glockenspiel, Pop-Sounds, Fanfaren) werden in Echtzeit mathematisch über die Web Audio API im Gerät berechnet. Es werden keine externen Audiodateien heruntergeladen.
+      </p>
+
+      <h2>6. Kontakt</h2>
+      <p>
+        Bei Fragen zu dieser Datenschutzerklärung oder zum Spiel wenden Sie sich gerne direkt an den Entwickler:
+      </p>
+      <div class="contact-box">
+        <strong>Entwickler:</strong> Korbinian Probst<br>
+        <strong>E-Mail:</strong> <a href="mailto:kp.droid.dev@gmail.com" style="color: #D2691E; font-weight: bold;">kp.droid.dev@gmail.com</a><br>
+        <strong>Quellcode:</strong> <a href="https://github.com/KorbinianP/BlitzCount" target="_blank" rel="noopener" style="color: #D2691E;">github.com/KorbinianP/BlitzCount</a>
+      </div>
+      <p style="margin-top: 14px; font-size: 0.85rem; color: var(--text-muted);">
+        Stand: November 2026
+      </p>
+    </main>
+
+    <div class="back-nav">
+      <a href="index.html" class="back-btn">
+        <span>🎮</span>
+        <span id="back-text">Back to BlitzCount</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      const enSection = document.getElementById('section-en');
+      const deSection = document.getElementById('section-de');
+      const btnEn = document.getElementById('btn-en');
+      const btnDe = document.getElementById('btn-de');
+      const backText = document.getElementById('back-text');
+
+      if (lang === 'de') {
+        enSection.style.display = 'none';
+        deSection.style.display = 'block';
+        btnEn.classList.remove('active');
+        btnDe.classList.add('active');
+        backText.textContent = 'Zurück zu BlitzCount';
+      } else {
+        enSection.style.display = 'block';
+        deSection.style.display = 'none';
+        btnDe.classList.remove('active');
+        btnEn.classList.add('active');
+        backText.textContent = 'Back to BlitzCount';
+      }
+    }
+
+    // Auto-detect browser language
+    if (navigator.language && navigator.language.startsWith('de')) {
+      setLang('de');
+    }
+  </script>
+</body>
+</html>

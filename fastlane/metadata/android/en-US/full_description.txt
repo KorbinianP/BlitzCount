@@ -1,0 +1,15 @@
+BlitzCount is a 100% offline, kid-friendly educational game designed for children aged 4–8 to develop rapid visual number recognition (subitizing) from 0 to 12.
+
+Featuring Counti, the cute kawaii Capybara mascot! 🍊
+
+🌟 Key Features:
+• Multiple Game Modes: Classic Rounds (5, 10, or 20 rounds), 60s Blitz (Time Attack), and Sudden Death (Streak Master).
+• Number Ranges:
+  - Starter / Easy (0 to 6): Fingers on one hand, fruits & dice in 3x3 pattern with an adaptive compact keypad.
+  - Advanced / Profi (0 to 12): Two hands, Hungarian 5+X grouping, two realistic dice.
+• Pedagogical Grouping: Fingers anchored on the ten-frame, high-contrast dice cards, and fruit patterns.
+• Zero-Text / Non-Reader Friendly: Designed so preschoolers can play independently without needing to read words. Speeds are represented by cute animal metaphors: 🐢 Turtle (2.5s), 🐇 Bunny (1.2s), 🐆 Cheetah (0.6s), and 🚀 Rocket (0.3s).
+• Instant Input: Tap your answer immediately during the flash without waiting.
+• Profiles & Medals: Create animal avatar profiles and earn Bronze, Silver, and Gold medals in the Trophy Room.
+• Procedural Audio: Instant, cheerful synthesized sounds and glockenspiel chimes created live with zero audio bloat.
+• 100% Private & Offline: No ads, no trackers, zero network permissions. All progress stays safely on your device.

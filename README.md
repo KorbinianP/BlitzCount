@@ -18,11 +18,14 @@ You can play **BlitzCount** directly in your browser or install it as an offline
 
 > **Live Demo**: [https://korbinianp.github.io/BlitzCount/](https://korbinianp.github.io/BlitzCount/)
 
-### 📱 Installing on an Android Tablet or Phone (PWA)
-1. Open the URL in Google Chrome (or any modern mobile browser).
-2. Tap the browser menu (⋮) and select **"Install App"** or **"Add to Home screen"**.
-3. BlitzCount installs with its orange icon (`🍊`) and launches full-screen like a native app.
-4. **100% Offline**: Once loaded, it works entirely offline with zero network connection needed!
+### 📱 Installing on an Android Tablet or Phone
+1. **Direct Native Android APK (Recommended)**:
+   - Download the latest `BlitzCount-vX.Y.Z.apk` directly from [GitHub Releases](https://github.com/KorbinianP/BlitzCount/releases).
+   - Works 100% offline with **zero Android permissions** requested (perfect for de-googled ROMs like GrapheneOS, CalyxOS, and LineageOS).
+2. **Web PWA (No installation required)**:
+   - Open the [Live Demo](https://korbinianp.github.io/BlitzCount/) in Google Chrome or any modern mobile browser.
+   - Tap the browser menu (⋮) and select **"Install App"** or **"Add to Home screen"**.
+   - BlitzCount installs with its cute Counti icon and launches full-screen offline.
 
 ---
 
@@ -144,6 +147,18 @@ sumarize/
         ├── trophyModal.js  # Trophy Room & shared Hall of Fame
         └── settingsModal.js# Parent fine-tuning sliders & language toggle
 ```
+
+---
+
+## 🔒 Privacy & Safety
+
+BlitzCount is strictly built for children aged 4–8:
+- **Zero data collection**: No telemetry, no analytics, no tracking.
+- **Zero ads**: No third-party ad networks or SDKs.
+- **Zero permissions**: No Internet, camera, or storage permissions required on Android.
+- **COPPA & GDPR-K compliant**.
+
+Read our full [Privacy Policy](https://korbinianp.github.io/BlitzCount/privacy.html).
 
 ---
 

@@ -51,7 +51,9 @@ export function openSettingsModal(modalContainer, { onSettingsChanged }) {
                 </div>
                 <div class="about-row about-privacy-row">
                   <span class="about-icon">🛡️</span>
-                  <span class="about-privacy-note">${t('about.privacy')}</span>
+                  <a href="privacy.html" target="_blank" rel="noopener noreferrer" class="about-source-link">
+                    ${t('about.privacy')} ↗
+                  </a>
                 </div>
               </div>
             </div>

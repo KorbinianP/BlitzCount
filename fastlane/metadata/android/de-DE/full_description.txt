@@ -1,0 +1,15 @@
+BlitzCount ist ein 100% offline-fähiges Lernspiel für Kinder im Alter von 4 bis 8 Jahren zur spielerischen Förderung der simultanen Mengenerfassung (Subitizing) im Zahlenraum von 0 bis 12.
+
+Mit Counti, dem liebenswerten Kawaii-Wasserschwein! 🍊
+
+🌟 Highlights & Funktionen:
+• Verschiedene Spielmodi: Klassische Runden (5, 10 oder 20 Runden), 60s Blitz (Zeitrennen) und Sudden Death (Fehlerfrei-Serie).
+• Zahlenräume:
+  - Starter / Leicht (0 bis 6): Finger einer Hand, Früchte & Würfelmuster im 3x3-Muster mit extragroßer, kompakter Kindertastatur.
+  - Profi / Fortgeschritten (0 bis 12): Zwei Hände mit ungarischer 5+X Struktur, zwei realistische Würfelkarten.
+• Pädagogisch fundiert: Mengenerfassung über das Zehnerfeld, Würfelbilder und Punktefelder.
+• Lesefrei spielbar: Kinder im Vorschulalter können völlig selbstständig spielen. Schwierigkeiten werden durch intuitive Tiersymbole dargestellt: 🐢 Schildkröte (2,5s), 🐇 Hase (1,2s), 🐆 Gepard (0,6s) und 🚀 Rakete (0,3s).
+• Sofortige Eingabe: Kinder können direkt tippen, während das Bild aufblitzt – ohne Wartezeit.
+• Profile & Pokalzimmer: Eigene Tier-Profile anlegen und Bronze-, Silber- und Goldmedaillen sammeln.
+• Echte Klänge in Echtzeit: Fröhliche Glockenspiel-Töne und Fanfaren, direkt im Gerät generiert.
+• 100% Sicher & Privat: Keine Werbung, keine In-App-Käufe, keine Tracker, keine Internetberechtigung. Alle Spielstände bleiben lokal auf dem Gerät.

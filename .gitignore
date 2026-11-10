@@ -2,6 +2,21 @@
 *.png
 *.jpg
 *.jpeg
+!android/app/src/main/res/mipmap-*/*.png
+!android/app/src/main/*.png
+
 .DS_Store
 scratch/
 conversation_history.md
+blitzcount-release.keystore
+*.keystore
+*.jks
+keystore_base64.txt
+
+# Android build outputs and caches
+android/.gradle/
+android/build/
+android/app/build/
+android/app/src/main/assets/
+
+

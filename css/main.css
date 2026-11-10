@@ -1,8 +1,8 @@
 /* BlitzCount - Cheerful, Modern Kid-Friendly Theme */
 
 :root {
-  --safe-top: 48px;
-  --safe-bottom: 12px;
+  --safe-top: 54px;
+  --safe-bottom: 16px;
   --safe-left: 0px;
   --safe-right: 0px;
   --bg-gradient: linear-gradient(135deg, #FFFDF8 0%, #FFF3E0 100%);
@@ -50,10 +50,14 @@ body {
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
-  padding: max(var(--safe-top, 48px), env(safe-area-inset-top, 48px))
-           max(12px, var(--safe-right, 0px), env(safe-area-inset-right, 12px))
-           max(var(--safe-bottom, 12px), env(safe-area-inset-bottom, 12px))
-           max(12px, var(--safe-left, 0px), env(safe-area-inset-left, 12px));
+  padding-top: 54px;
+  padding-top: var(--safe-top, 54px);
+  padding-bottom: 16px;
+  padding-bottom: var(--safe-bottom, 16px);
+  padding-left: 14px;
+  padding-left: max(14px, var(--safe-left, 0px));
+  padding-right: 14px;
+  padding-right: max(14px, var(--safe-right, 0px));
   box-sizing: border-box;
 }
 
@@ -220,9 +224,9 @@ body {
   flex-direction: column;
   flex: 1;
   justify-content: space-between;
-  gap: clamp(6px, 1.4vh, 14px);
+  gap: clamp(8px, 1.8vh, 18px);
   min-height: 0;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
 }
 
 .hero-top-bar {
@@ -239,7 +243,7 @@ body {
   flex-direction: column;
   background: #FFFFFF;
   border-radius: var(--radius-lg);
-  padding: 10px 16px 12px 16px;
+  padding: clamp(10px, 1.6vh, 18px) 16px;
   box-shadow: var(--card-shadow);
   border: 3px solid #FFF3E0;
   gap: 0;
@@ -257,14 +261,14 @@ body {
 }
 
 .game-headline {
-  font-size: 1.85rem;
+  font-size: clamp(1.6rem, 3.2vh, 1.95rem);
   font-weight: 900;
   color: #37474F;
   line-height: 1.1;
 }
 
 .game-tagline {
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 1.5vh, 0.98rem);
   font-weight: 600;
   color: #78909C;
   margin-top: 4px;
@@ -274,20 +278,20 @@ body {
 .category-tabs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: clamp(8px, 1.2vw, 12px);
 }
 
 .cat-tab-btn {
   background: #FFFFFF;
   border: 3px solid #ECEFF1;
   border-radius: var(--radius-md);
-  padding: 8px 4px;
-  min-height: 60px;
+  padding: clamp(8px, 1.2vh, 14px) 4px;
+  min-height: clamp(66px, 8.5vh, 86px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
   cursor: pointer;
   transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
@@ -304,11 +308,11 @@ body {
 }
 
 .tab-emoji {
-  font-size: 1.75rem;
+  font-size: clamp(1.75rem, 3.2vh, 2.2rem);
 }
 
 .tab-label {
-  font-size: 0.85rem;
+  font-size: clamp(0.8rem, 1.5vh, 0.9rem);
   font-weight: 800;
   color: #455A64;
 }
@@ -326,20 +330,20 @@ body {
 .speed-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: clamp(8px, 1.2vw, 12px);
 }
 
 .speed-card-btn {
   background: #FFFFFF;
   border: 3px solid #ECEFF1;
   border-radius: var(--radius-md);
-  padding: 8px 4px;
-  min-height: 64px;
+  padding: clamp(8px, 1.2vh, 14px) 4px;
+  min-height: clamp(68px, 8.8vh, 88px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
   cursor: pointer;
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
@@ -355,11 +359,11 @@ body {
 }
 
 .animal-avatar {
-  font-size: 1.85rem;
+  font-size: clamp(1.85rem, 3.2vh, 2.3rem);
 }
 
 .speed-title {
-  font-size: 0.75rem;
+  font-size: clamp(0.72rem, 1.4vh, 0.8rem);
   font-weight: 800;
   color: #37474F;
   text-align: center;
@@ -370,9 +374,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 4px;
+  gap: clamp(6px, 1.2vh, 12px);
+  width: 100%;
+  padding-top: 2px;
 }
 
 .highscore-badge-row {
@@ -383,7 +387,7 @@ body {
   background: rgba(255, 217, 61, 0.25);
   border: 2px solid #FFD54F;
   border-radius: var(--radius-full);
-  padding: 5px 16px;
+  padding: clamp(5px, 0.9vh, 9px) 18px;
   align-self: center;
 }
 
@@ -392,7 +396,7 @@ body {
 }
 
 .best-score-text {
-  font-size: 0.9rem;
+  font-size: clamp(0.88rem, 1.5vh, 1.02rem);
   font-weight: 700;
   color: #5D4037;
 }
@@ -402,7 +406,7 @@ body {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 2px 0 6px 0;
+  padding: 2px 0 4px 0;
 }
 
 .huge-play-btn {
@@ -410,8 +414,8 @@ body {
   color: #FFFFFF;
   border: none;
   border-radius: var(--radius-full);
-  padding: 15px 44px;
-  font-size: 1.55rem;
+  padding: clamp(14px, 2.2vh, 20px) 44px;
+  font-size: clamp(1.45rem, 2.8vh, 1.85rem);
   font-weight: 900;
   display: flex;
   align-items: center;
@@ -419,7 +423,7 @@ body {
   gap: 12px;
   cursor: pointer;
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
   box-shadow: 0 7px 0 #388E3C, 0 12px 24px rgba(78, 186, 91, 0.35);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
@@ -1885,11 +1889,11 @@ body {
 .mode-tabs {
   display: flex;
   background: #EDF2F7;
-  padding: 4px;
+  padding: clamp(3px, 0.6vh, 6px);
   border-radius: var(--radius-full);
   gap: 4px;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   margin: 0 auto;
 }
 
@@ -1899,12 +1903,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 8px 12px;
+  padding: clamp(8px, 1.3vh, 13px) 10px;
   background: transparent;
   border: none;
   border-radius: var(--radius-full);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: clamp(0.85rem, 1.6vh, 0.95rem);
   color: #718096;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1934,11 +1938,11 @@ body {
 .range-tabs {
   display: flex;
   background: #EDF2F7;
-  padding: 4px;
+  padding: clamp(3px, 0.6vh, 6px);
   border-radius: var(--radius-full);
   gap: 4px;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   margin: 0 auto;
 }
 
@@ -1948,12 +1952,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 8px 12px;
+  padding: clamp(8px, 1.3vh, 13px) 10px;
   background: transparent;
   border: none;
   border-radius: var(--radius-full);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: clamp(0.85rem, 1.6vh, 0.95rem);
   color: #718096;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);

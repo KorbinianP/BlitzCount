@@ -23,6 +23,21 @@ import androidx.webkit.WebViewClientCompat
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
+    private var cachedSafeTopDp = 54
+    private var cachedSafeBottomDp = 16
+    private var cachedSafeLeftDp = 0
+    private var cachedSafeRightDp = 0
+
+    private fun applyCssInsets() {
+        if (!::webView.isInitialized) return
+        webView.evaluateJavascript(
+            "document.documentElement.style.setProperty('--safe-top', '${cachedSafeTopDp}px');" +
+            "document.documentElement.style.setProperty('--safe-bottom', '${cachedSafeBottomDp}px');" +
+            "document.documentElement.style.setProperty('--safe-left', '${cachedSafeLeftDp}px');" +
+            "document.documentElement.style.setProperty('--safe-right', '${cachedSafeRightDp}px');",
+            null
+        )
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,36 +72,23 @@ class MainActivity : AppCompatActivity() {
 
         // Edge-to-edge canvas: WebView spans 100% of physical display without letterboxing,
         // while safe insets are delivered dynamically to CSS so game controls sit safely below cutouts.
-        var cachedSafeTopDp = 48
-        var cachedSafeBottomDp = 14
-        var cachedSafeLeftDp = 0
-        var cachedSafeRightDp = 0
-
-        fun applyCssInsets() {
-            webView.evaluateJavascript(
-                "document.documentElement.style.setProperty('--safe-top', '${cachedSafeTopDp}px');" +
-                "document.documentElement.style.setProperty('--safe-bottom', '${cachedSafeBottomDp}px');" +
-                "document.documentElement.style.setProperty('--safe-left', '${cachedSafeLeftDp}px');" +
-                "document.documentElement.style.setProperty('--safe-right', '${cachedSafeRightDp}px');",
-                null
-            )
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(webView) { _, windowInsets ->
+        val insetsListener = androidx.core.view.OnApplyWindowInsetsListener { _, windowInsets ->
             val cutoutInsets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
             )
             val density = resources.displayMetrics.density
-            val minTopPx = (46 * density).toInt()
-            val extraTopPx = (8 * density).toInt()
+            val minTopPx = (54 * density).toInt()
+            val extraTopPx = (10 * density).toInt()
             cachedSafeTopDp = (maxOf(cutoutInsets.top + (if (cutoutInsets.top > 0) extraTopPx else 0), minTopPx) / density).toInt()
-            cachedSafeBottomDp = (maxOf(cutoutInsets.bottom, (14 * density).toInt()) / density).toInt()
+            cachedSafeBottomDp = (maxOf(cutoutInsets.bottom, (16 * density).toInt()) / density).toInt()
             cachedSafeLeftDp = (cutoutInsets.left / density).toInt()
             cachedSafeRightDp = (cutoutInsets.right / density).toInt()
 
             applyCssInsets()
             windowInsets
         }
+        ViewCompat.setOnApplyWindowInsetsListener(container, insetsListener)
+        ViewCompat.setOnApplyWindowInsetsListener(webView, insetsListener)
 
         // Secure offline asset loader: maps app assets to https://appassets.androidplatform.net/assets/
         val assetLoader = WebViewAssetLoader.Builder()
@@ -160,6 +162,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         webView.onResume()
         setupImmersiveMode()
+        applyCssInsets()
     }
 
     override fun onPause() {

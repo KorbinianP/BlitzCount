@@ -1,10 +1,12 @@
 // BlitzCount Offline Service Worker
-const CACHE_NAME = 'blitzcount-v1.7.2';
+const CACHE_NAME = 'blitzcount-v1.8.0';
 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './privacy.html',
   './manifest.webmanifest',
+  './assets/counti.svg',
   './css/main.css',
   './js/app.js',
   './js/audio.js',

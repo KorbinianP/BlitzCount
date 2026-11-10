@@ -48,7 +48,7 @@ jobs:
       - name: Extract App Version
         id: app_version
         run: |
-          VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "1.7.2")
+          VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "1.8.0")
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "Building BlitzCount version: ${VERSION}"
 

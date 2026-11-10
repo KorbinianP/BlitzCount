@@ -30,23 +30,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Accept Android SDK Licenses
         run: |
-          yes | sdkmanager --licenses || true
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
 
       - name: Extract App Version
         id: app_version
@@ -107,14 +104,14 @@ jobs:
           ls -la artifacts/
 
       - name: Upload Debug APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: BlitzCount-debug-apk
           path: artifacts/*debug.apk
           retention-days: 14
 
       - name: Upload Release APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: BlitzCount-release-apk
           path: |
@@ -123,7 +120,7 @@ jobs:
           retention-days: 30
 
       - name: Upload Release AAB Bundle (Play Store)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: BlitzCount-playstore-aab
           path: artifacts/*.aab
@@ -131,7 +128,7 @@ jobs:
 
       - name: Publish GitHub Release (on Git Tag)
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: artifacts/*
           generate_release_notes: true

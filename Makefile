@@ -4,6 +4,12 @@ SHELL := /bin/bash
 ROOT_DIR := $(shell pwd)
 GRADLEW := $(ROOT_DIR)/android/gradlew
 
+# Auto-detect JAVA_HOME if not set
+export JAVA_HOME ?= $(shell if [ -d "$$HOME/jdk-21" ]; then echo "$$HOME/jdk-21"; elif [ -d "/usr/lib/jvm/java-21-openjdk-amd64" ]; then echo "/usr/lib/jvm/java-21-openjdk-amd64"; fi)
+ifneq ("$(wildcard $(JAVA_HOME)/bin)","")
+  export PATH := $(JAVA_HOME)/bin:$(PATH)
+endif
+
 # Auto-detect ANDROID_HOME if not set
 export ANDROID_HOME ?= $(shell if [ -d "$$HOME/Android/Sdk" ]; then echo "$$HOME/Android/Sdk"; elif [ -d "$$HOME/Library/Android/sdk" ]; then echo "$$HOME/Library/Android/sdk"; elif [ -d "/usr/lib/android-sdk" ]; then echo "/usr/lib/android-sdk"; fi)
 export ANDROID_SDK_ROOT ?= $(ANDROID_HOME)

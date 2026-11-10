@@ -24,6 +24,18 @@ echo -e "${CYAN}==========================================================${NC}"
 echo -e "${CYAN}               ⚡ BlitzCount Local Builder ⚡             ${NC}"
 echo -e "${CYAN}==========================================================${NC}"
 
+# Detect Java
+if [ -z "$JAVA_HOME" ]; then
+    if [ -d "$HOME/jdk-21" ]; then
+        export JAVA_HOME="$HOME/jdk-21"
+    elif [ -d "/usr/lib/jvm/java-21-openjdk-amd64" ]; then
+        export JAVA_HOME="/usr/lib/jvm/java-21-openjdk-amd64"
+    fi
+fi
+if [ -n "$JAVA_HOME" ] && [ -d "$JAVA_HOME/bin" ]; then
+    export PATH="$JAVA_HOME/bin:$PATH"
+fi
+
 # Detect Android SDK
 if [ -z "$ANDROID_HOME" ]; then
     if [ -d "$HOME/Android/Sdk" ]; then

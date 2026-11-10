@@ -1,14 +1,17 @@
 package dev.kpdroid.blitzcount
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -23,6 +26,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Allow drawing around cutouts on API 28+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.attributes.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+        }
+
         // Enable edge-to-edge / sticky immersive mode for kid-friendly full screen
         setupImmersiveMode()
 
@@ -31,6 +40,21 @@ class MainActivity : AppCompatActivity() {
             setBackgroundColor(0xFFFFFDF8.toInt()) // Matches BlitzCount --bg-gradient warm tint
         }
         setContentView(webView)
+
+        // Protect against camera punch-holes (center, left, right) and screen corner curves
+        ViewCompat.setOnApplyWindowInsetsListener(webView) { view, windowInsets ->
+            val cutoutInsets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
+            )
+            // Apply padding to webView so all cutouts and curved screen corners are 100% physically respected
+            view.setPadding(
+                cutoutInsets.left,
+                cutoutInsets.top,
+                cutoutInsets.right,
+                cutoutInsets.bottom
+            )
+            windowInsets
+        }
 
         // Secure offline asset loader: maps app assets to https://appassets.androidplatform.net/assets/
         val assetLoader = WebViewAssetLoader.Builder()

@@ -3,8 +3,10 @@ import { getState, updateSettings, getActiveProfile, getProfileBestScore } from 
 import { playTap } from '../audio.js';
 import { t } from '../i18n.js';
 import { renderCounti } from '../mascot.js';
+import { getHeaderActionsHtml, attachHeaderControls } from './header.js';
 
-export function renderHomeScreen(container, { onStartGame }) {
+export function renderHomeScreen(container, callbacks) {
+  const { onStartGame, onOpenProfiles, onOpenSettings, onOpenTrophies } = callbacks || {};
   const state = getState();
   const profile = getActiveProfile();
   const { gameMode = 'classic', category, speed, rounds, numberRange = 'advanced' } = state.settings;
@@ -22,13 +24,18 @@ export function renderHomeScreen(container, { onStartGame }) {
 
   container.innerHTML = `
     <div class="home-screen-view">
+      <!-- Integrated Game Hub Card (Header + Mascot) -->
       <div class="mascot-hero-card">
-        <div class="mascot-large-wrap">
-          ${renderCounti('idle', 130)}
-        </div>
-        <div class="mascot-bubble">
-          <h1 class="game-headline">${t('appTitle')}</h1>
-          <p class="game-tagline">${t('tagline')}</p>
+        ${getHeaderActionsHtml()}
+
+        <div class="hero-content">
+          <div class="mascot-large-wrap">
+            ${renderCounti('idle', 115)}
+          </div>
+          <div class="mascot-bubble">
+            <h1 class="game-headline">${t('appTitle')}</h1>
+            <p class="game-tagline">${t('tagline')}</p>
+          </div>
         </div>
       </div>
 
@@ -117,67 +124,75 @@ export function renderHomeScreen(container, { onStartGame }) {
         </div>
       </section>
 
-      <div class="highscore-badge-row">
-        <span class="best-score-text">${highscoreLabel}</span>
-      </div>
+      <!-- Bottom Play Dock (High Score Pill + Big Play Button) -->
+      <div class="home-play-dock">
+        <div class="highscore-badge-row">
+          <span class="best-score-text">${highscoreLabel}</span>
+        </div>
 
-      <div class="play-action-wrapper">
-        <button class="huge-play-btn" id="btn-play-game">
-          <span class="play-icon">▶️</span>
-          <span class="play-text">${t('play')}</span>
-        </button>
+        <div class="play-action-wrapper">
+          <button class="huge-play-btn" id="btn-play-game">
+            <span class="play-icon">▶</span>
+            <span class="play-text">${t('play')}</span>
+          </button>
+        </div>
       </div>
     </div>
   `;
 
-  // Mode button events
+  // Attach Header Controls (Profile, Sound, Trophies, Settings)
+  attachHeaderControls(container, callbacks);
+
+  // Attach Mode Tab Events
   const modeButtons = container.querySelectorAll('.mode-tab-btn');
   modeButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       playTap();
       const newMode = btn.getAttribute('data-mode');
       updateSettings({ gameMode: newMode });
-      renderHomeScreen(container, { onStartGame });
+      renderHomeScreen(container, callbacks);
     });
   });
 
-  // Range button events
+  // Attach Range Tab Events
   const rangeButtons = container.querySelectorAll('.range-tab-btn');
   rangeButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       playTap();
       const newRange = btn.getAttribute('data-range');
       updateSettings({ numberRange: newRange });
-      renderHomeScreen(container, { onStartGame });
+      renderHomeScreen(container, callbacks);
     });
   });
 
-  // Category button events
+  // Attach Category Button Events
   const catButtons = container.querySelectorAll('.cat-tab-btn');
   catButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       playTap();
       const newCat = btn.getAttribute('data-cat');
       updateSettings({ category: newCat });
-      renderHomeScreen(container, { onStartGame });
+      renderHomeScreen(container, callbacks);
     });
   });
 
-  // Speed button events
+  // Attach Speed Button Events
   const speedButtons = container.querySelectorAll('.speed-card-btn');
   speedButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       playTap();
       const newSpeed = btn.getAttribute('data-speed');
       updateSettings({ speed: newSpeed });
-      renderHomeScreen(container, { onStartGame });
+      renderHomeScreen(container, callbacks);
     });
   });
 
-  // Play button
+  // Attach Play Button Event
   const btnPlay = container.querySelector('#btn-play-game');
-  btnPlay.addEventListener('click', () => {
-    playTap();
-    onStartGame();
-  });
+  if (btnPlay) {
+    btnPlay.addEventListener('click', () => {
+      playTap();
+      if (onStartGame) onStartGame();
+    });
+  }
 }

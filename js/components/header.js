@@ -1,17 +1,15 @@
-// Top Header Navigation Bar component with Kid Profile, Counti, Sound, Trophies & Child-Locked Settings
+// Top Header Navigation Bar component with Kid Profile, Sound, Trophies & Child-Locked Settings
 
-import { getState, getActiveProfile, setSoundEnabled, updateSettings } from '../state.js';
+import { getState, getActiveProfile, setSoundEnabled } from '../state.js';
 import { playTap, toggleMuted, getMuted } from '../audio.js';
 import { t } from '../i18n.js';
-import { renderCounti } from '../mascot.js';
 
-export function renderHeader(container, { onOpenProfiles, onOpenSettings, onOpenTrophies, onGoHome }) {
-  const state = getState();
+export function getHeaderActionsHtml() {
   const profile = getActiveProfile();
   const muted = getMuted();
 
-  container.innerHTML = `
-    <header class="app-header">
+  return `
+    <div class="hero-top-bar">
       <!-- Player Profile Button (One Tap) -->
       <button class="profile-badge-btn" id="btn-profile" title="${t('profileModal.title')}">
         <span class="avatar-icon">${profile.avatar}</span>
@@ -44,77 +42,95 @@ export function renderHeader(container, { onOpenProfiles, onOpenSettings, onOpen
           </div>
         </div>
       </div>
-    </header>
+    </div>
   `;
+}
 
-  // Attach event handlers
+export function attachHeaderControls(container, { onOpenProfiles, onOpenSettings, onOpenTrophies }) {
   const btnProfile = container.querySelector('#btn-profile');
-  btnProfile.addEventListener('click', () => {
-    playTap();
-    onOpenProfiles();
-  });
+  if (btnProfile) {
+    btnProfile.addEventListener('click', () => {
+      playTap();
+      if (onOpenProfiles) onOpenProfiles();
+    });
+  }
 
   const btnSound = container.querySelector('#btn-sound');
-  btnSound.addEventListener('click', () => {
-    const isNowMuted = toggleMuted();
-    setSoundEnabled(!isNowMuted);
-    playTap();
-    btnSound.querySelector('.btn-emoji').textContent = isNowMuted ? '🔇' : '🔊';
-    btnSound.classList.toggle('is-muted', isNowMuted);
-  });
+  if (btnSound) {
+    btnSound.addEventListener('click', () => {
+      const isNowMuted = toggleMuted();
+      setSoundEnabled(!isNowMuted);
+      playTap();
+      btnSound.querySelector('.btn-emoji').textContent = isNowMuted ? '🔇' : '🔊';
+      btnSound.classList.toggle('is-muted', isNowMuted);
+    });
+  }
 
   const btnTrophies = container.querySelector('#btn-trophies');
-  btnTrophies.addEventListener('click', () => {
-    playTap();
-    onOpenTrophies();
-  });
+  if (btnTrophies) {
+    btnTrophies.addEventListener('click', () => {
+      playTap();
+      if (onOpenTrophies) onOpenTrophies();
+    });
+  }
 
-  // Settings Child Lock: Long press 2.5s or prompt
+  // Settings Child Lock: Long press 2.5s
   const btnSettings = container.querySelector('#btn-settings');
   const ringFill = container.querySelector('#settings-hold-ring');
   const toast = container.querySelector('#child-lock-toast');
 
-  let holdTimer = null;
-  let holdStart = 0;
-  const HOLD_DURATION = 2500;
+  if (btnSettings && ringFill) {
+    let holdTimer = null;
+    let holdStart = 0;
+    const HOLD_DURATION = 2500;
 
-  function startHold(e) {
-    if (e.type === 'touchstart') e.preventDefault();
-    holdStart = Date.now();
-    btnSettings.classList.add('holding');
+    function startHold(e) {
+      if (e.type === 'touchstart') e.preventDefault();
+      holdStart = Date.now();
+      btnSettings.classList.add('holding');
 
-    ringFill.style.transition = `stroke-dashoffset ${HOLD_DURATION}ms linear`;
-    ringFill.style.strokeDashoffset = '0';
+      ringFill.style.transition = `stroke-dashoffset ${HOLD_DURATION}ms linear`;
+      ringFill.style.strokeDashoffset = '0';
 
-    holdTimer = setTimeout(() => {
+      holdTimer = setTimeout(() => {
+        btnSettings.classList.remove('holding');
+        ringFill.style.transition = 'none';
+        ringFill.style.strokeDashoffset = '120';
+        playTap();
+        if (onOpenSettings) onOpenSettings();
+      }, HOLD_DURATION);
+    }
+
+    function cancelHold() {
+      if (holdTimer) {
+        clearTimeout(holdTimer);
+        holdTimer = null;
+      }
+      const elapsed = Date.now() - holdStart;
       btnSettings.classList.remove('holding');
       ringFill.style.transition = 'none';
       ringFill.style.strokeDashoffset = '120';
-      playTap();
-      onOpenSettings();
-    }, HOLD_DURATION);
-  }
 
-  function cancelHold() {
-    if (holdTimer) {
-      clearTimeout(holdTimer);
-      holdTimer = null;
+      if (holdStart > 0 && elapsed < 800 && toast) {
+        toast.classList.add('visible');
+        setTimeout(() => toast.classList.remove('visible'), 2600);
+      }
+      holdStart = 0;
     }
-    const elapsed = Date.now() - holdStart;
-    btnSettings.classList.remove('holding');
-    ringFill.style.transition = 'none';
-    ringFill.style.strokeDashoffset = '120';
 
-    if (holdStart > 0 && elapsed < 800) {
-      toast.classList.add('visible');
-      setTimeout(() => toast.classList.remove('visible'), 2600);
-    }
-    holdStart = 0;
+    btnSettings.addEventListener('mousedown', startHold);
+    btnSettings.addEventListener('touchstart', startHold, { passive: false });
+    btnSettings.addEventListener('mouseup', cancelHold);
+    btnSettings.addEventListener('mouseleave', cancelHold);
+    btnSettings.addEventListener('touchend', cancelHold);
   }
+}
 
-  btnSettings.addEventListener('mousedown', startHold);
-  btnSettings.addEventListener('touchstart', startHold, { passive: false });
-  btnSettings.addEventListener('mouseup', cancelHold);
-  btnSettings.addEventListener('mouseleave', cancelHold);
-  btnSettings.addEventListener('touchend', cancelHold);
+export function renderHeader(container, callbacks) {
+  container.innerHTML = `
+    <header class="app-header">
+      ${getHeaderActionsHtml()}
+    </header>
+  `;
+  attachHeaderControls(container, callbacks);
 }

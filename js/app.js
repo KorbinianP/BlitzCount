@@ -3,7 +3,6 @@
 import { getState, subscribe } from './state.js';
 import { setLanguage as setI18nLanguage } from './i18n.js';
 import { setMuted } from './audio.js';
-import { renderHeader } from './components/header.js';
 import { renderHomeScreen } from './components/homeScreen.js';
 import { renderGameScreen } from './components/gameScreen.js';
 import { renderResultScreen } from './components/resultScreen.js';
@@ -35,7 +34,6 @@ class BlitzCountApp {
   }
 
   init() {
-    this.refreshHeader();
     this.renderCurrentView();
 
     if ('serviceWorker' in navigator) {
@@ -48,20 +46,22 @@ class BlitzCountApp {
   }
 
   refreshHeader() {
-    renderHeader(this.headerMount, {
-      onOpenProfiles: () => this.handleOpenProfiles(),
-      onOpenSettings: () => this.handleOpenSettings(),
-      onOpenTrophies: () => this.handleOpenTrophies(),
-      onGoHome: () => this.goToHome()
-    });
+    if (this.headerMount) {
+      this.headerMount.style.display = 'none';
+      this.headerMount.innerHTML = '';
+    }
   }
 
   renderCurrentView() {
+    this.refreshHeader();
     this.mainMount.innerHTML = '';
 
     if (this.currentView === 'home') {
       renderHomeScreen(this.mainMount, {
-        onStartGame: () => this.startGame()
+        onStartGame: () => this.startGame(),
+        onOpenProfiles: () => this.handleOpenProfiles(),
+        onOpenSettings: () => this.handleOpenSettings(),
+        onOpenTrophies: () => this.handleOpenTrophies()
       });
     } else if (this.currentView === 'game') {
       this.activeGameInstance = renderGameScreen(this.mainMount, {
@@ -102,10 +102,7 @@ class BlitzCountApp {
   handleOpenProfiles() {
     openProfileModal(this.modalMount, {
       onProfileChanged: () => {
-        this.refreshHeader();
-        if (this.currentView === 'home') {
-          this.renderCurrentView();
-        }
+        this.renderCurrentView();
       }
     });
   }
@@ -117,7 +114,6 @@ class BlitzCountApp {
   handleOpenSettings() {
     openSettingsModal(this.modalMount, {
       onSettingsChanged: () => {
-        this.refreshHeader();
         this.renderCurrentView();
       }
     });

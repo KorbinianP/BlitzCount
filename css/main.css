@@ -1354,6 +1354,253 @@ body {
   background: #F0F7FF;
 }
 
+.profile-tile-card {
+  position: relative;
+  background: #F8FAFC;
+  border: 3px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.profile-tile-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.profile-tile-card.is-active-profile {
+  border-color: #4D96FF;
+  background: #F0F7FF;
+}
+
+.profile-select-btn {
+  background: transparent;
+  border: none;
+  padding: 12px 8px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.profile-edit-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #CBD5E0;
+  border-radius: var(--radius-full);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.profile-edit-btn:hover {
+  transform: scale(1.15);
+  background: #FFF;
+  border-color: #4D96FF;
+}
+
+/* Edit Player View */
+.edit-player-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.avatar-preview-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.avatar-preview-display {
+  font-size: 3.5rem;
+  background: #FFF3E0;
+  border: 3px solid #FFE0B2;
+  border-radius: var(--radius-full);
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.edit-section-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.edit-player-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.save-changes-btn {
+  width: 100%;
+  padding: 12px;
+  background: #6BCB77;
+  color: #FFF;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #4CAF50;
+  transition: transform 0.1s ease;
+}
+
+.save-changes-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #4CAF50;
+}
+
+.delete-player-btn {
+  width: 100%;
+  padding: 10px;
+  background: #FFF5F5;
+  color: #E53E3E;
+  border: 2px solid #FEB2B2;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.delete-player-btn:hover {
+  background: #FED7D7;
+}
+
+.cancel-edit-btn {
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  color: #718096;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Confirmation Dialog Overlay & Card */
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+.confirm-dialog-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.confirm-icon {
+  font-size: 2.8rem;
+}
+
+.confirm-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #2D3748;
+  margin: 0;
+}
+
+.confirm-desc {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #718096;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.confirm-btn-cancel {
+  flex: 1;
+  padding: 10px 14px;
+  background: #EDF2F7;
+  color: #4A5568;
+  border: 2px solid #CBD5E0;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.confirm-btn-action {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  color: #FFF;
+}
+
+.btn-danger {
+  background: #E53E3E;
+  box-shadow: 0 4px 0 #C53030;
+}
+
+.btn-success {
+  background: #48BB78;
+  box-shadow: 0 4px 0 #38A169;
+}
+
+.btn-exit {
+  background: #FF6B6B;
+  box-shadow: 0 4px 0 #E55050;
+}
+
+.confirm-mascot {
+  margin-bottom: -6px;
+}
+
 .tile-avatar {
   font-size: 2.2rem;
 }

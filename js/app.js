@@ -1,8 +1,9 @@
 // Main Application Controller for BlitzCount
 
 import { getState, subscribe } from './state.js';
-import { setLanguage as setI18nLanguage } from './i18n.js';
-import { setMuted } from './audio.js';
+import { setLanguage as setI18nLanguage, t } from './i18n.js';
+import { setMuted, playTap } from './audio.js';
+import { renderCounti } from './mascot.js';
 import { renderHomeScreen } from './components/homeScreen.js';
 import { renderGameScreen } from './components/gameScreen.js';
 import { renderResultScreen } from './components/resultScreen.js';
@@ -30,6 +31,9 @@ class BlitzCountApp {
       this.refreshHeader();
     });
 
+    // Expose back navigation handler to Android WebView native bridge
+    window.handleAndroidBack = () => this.handleBackPress();
+
     this.init();
   }
 
@@ -43,6 +47,100 @@ class BlitzCountApp {
         });
       });
     }
+
+    // Support browser / PWA back button via popstate
+    window.addEventListener('popstate', () => {
+      this.handleBackPress();
+    });
+  }
+
+  handleBackPress() {
+    // 1. If any modal is currently displayed (ProfileModal, SettingsModal, TrophyModal)
+    if (this.modalMount && this.modalMount.firstElementChild) {
+      const subCancel = this.modalMount.querySelector('#btn-confirm-cancel, #btn-cancel-edit-player, #btn-cancel-edit');
+      if (subCancel) {
+        subCancel.click();
+        return true;
+      }
+      const closeBtn = this.modalMount.querySelector('#btn-close-modal, .modal-close-btn');
+      if (closeBtn) {
+        closeBtn.click();
+      } else {
+        this.modalMount.innerHTML = '';
+      }
+      return true;
+    }
+
+    // 2. If the exit confirmation dialog is already open, pressing back again confirms exit
+    const exitDialog = document.getElementById('exit-confirm-dialog');
+    if (exitDialog) {
+      exitDialog.remove();
+      if (window.AndroidBridge && window.AndroidBridge.exitApp) {
+        window.AndroidBridge.exitApp();
+      }
+      return false; // tell Android callback to finish activity if bridge not present
+    }
+
+    // 3. If currently playing a game or viewing results -> return to home menu
+    if (this.currentView === 'game' || this.currentView === 'result') {
+      this.goToHome();
+      return true;
+    }
+
+    // 4. In Home menu: show child-friendly exit confirmation dialog
+    this.showExitConfirmDialog();
+    return true;
+  }
+
+  showExitConfirmDialog() {
+    const existing = document.getElementById('exit-confirm-dialog');
+    if (existing) return;
+
+    playTap();
+    const dialog = document.createElement('div');
+    dialog.className = 'confirm-dialog-overlay';
+    dialog.id = 'exit-confirm-dialog';
+
+    dialog.innerHTML = `
+      <div class="confirm-dialog-card exit-dialog-card">
+        <div class="confirm-mascot">
+          ${renderCounti('idle', 95)}
+        </div>
+        <h3 class="confirm-title">${t('exitDialog.title')}</h3>
+        <p class="confirm-desc">${t('exitDialog.desc')}</p>
+        <div class="confirm-actions">
+          <button class="confirm-btn-cancel" id="btn-exit-cancel">
+            ${t('exitDialog.keepPlaying')}
+          </button>
+          <button class="confirm-btn-action btn-exit" id="btn-exit-confirm">
+            ${t('exitDialog.exit')}
+          </button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(dialog);
+
+    dialog.querySelector('#btn-exit-cancel').addEventListener('click', () => {
+      playTap();
+      dialog.remove();
+    });
+
+    dialog.querySelector('#btn-exit-confirm').addEventListener('click', () => {
+      playTap();
+      dialog.remove();
+      if (window.AndroidBridge && window.AndroidBridge.exitApp) {
+        window.AndroidBridge.exitApp();
+      } else {
+        window.close();
+      }
+    });
+
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) {
+        dialog.remove();
+      }
+    });
   }
 
   refreshHeader() {

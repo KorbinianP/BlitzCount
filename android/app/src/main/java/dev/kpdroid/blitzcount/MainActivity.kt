@@ -106,20 +106,32 @@ class MainActivity : AppCompatActivity() {
             loadWithOverviewMode = true
         }
 
-        // Handle Android back button
+        webView.addJavascriptInterface(AndroidBridge(), "AndroidBridge")
+
+        // Handle Android back button: delegates to Web App router (exits game to home, closes modal, confirms app exit)
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (webView.canGoBack()) {
-                    webView.goBack()
-                } else {
-                    isEnabled = false
-                    onBackPressedDispatcher.onBackPressed()
+                webView.evaluateJavascript("typeof window.handleAndroidBack === 'function' ? window.handleAndroidBack() : false") { result ->
+                    val handled = result == "true"
+                    if (!handled) {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
                 }
             }
         })
 
         // Load the bundled offline web app
         webView.loadUrl("https://appassets.androidplatform.net/assets/index.html")
+    }
+
+    inner class AndroidBridge {
+        @android.webkit.JavascriptInterface
+        fun exitApp() {
+            runOnUiThread {
+                finish()
+            }
+        }
     }
 
     private fun setupImmersiveMode() {

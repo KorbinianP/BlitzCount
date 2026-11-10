@@ -52,7 +52,7 @@ export const translations = {
     },
     about: {
       title: 'About BlitzCount',
-      version: 'Version 1.8.1-beta.2',
+      version: 'Version 1.8.1-beta.3',
       direction: 'Direction & Concept: Korbinian Probst',
       code: 'Code & Architecture: Antigravity',
       license: 'License: MIT (Free & Open Source)',
@@ -71,7 +71,7 @@ export const translations = {
       sound: 'Sound Effects',
       language: 'Language',
       profiles: 'Players & Profiles',
-      addPlayer: '+ New Player',
+      addPlayer: 'New Player',
       save: 'Save & Close',
       close: 'Back',
       resetScores: 'Reset Scores',
@@ -81,7 +81,23 @@ export const translations = {
     profileModal: {
       title: 'Choose Your Player',
       nameLabel: 'Player Name',
-      createButton: 'Save Player'
+      createButton: 'Save Player',
+      editTitle: 'Edit Player',
+      editButton: 'Edit Player',
+      deleteButton: 'Delete Player',
+      confirmSaveTitle: 'Save Changes?',
+      confirmSaveDesc: 'Do you want to save the changes for "{name}"?',
+      confirmDeleteTitle: 'Delete Player?',
+      confirmDeleteDesc: 'Do you really want to delete "{name}"? All medals and best scores will be lost.',
+      cancel: 'Cancel',
+      save: 'Save',
+      delete: 'Delete'
+    },
+    exitDialog: {
+      title: 'Exit BlitzCount?',
+      desc: 'Do you want to close the game?',
+      keepPlaying: 'Keep Playing',
+      exit: 'Exit'
     },
     trophyRoom: {
       title: 'Trophy Room',
@@ -91,7 +107,7 @@ export const translations = {
   },
   de: {
     appTitle: 'BlitzCount',
-    tagline: 'Blitzschnell Zählen mit Counti',
+    tagline: 'Blitzschnell zählen mit Counti',
     play: 'Spielen',
     replay: 'Nochmal',
     home: 'Start',
@@ -141,7 +157,7 @@ export const translations = {
     },
     about: {
       title: 'Über BlitzCount',
-      version: 'Version 1.8.1-beta.2',
+      version: 'Version 1.8.1-beta.3',
       direction: 'Regie & Konzept: Korbinian Probst',
       code: 'Code & Architektur: Antigravity',
       license: 'Lizenz: MIT (Frei & Open Source)',
@@ -160,7 +176,7 @@ export const translations = {
       sound: 'Soundeffekte',
       language: 'Sprache',
       profiles: 'Spieler & Profile',
-      addPlayer: '+ Neuer Spieler',
+      addPlayer: 'Neuer Spieler',
       save: 'Speichern & Schließen',
       close: 'Zurück',
       resetScores: 'Punkte zurücksetzen',
@@ -170,7 +186,23 @@ export const translations = {
     profileModal: {
       title: 'Wähle deinen Spieler',
       nameLabel: 'Name',
-      createButton: 'Speichern'
+      createButton: 'Speichern',
+      editTitle: 'Spieler bearbeiten',
+      editButton: 'Spieler bearbeiten',
+      deleteButton: 'Spieler löschen',
+      confirmSaveTitle: 'Änderungen speichern?',
+      confirmSaveDesc: 'Möchtest du die Änderungen für "{name}" übernehmen?',
+      confirmDeleteTitle: 'Spieler löschen?',
+      confirmDeleteDesc: 'Möchtest du "{name}" wirklich löschen? Alle Medaillen und Rekorde gehen verloren.',
+      cancel: 'Abbrechen',
+      save: 'Speichern',
+      delete: 'Löschen'
+    },
+    exitDialog: {
+      title: 'BlitzCount beenden?',
+      desc: 'Möchtest du das Spiel wirklich beenden?',
+      keepPlaying: 'Weiterspielen',
+      exit: 'Beenden'
     },
     trophyRoom: {
       title: 'Trophäen-Zimmer',
@@ -192,9 +224,10 @@ export function getLanguage() {
   return currentLang;
 }
 
-export function t(keyPath) {
+export function t(keyPath, params) {
   const keys = keyPath.split('.');
   let obj = translations[currentLang] || translations.de;
+  let val = undefined;
   for (const k of keys) {
     if (obj && obj[k] !== undefined) {
       obj = obj[k];
@@ -203,8 +236,13 @@ export function t(keyPath) {
       for (const fk of keys) {
         fallback = fallback ? fallback[fk] : undefined;
       }
-      return fallback !== undefined ? fallback : keyPath;
+      val = fallback !== undefined ? fallback : keyPath;
+      break;
     }
   }
-  return obj;
+  if (val === undefined) val = obj;
+  if (typeof val === 'string' && params) {
+    return Object.entries(params).reduce((str, [k, v]) => str.replace(`{${k}}`, v), val);
+  }
+  return val;
 }

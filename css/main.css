@@ -1,7 +1,7 @@
 /* BlitzCount - Cheerful, Modern Kid-Friendly Theme */
 
 :root {
-  --safe-top: 54px;
+  --safe-top: 58px;
   --safe-bottom: 16px;
   --safe-left: 0px;
   --safe-right: 0px;
@@ -50,8 +50,8 @@ body {
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
-  padding-top: 54px;
-  padding-top: var(--safe-top, 54px);
+  padding-top: 58px;
+  padding-top: var(--safe-top, 58px);
   padding-bottom: 16px;
   padding-bottom: var(--safe-bottom, 16px);
   padding-left: 14px;
@@ -2279,7 +2279,10 @@ body {
 /* ==================== RESPONSIVE ADJUSTMENTS ==================== */
 @media (max-width: 600px) {
   #app {
-    padding: 6px 8px;
+    padding-top: var(--safe-top, 58px);
+    padding-bottom: var(--safe-bottom, 16px);
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .game-headline {

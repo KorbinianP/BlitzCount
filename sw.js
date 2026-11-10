@@ -1,5 +1,5 @@
 // BlitzCount Offline Service Worker
-const CACHE_NAME = 'blitzcount-v1.8.1-beta.6';
+const CACHE_NAME = 'blitzcount-v1.8.1';
 
 const ASSETS_TO_CACHE = [
   './',

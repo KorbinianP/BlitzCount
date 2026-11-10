@@ -23,7 +23,7 @@ import androidx.webkit.WebViewClientCompat
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
-    private var cachedSafeTopDp = 54
+    private var cachedSafeTopDp = 58
     private var cachedSafeBottomDp = 16
     private var cachedSafeLeftDp = 0
     private var cachedSafeRightDp = 0
@@ -77,8 +77,8 @@ class MainActivity : AppCompatActivity() {
                 WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
             )
             val density = resources.displayMetrics.density
-            val minTopPx = (54 * density).toInt()
-            val extraTopPx = (10 * density).toInt()
+            val minTopPx = (58 * density).toInt()
+            val extraTopPx = (12 * density).toInt()
             cachedSafeTopDp = (maxOf(cutoutInsets.top + (if (cutoutInsets.top > 0) extraTopPx else 0), minTopPx) / density).toInt()
             cachedSafeBottomDp = (maxOf(cutoutInsets.bottom, (16 * density).toInt()) / density).toInt()
             cachedSafeLeftDp = (cutoutInsets.left / density).toInt()

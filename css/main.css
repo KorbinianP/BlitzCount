@@ -1,6 +1,10 @@
 /* BlitzCount - Cheerful, Modern Kid-Friendly Theme */
 
 :root {
+  --safe-top: 48px;
+  --safe-bottom: 12px;
+  --safe-left: 0px;
+  --safe-right: 0px;
   --bg-gradient: linear-gradient(135deg, #FFFDF8 0%, #FFF3E0 100%);
   --primary-color: #FF6B6B;
   --secondary-color: #4D96FF;
@@ -46,10 +50,10 @@ body {
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
-  padding: max(6px, env(safe-area-inset-top, 6px))
-           max(12px, env(safe-area-inset-right, 12px))
-           max(10px, env(safe-area-inset-bottom, 10px))
-           max(12px, env(safe-area-inset-left, 12px));
+  padding: max(var(--safe-top, 48px), env(safe-area-inset-top, 48px))
+           max(12px, var(--safe-right, 0px), env(safe-area-inset-right, 12px))
+           max(var(--safe-bottom, 12px), env(safe-area-inset-bottom, 12px))
+           max(12px, var(--safe-left, 0px), env(safe-area-inset-left, 12px));
   box-sizing: border-box;
 }
 
@@ -1262,14 +1266,15 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(255, 248, 238, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 16px;
+  box-sizing: border-box;
 }
 
 .modal-card {
@@ -1279,7 +1284,8 @@ body {
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 44px rgba(90, 60, 30, 0.16), 0 4px 14px rgba(90, 60, 30, 0.08);
+  border: 3px solid #FFE0B2;
   display: flex;
   flex-direction: column;
 }
@@ -1507,9 +1513,9 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(255, 248, 238, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1524,7 +1530,8 @@ body {
   padding: 24px 20px;
   max-width: 360px;
   width: 100%;
-  box-shadow: var(--card-shadow);
+  box-shadow: 0 16px 44px rgba(90, 60, 30, 0.16), 0 4px 14px rgba(90, 60, 30, 0.08);
+  border: 3px solid #FFE0B2;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -1562,13 +1569,18 @@ body {
 .confirm-btn-cancel {
   flex: 1;
   padding: 10px 14px;
-  background: #EDF2F7;
+  background: #FFFFFF;
   color: #4A5568;
   border: 2px solid #CBD5E0;
   border-radius: var(--radius-md);
   font-size: 0.95rem;
   font-weight: 800;
   cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.confirm-btn-cancel:hover {
+  background: #F7FAFC;
 }
 
 .confirm-btn-action {

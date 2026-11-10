@@ -166,7 +166,7 @@ export function openProfileModal(modalContainer, { onProfileChanged }) {
             </div>
 
             <!-- Avatar Options Carousel -->
-            <div class="edit-section-label">${t('profileModal.chooseAvatar') || 'Avatar wählen'}</div>
+            <div class="edit-section-label">${t('profileModal.chooseAvatar')}</div>
             <div class="avatar-picker-row">
               ${DEFAULT_AVATARS.map((av) => `
                 <button class="avatar-option-btn ${av === currentAvatar ? 'is-selected' : ''}" data-avatar="${av}">${av}</button>

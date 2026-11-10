@@ -55,27 +55,36 @@ class MainActivity : AppCompatActivity() {
         container.addView(webView)
         setContentView(container)
 
-        // Protect against camera punch-holes (center, left, right) and screen corner curves
-        ViewCompat.setOnApplyWindowInsetsListener(container) { v, windowInsets ->
+        // Edge-to-edge canvas: WebView spans 100% of physical display without letterboxing,
+        // while safe insets are delivered dynamically to CSS so game controls sit safely below cutouts.
+        var cachedSafeTopDp = 48
+        var cachedSafeBottomDp = 14
+        var cachedSafeLeftDp = 0
+        var cachedSafeRightDp = 0
+
+        fun applyCssInsets() {
+            webView.evaluateJavascript(
+                "document.documentElement.style.setProperty('--safe-top', '${cachedSafeTopDp}px');" +
+                "document.documentElement.style.setProperty('--safe-bottom', '${cachedSafeBottomDp}px');" +
+                "document.documentElement.style.setProperty('--safe-left', '${cachedSafeLeftDp}px');" +
+                "document.documentElement.style.setProperty('--safe-right', '${cachedSafeRightDp}px');",
+                null
+            )
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(webView) { _, windowInsets ->
             val cutoutInsets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.displayCutout() or WindowInsetsCompat.Type.systemBars()
             )
             val density = resources.displayMetrics.density
             val minTopPx = (46 * density).toInt()
             val extraTopPx = (8 * density).toInt()
-            val safeTop = maxOf(cutoutInsets.top + (if (cutoutInsets.top > 0) extraTopPx else 0), minTopPx)
-            val minSidePx = (10 * density).toInt()
-            val safeLeft = maxOf(cutoutInsets.left, minSidePx)
-            val safeRight = maxOf(cutoutInsets.right, minSidePx)
-            val minBottomPx = (14 * density).toInt()
-            val safeBottom = maxOf(cutoutInsets.bottom, minBottomPx)
+            cachedSafeTopDp = (maxOf(cutoutInsets.top + (if (cutoutInsets.top > 0) extraTopPx else 0), minTopPx) / density).toInt()
+            cachedSafeBottomDp = (maxOf(cutoutInsets.bottom, (14 * density).toInt()) / density).toInt()
+            cachedSafeLeftDp = (cutoutInsets.left / density).toInt()
+            cachedSafeRightDp = (cutoutInsets.right / density).toInt()
 
-            v.setPadding(
-                safeLeft,
-                safeTop,
-                safeRight,
-                safeBottom
-            )
+            applyCssInsets()
             windowInsets
         }
 
@@ -90,6 +99,11 @@ class MainActivity : AppCompatActivity() {
                 request: WebResourceRequest
             ): WebResourceResponse? {
                 return assetLoader.shouldInterceptRequest(request.url)
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                applyCssInsets()
             }
         }
 

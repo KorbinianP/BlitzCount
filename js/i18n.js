@@ -52,7 +52,7 @@ export const translations = {
     },
     about: {
       title: 'About BlitzCount',
-      version: 'Version 1.8.1-beta.3',
+      version: 'Version 1.8.1-beta.4',
       direction: 'Direction & Concept: Korbinian Probst',
       code: 'Code & Architecture: Antigravity',
       license: 'License: MIT (Free & Open Source)',
@@ -81,6 +81,7 @@ export const translations = {
     profileModal: {
       title: 'Choose Your Player',
       nameLabel: 'Player Name',
+      chooseAvatar: 'Choose Avatar',
       createButton: 'Save Player',
       editTitle: 'Edit Player',
       editButton: 'Edit Player',
@@ -157,7 +158,7 @@ export const translations = {
     },
     about: {
       title: 'Über BlitzCount',
-      version: 'Version 1.8.1-beta.3',
+      version: 'Version 1.8.1-beta.4',
       direction: 'Regie & Konzept: Korbinian Probst',
       code: 'Code & Architektur: Antigravity',
       license: 'Lizenz: MIT (Frei & Open Source)',
@@ -186,6 +187,7 @@ export const translations = {
     profileModal: {
       title: 'Wähle deinen Spieler',
       nameLabel: 'Name',
+      chooseAvatar: 'Avatar wählen',
       createButton: 'Speichern',
       editTitle: 'Spieler bearbeiten',
       editButton: 'Spieler bearbeiten',

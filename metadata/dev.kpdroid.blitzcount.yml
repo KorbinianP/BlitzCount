@@ -28,7 +28,7 @@ Repo: https://github.com/KorbinianP/BlitzCount.git
 Builds:
   - versionName: 1.8.2
     versionCode: 10
-    commit: v1.8.2
+    commit: b6d2addec570d179df6fe488c4959c57c4c14a53
     subdir: android
     gradle:
       - yes

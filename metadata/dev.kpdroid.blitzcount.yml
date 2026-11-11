@@ -1,5 +1,5 @@
 Categories:
-  - Games
+  - Educational Game
   - Science & Education
 License: MIT
 AuthorName: KorbinianP
@@ -19,8 +19,10 @@ Builds:
     subdir: android
     gradle:
       - yes
+    scanignore:
+      - package.json
 
-AutoUpdateMode: Version v%v
+AutoUpdateMode: Version
 UpdateCheckMode: Tags
 CurrentVersion: 1.8.2
 CurrentVersionCode: 10

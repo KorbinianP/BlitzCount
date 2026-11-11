@@ -1,0 +1,15 @@
+# Force all text files to use LF (Unix) line endings
+* text=auto eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.js text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.kts text eol=lf
+*.gradle text eol=lf
+*.properties text eol=lf
+*.xml text eol=lf
+*.sh text eol=lf
+Makefile text eol=lf

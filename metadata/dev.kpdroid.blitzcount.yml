@@ -1,0 +1,39 @@
+Categories:
+  - Education
+  - Games
+License: MIT
+AuthorName: Korbinian Probst & Antigravity
+SourceCode: https://github.com/KorbinianP/BlitzCount
+IssueTracker: https://github.com/KorbinianP/BlitzCount/issues
+Changelog: https://github.com/KorbinianP/BlitzCount/releases
+
+AutoName: BlitzCount
+Summary: Playful flash number recognition and subitizing training for kids
+Description: |-
+  BlitzCount is a 100% offline, kid-friendly educational game designed for
+  children aged 4–8 to develop rapid visual number recognition (subitizing)
+  from 0 to 12.
+
+  Features:
+  * 100% Offline with zero ads, zero trackers, and zero permissions
+  * Multiple modes: Classic rounds (5, 10, or 20), 60s Blitz, and Streak
+  * Number ranges up to 6 (one hand, single die) and up to 12
+  * Hungarian 5+X grouping, dice dot patterns, and fingers
+  * Multiple player profiles and trophy room with medals
+  * Designed for non-readers with intuitive animal speeds
+
+RepoType: git
+Repo: https://github.com/KorbinianP/BlitzCount.git
+
+Builds:
+  - versionName: 1.8.2
+    versionCode: 10
+    commit: v1.8.2
+    subdir: android
+    gradle:
+      - yes
+
+AutoUpdateMode: Version v%v
+UpdateCheckMode: Tags
+CurrentVersion: 1.8.2
+CurrentVersionCode: 10

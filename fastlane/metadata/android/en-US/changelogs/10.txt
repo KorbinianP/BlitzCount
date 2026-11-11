@@ -1,0 +1,5 @@
+• Store & F-Droid Polish: Added high-resolution Counti icon and gameplay screenshots.
+• Display clearance: Interface now sits safely below camera punch-holes and curved display corners.
+• Accidental exit protection: Friendly back confirmation dialog prevents accidental app exits.
+• Player management: Edit player names, choose cute animal avatars, and manage profiles with deletion guards.
+• Polished typography and German spellings ("Blitzschnell zählen mit Counti").

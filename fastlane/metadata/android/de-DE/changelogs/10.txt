@@ -1,0 +1,5 @@
+• F-Droid & Store-Optimierung: Hochauflösendes Counti-App-Icon und Screenshots ergänzt.
+• Display-Optimierung: Sicherer Abstand zu Kamera-Punch-Holes und abgerundeten Displayecken.
+• Navigationsschutz: Bestätigungsabfrage vor dem Beenden verhindert versehentliches Schließen per Zurück-Taste.
+• Spielerprofile: Namen und Tier-Avatare können jederzeit bearbeitet werden (mit Löschschutz).
+• Polierte Rechtschreibung ("Blitzschnell zählen mit Counti").

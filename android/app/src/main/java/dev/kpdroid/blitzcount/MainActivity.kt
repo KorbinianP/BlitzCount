@@ -1,6 +1,7 @@
 package dev.kpdroid.blitzcount
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -96,6 +97,31 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         webView.webViewClient = object : WebViewClientCompat() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                request: WebResourceRequest
+            ): Boolean {
+                val uri = request.url
+                val scheme = uri.scheme?.lowercase()
+                val host = uri.host?.lowercase()
+
+                // Keep internal app assets within the WebView
+                if (scheme == "https" && host == "appassets.androidplatform.net") {
+                    return false
+                }
+
+                // Open external links (GitHub, mailto:, external sites) in the default browser / system app
+                return try {
+                    val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+                        addCategory(Intent.CATEGORY_BROWSABLE)
+                    }
+                    view.context.startActivity(intent)
+                    true
+                } catch (e: Exception) {
+                    true
+                }
+            }
+
             override fun shouldInterceptRequest(
                 view: WebView,
                 request: WebResourceRequest
@@ -127,6 +153,10 @@ class MainActivity : AppCompatActivity() {
         // Handle Android back button: delegates to Web App router (exits game to home, closes modal, confirms app exit)
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                if (webView.canGoBack()) {
+                    webView.goBack()
+                    return
+                }
                 webView.evaluateJavascript("typeof window.handleAndroidBack === 'function' ? window.handleAndroidBack() : false") { result ->
                     val handled = result == "true"
                     if (!handled) {

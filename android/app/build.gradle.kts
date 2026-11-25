@@ -14,8 +14,8 @@ android {
         applicationId = "dev.kpdroid.blitzcount"
         minSdk = 26
         targetSdk = 36
-        versionCode = 10
-        versionName = "1.8.2"
+        versionCode = 11
+        versionName = "1.8.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -93,6 +93,7 @@ val syncWebAssets = tasks.register<Copy>("syncWebAssets") {
     description = "Sync web application assets into Android app assets directory"
     from("${project.rootDir}/..") {
         include("index.html")
+        include("privacy.html")
         include("manifest.webmanifest")
         include("sw.js")
         include("css/**")

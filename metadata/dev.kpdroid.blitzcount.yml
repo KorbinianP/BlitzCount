@@ -22,7 +22,16 @@ Builds:
     scanignore:
       - package.json
 
+  - versionName: 1.8.3
+    versionCode: 11
+    commit: v1.8.3
+    subdir: android
+    gradle:
+      - yes
+    scanignore:
+      - package.json
+
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.8.2
-CurrentVersionCode: 10
+CurrentVersion: 1.8.3
+CurrentVersionCode: 11

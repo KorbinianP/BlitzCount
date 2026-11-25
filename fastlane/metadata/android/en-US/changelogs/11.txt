@@ -1,0 +1,3 @@
+• Offline Privacy Policy: Privacy policy is now bundled and accessible 100% offline within the app.
+• External link handling: GitHub source code and external links now open smoothly in the device's default browser.
+• Seamless navigation: Device back button cleanly returns from the privacy page back to the game.

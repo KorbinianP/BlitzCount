@@ -1,0 +1,3 @@
+• Datenschutz & Info: Datenschutzerklärung ist nun direkt und vollständig offline in der App verfügbar.
+• Externe Links: GitHub-Quellcode und externe Links öffnen sich nahtlos im Standard-Browser des Geräts.
+• Verbesserte Navigation: Android-Zurück-Taste kehrt von der Datenschutzseite zuverlässig zum Spiel zurück.

@@ -9,6 +9,7 @@ on:
       - 'js/**'
       - 'assets/**'
       - 'index.html'
+      - 'privacy.html'
       - 'manifest.webmanifest'
       - 'sw.js'
       - '.github/workflows/android-build.yml'
